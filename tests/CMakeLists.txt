@@ -3,13 +3,17 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 ### C Source Files ###
 file(GLOB sources
       "${PROJECT_SOURCE_DIR}/src/*.c"
-      "${PROJECT_SOURCE_DIR}/src/testy/*.c"
+      "${PROJECT_SOURCE_DIR}/src/lexer/*.c"
+      "${PROJECT_SOURCE_DIR}/src/parser/*.c"
+      "${PROJECT_SOURCE_DIR}/src/expander/*.c"
+      "${PROJECT_SOURCE_DIR}/src/executor/*.c"
+      "${PROJECT_SOURCE_DIR}/src/utils/*.c"
     )
 list(REMOVE_ITEM sources "${PROJECT_SOURCE_DIR}/src/main.c")
 
 ### CPP Test Files ###
-file(GLOB tests "${PROJECT_SOURCE_DIR}/test/*.cpp")
-list(REMOVE_ITEM tests "${PROJECT_SOURCE_DIR}/test/main.cpp")
+file(GLOB tests "${PROJECT_SOURCE_DIR}/tests/*.cpp")
+list(REMOVE_ITEM tests "${PROJECT_SOURCE_DIR}/tests/main.cpp")
 
 foreach(file ${tests})
   set(name)
