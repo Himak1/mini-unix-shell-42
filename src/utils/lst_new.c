@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   lst_new.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/06/29 16:36:03 by jhille        ########   odam.nl         */
+/*   Created: 2022/06/29 16:52:49 by jhille        #+#    #+#                 */
+/*   Updated: 2022/06/29 17:07:56 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
+#include "token.h"
 
-int	main(void)
+t_token	*lst_new(t_uint type, char *value)
 {
-	char	*ptr;
+	t_token	*new_node;
 
-	ptr = NULL;
-	while (1)
+	new_node = malloc(sizeof(t_token));
+	if (new_node)
 	{
-		ptr = readline("Minishell:");
-		printf("%s\n", ptr);
-		free(ptr);
+		new_node->type = type;
+		new_node->value = value;
+		new_node->next = NULL;
 	}
-	return (0);
+	return (new_node);
 }

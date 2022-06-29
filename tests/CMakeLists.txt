@@ -12,7 +12,10 @@ file(GLOB sources
 list(REMOVE_ITEM sources "${PROJECT_SOURCE_DIR}/src/main.c")
 
 ### CPP Test Files ###
-file(GLOB tests "${PROJECT_SOURCE_DIR}/tests/*.cpp")
+file(GLOB tests
+      "${PROJECT_SOURCE_DIR}/tests/*.cpp"
+      "${PROJECT_SOURCE_DIR}/tests/utils_tests/*cpp"
+    )
 list(REMOVE_ITEM tests "${PROJECT_SOURCE_DIR}/tests/main.cpp")
 
 foreach(file ${tests})

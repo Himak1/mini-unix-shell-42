@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   lst_append.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/06/29 16:36:03 by jhille        ########   odam.nl         */
+/*   Created: 2022/06/29 17:03:00 by jhille        #+#    #+#                 */
+/*   Updated: 2022/06/29 17:08:39 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
+#include "token.h"
 
-int	main(void)
+void	lst_append(t_token **list, t_token *node)
 {
-	char	*ptr;
+	t_token	*iter;
 
-	ptr = NULL;
-	while (1)
-	{
-		ptr = readline("Minishell:");
-		printf("%s\n", ptr);
-		free(ptr);
-	}
-	return (0);
+	iter = *list;
+	while (iter->next)
+		iter = iter->next;
+	iter->next = node;
 }

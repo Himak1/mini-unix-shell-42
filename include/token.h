@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   token.h                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/06/29 16:36:03 by jhille        ########   odam.nl         */
+/*   Created: 2022/06/29 16:36:49 by jhille        #+#    #+#                 */
+/*   Updated: 2022/06/29 16:49:23 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
+#ifndef TOKEN_H
+# define TOKEN_H
 
-int	main(void)
+typedef unsigned int	t_uint;
+
+enum e_types
 {
-	char	*ptr;
+	string = 0,
+	single_quote = 1,
+	double_quote = 2
+};
 
-	ptr = NULL;
-	while (1)
-	{
-		ptr = readline("Minishell:");
-		printf("%s\n", ptr);
-		free(ptr);
-	}
-	return (0);
-}
+typedef struct s_token
+{
+	t_uint		type;
+	char		*value;
+	t_token		*next;
+}				t_token;
+
+#endif

@@ -1,29 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   lst_append.cpp                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/06/29 16:36:03 by jhille        ########   odam.nl         */
+/*   Created: 2022/06/29 17:12:18 by jhille        #+#    #+#                 */
+/*   Updated: 2022/06/29 17:12:28 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
-
-int	main(void)
-{
-	char	*ptr;
-
-	ptr = NULL;
-	while (1)
-	{
-		ptr = readline("Minishell:");
-		printf("%s\n", ptr);
-		free(ptr);
-	}
-	return (0);
-}
+#include "include/utils.h"

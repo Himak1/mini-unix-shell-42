@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   lst_clear.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/06/29 16:36:03 by jhille        ########   odam.nl         */
+/*   Created: 2022/06/29 16:58:02 by jhille        #+#    #+#                 */
+/*   Updated: 2022/06/29 17:08:06 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
+#include "token.h"
 
-int	main(void)
+void	lst_clear(t_token **list)
 {
-	char	*ptr;
+	t_token	*iter;
+	t_token	*next;
 
-	ptr = NULL;
-	while (1)
+	iter = *list;
+	while (iter)
 	{
-		ptr = readline("Minishell:");
-		printf("%s\n", ptr);
-		free(ptr);
+		next = iter->next;
+		free(iter->value);
+		free(iter);
+		if (next)
+			iter = next;
 	}
-	return (0);
 }
