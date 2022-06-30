@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lst_new.c                                          :+:    :+:            */
+/*   lst_add_bk.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/29 16:52:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/06/30 10:49:40 by jhille        ########   odam.nl         */
+/*   Created: 2022/06/29 17:03:00 by jhille        #+#    #+#                 */
+/*   Updated: 2022/06/30 10:58:55 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "utils.h"
 
-t_token	*lst_new(t_uint type, char *value)
+void	lst_add_bk(t_token **list, t_token *node)
 {
-	t_token	*new_node;
+	t_token	*iter;
 
-	new_node = malloc(sizeof(t_token));
-	if (new_node)
-	{
-		new_node->type = type;
-		new_node->value = value;
-		new_node->next = NULL;
-	}
-	return (new_node);
+	iter = *list;
+	while (iter->next)
+		iter = iter->next;
+	iter->next = node;
 }

@@ -6,12 +6,12 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:58:02 by jhille        #+#    #+#                 */
-/*   Updated: 2022/06/29 17:08:06 by jhille        ########   odam.nl         */
+/*   Updated: 2022/06/30 10:49:35 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "token.h"
+#include "utils.h"
 
 void	lst_clear(t_token **list)
 {
