@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/01 15:11:02 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/01 15:25:53 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/01 15:46:30 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,3 @@ TEST(get_type, environment_var)
 	ASSERT_EQ(get_type("$aDa"), ENV_V);
 }
 
-TEST(get_type, environment_var)
-{
-	ASSERT_EQ(get_type("$s"), ENV_V);
-	ASSERT_EQ(get_type("$aDa"), ENV_V);
-}

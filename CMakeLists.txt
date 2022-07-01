@@ -27,4 +27,5 @@ file(GLOB sources
         "${PROJECT_SOURCE_DIR}/src/*.c"
     )
 add_executable(minishell ${sources})
+target_compile_options(minishell PRIVATE -Wextra -Wall -Werror)
 target_link_libraries(minishell "readline")

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 15:37:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/07/01 15:38:43 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/07/01 15:48:52 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	create_token(t_token **token_list, char *str, int start, int end)
 void	ft_lexer(t_token **token_list, char *input)
 {
 	int	i;
-	int start;
+	int	start;
 
 	i = 0;
 	start = 0;
@@ -62,9 +62,9 @@ void	ft_lexer(t_token **token_list, char *input)
 	}
 }
 
-void print_token_list(t_token **token)
+void	print_token_list(t_token **token)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (*token != NULL)
@@ -78,6 +78,7 @@ void print_token_list(t_token **token)
 	}
 }
 
+/*
 int main()
 {
 	t_token *token = NULL;
@@ -87,6 +88,7 @@ int main()
 	print_token_list(&token);
 	//ft_lexer(input);
 }
+*/
 
 
 
