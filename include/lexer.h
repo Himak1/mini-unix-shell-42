@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lst_add_bk.c                                       :+:    :+:            */
+/*   lexer.h                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jhille <jhille@student.codam.nl>             +#+                     */
+/*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/29 17:03:00 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/01 14:51:10 by tvan-der      ########   odam.nl         */
+/*   Created: 2022/06/30 11:07:03 by tvan-der      #+#    #+#                 */
+/*   Updated: 2022/07/01 14:47:28 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/utils.h"
+#ifndef LEXER_H
+# define LEXER_H
 
-void	lst_add_bk(t_token **list, t_token *node)
-{
-	t_token	*iter;
+#include "utils.h"
 
-	iter = *list;
-	while (iter->next)
-		iter = iter->next;
-	iter->next = node;
-}
+void create_token(t_token **token_list, char *str, int start, int end);
+
+#endif

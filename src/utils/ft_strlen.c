@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lst_new.c                                          :+:    :+:            */
+/*   ft_strlen.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jhille <jhille@student.codam.nl>             +#+                     */
+/*   By: tvan-der <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/29 16:52:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/01 13:36:39 by tvan-der      ########   odam.nl         */
+/*   Created: 2020/10/29 15:45:10 by tvan-der      #+#    #+#                 */
+/*   Updated: 2022/07/01 13:36:32 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "../../incl/utils.h"
 
-t_token	*lst_new(t_uint type, char *value)
+size_t	ft_strlen(const char *s)
 {
-	t_token	*new_node;
+	size_t	i;
 
-	new_node = malloc(sizeof(t_token));
-	if (new_node)
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
 	{
-		new_node->type = type;
-		new_node->value = value;
-		new_node->next = NULL;
+		i++;
 	}
-	return (new_node);
+	return (i);
 }
