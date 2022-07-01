@@ -6,13 +6,13 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 15:37:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/07/01 15:11:42 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/07/01 15:38:43 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "../../incl/lexer.h"
-#include "../../incl/utils.h"
+#include "lexer.h"
+#include "utils.h"
 
 // lexer function: iterate through inputstring (int i)
 //   ---> if whitespace is found jump into create_token function

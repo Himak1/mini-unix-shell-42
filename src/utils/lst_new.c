@@ -6,12 +6,12 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:52:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/01 13:36:39 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/07/01 15:38:48 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "../../incl/utils.h"
+#include "utils.h"
 
 t_token	*lst_new(t_uint type, char *value)
 {
