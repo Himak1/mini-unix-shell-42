@@ -1,0 +1,12 @@
+tasks:
+    ✔ Create a basic prompt in main to receive input @done(22-06-29 16:19)
+    ☐ Implement assign_type()
+        ☐ import ft_strncmp() function
+
+
+
+edge-cases:
+    ☐ e"$var"o
+        where $var == ch
+    ☐ e"cho hallo"
+    ☐ 3x export command, if the last one isn't valid the first two must still be executed
