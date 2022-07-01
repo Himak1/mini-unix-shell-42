@@ -6,13 +6,17 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:36:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/01 15:14:05 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/01 15:34:11 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 # include <stddef.h>
+
+# include <unistd.h>
+# include <stdlib.h>
+
 typedef unsigned int	t_uint;
 
 enum e_types
@@ -44,5 +48,6 @@ void	lst_clear(t_token **list);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 int		ft_isalnum(int c);
 size_t	ft_strlen(const char *str);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif

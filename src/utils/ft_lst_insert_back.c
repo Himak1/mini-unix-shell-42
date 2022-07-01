@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lst_new.c                                          :+:    :+:            */
+/*   ft_lst_insert_back.c                               :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jhille <jhille@student.codam.nl>             +#+                     */
+/*   By: Tessa <tvan-der@student.codam.nl>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/29 16:52:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/01 13:36:39 by tvan-der      ########   odam.nl         */
+/*   Created: 2021/01/16 16:40:43 by Tessa         #+#    #+#                 */
+/*   Updated: 2022/07/01 14:39:45 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "../../incl/utils.h"
 
-t_token	*lst_new(t_uint type, char *value)
+void	ft_lst_insert_back(t_token **token_list, t_uint type, char *value)
 {
-	t_token	*new_node;
+	t_token	*new;
+	t_token	*current;
 
-	new_node = malloc(sizeof(t_token));
-	if (new_node)
+	new = lst_new(data);
+	if (*head == NULL)
+		*head = new;
+	else
 	{
-		new_node->type = type;
-		new_node->value = value;
-		new_node->next = NULL;
+		current = *head;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new;
 	}
-	return (new_node);
 }
