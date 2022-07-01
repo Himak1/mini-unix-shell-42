@@ -1,12 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   lst_append.cpp                                     :+:    :+:            */
+/*   ft_strlen.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jhille <jhille@student.codam.nl>             +#+                     */
+/*   By: jhille <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/29 17:12:18 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/01 15:29:47 by jhille        ########   odam.nl         */
+/*   Created: 2020/10/27 14:14:48 by jhille        #+#    #+#                 */
+/*   Updated: 2020/11/22 16:54:09 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stddef.h>
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
