@@ -6,14 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:36:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/01 15:34:11 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/07/04 16:06:36 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 # include <stddef.h>
-
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -29,8 +28,6 @@ enum e_types
 	PIPE,
 	ENV_V,
 	EXIT_STAT,
-	SIG_INT,
-	SIG_EOF
 };
 
 typedef struct s_token
