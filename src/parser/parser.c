@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/04 17:24:19 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/05 15:28:02 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 t_ast	*parse_tokens(t_token **list)
 {
 	t_token	*new_token;
-	char	**output;
+	t_ast	*tree;
 
 	new_token = *list;
+	tree = new_node(EXE_CHAIN);
 	while (new_token)
 	{
-
+		
 		new_token = new_token->next;
 	}
-	return (output);
+	return (tree);
 }
