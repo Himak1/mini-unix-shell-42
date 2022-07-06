@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:36:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/04 16:06:36 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/06 15:14:40 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ int		ft_strncmp(const char *str1, const char *str2, size_t n);
 int		ft_isalnum(int c);
 size_t	ft_strlen(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strdup(const char *str);
 
 #endif

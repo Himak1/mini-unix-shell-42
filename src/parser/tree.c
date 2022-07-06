@@ -6,12 +6,17 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 17:29:11 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/05 17:20:18 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/06 17:37:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
 #include "parser.h"
+
+void	*set_error(int *status)
+{
+	*status = -1;
+	return (NULL);
+}
 
 t_ast	*new_node(int type)
 {
