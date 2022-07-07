@@ -6,74 +6,64 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/07 16:54:58 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/07 18:09:26 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_ast	*file(t_token **list, int *status)
+// new_term_node() creates a new terminal node
+t_ast	*new_term_node(t_token **list)
 {
 	t_ast	*output;
 
 	output = malloc(sizeof(t_ast));
-	if (!output)
-		return (set_error(status));
-	output->value = ft_strdup((*list)->value);
-	if (!output->value)
+	if (output)
 	{
-		free(output);
-		return (set_error(status));
+		output->value = (*list)->value;
+		output->type = TERMINAL;
 	}
 	*list = (*list)->next;
 	return (output);
 }
 
-t_ast	*operate(t_token **list, const char *op_type, int *status)
+void	free_child_nodes(t_ast *parent)
 {
-	t_ast	*output;
+	t_ast	*iter;
+	t_ast	*tmp;
 
-	output = NULL;
-	if (!ft_strncmp((*list)->value, op_type, ft_strlen((*list)->value)))
+	iter = parent->child_node;
+	while (iter)
 	{
-		output = new_node(RD_IN);
-		if (!output)
-			return (set_error(status));
-		output->value = ft_strdup((*list)->value);
-		if (!output->value)
-		{
-			free(output);
-			return (set_error(status));
-		}
-		*list = (*list)->next;
+		tmp = iter;
+		iter = iter->next_sib_node;
+		free(tmp);
 	}
-	return (output);
+	parent->child_node = NULL;
 }
 
 t_ast	*rd_in(t_token **list, int *status)
 {
-	t_ast	*output[3];
-	int		i;
+	t_ast	*output;
 
-	i = 0;
-	if (next_2_tkn_cmp(*list, RDR_IN, WORD))
+	if (!next_2_tkn(*list, RDR_IN, WORD))
+		return (NULL);
+	output = malloc(sizeof(t_ast));
+	if (output)
 	{
-		while (i < 3)
+		if (add_child(output, new_term_node(list)) == -1)
 		{
-			output[i] = malloc(sizeof(t_ast));
-			if (!output[i])
-			{
-				free_array(output, i + 1);
-				*status = -1;
-			}
-			i++;
+			free(output);
+			return (set_error(status));
 		}
-		if (*status != -1)
+		if (add_child(output, new_term_node(list)) == -1)
 		{
-
+			free_child_nodes(output);
+			free(output);
+			return (set_error(status));
 		}
 	}
-	return (output[0]);
+	return (output);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 12:41:17 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/07 16:24:10 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/07 18:03:07 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ enum e_ast_types
 
 typedef struct s_ast
 {
-	int				type;
+	t_uint			type;
 	int				num_children;
 	char			*value;
 	struct s_ast	*child_node;
@@ -39,12 +39,16 @@ typedef struct s_ast
 
 t_ast	*parse_tokens(t_token **list, int *status);
 
-t_ast	*file(t_token **list, int *status);
-t_ast	*operate(t_token **list, const char *op_type, int *status);
 t_ast	*rd_in(t_token **list, int *status);
 
+t_uint	peek_tkn(t_token *token);
+t_uint	next_2_tkn(t_token *token, t_uint type1, t_uint type2);
+
 void	*set_error(int *status);
+void	free_child_nodes(t_ast *parent);
+
 t_ast	*new_node(int type);
+t_ast	*new_term_node(t_token **list);
 int		add_child(t_ast *parent, t_ast *child);
 
 #endif
