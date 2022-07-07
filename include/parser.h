@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 12:41:17 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/06 17:36:50 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/07 16:24:10 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,14 @@
 
 enum e_ast_types
 {
-	EXE_CHAIN,
+	EXE_CHAIN = 20,
 	BASE,
 	ADD_BASE,
 	EXE_BLOCK,
 	RDS,
 	RD_IN,
 	RD_OUT,
-	OPERATOR,
 	CMD,
-	CMD_NAME,
-	CMD_ARG,
 	TERMINAL,
 };
 
@@ -41,7 +38,10 @@ typedef struct s_ast
 }					t_ast;
 
 t_ast	*parse_tokens(t_token **list, int *status);
-t_ast	*operate(t_token *list, const char *op_type, int *status);
+
+t_ast	*file(t_token **list, int *status);
+t_ast	*operate(t_token **list, const char *op_type, int *status);
+t_ast	*rd_in(t_token **list, int *status);
 
 void	*set_error(int *status);
 t_ast	*new_node(int type);

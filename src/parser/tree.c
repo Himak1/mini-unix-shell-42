@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 17:29:11 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/06 17:37:00 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/07 16:08:32 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,24 @@ void	*set_error(int *status)
 {
 	*status = -1;
 	return (NULL);
+}
+
+int	peek_tkn(t_token *token)
+{
+	return (token->type);
+}
+
+int	next_2_tkn(t_token *token, int type1, int type2)
+{
+	int	state;
+
+	state = 0;
+	if (peek_tkn(token) == type1)
+	{
+		if (token->next && peek_tkn(token->next->type) == type2)
+			state = 1;
+	}
+	return (state);
 }
 
 t_ast	*new_node(int type)
