@@ -25,6 +25,7 @@ foreach(file ${tests})
     ${sources}
     ${file}
     "${PROJECT_SOURCE_DIR}/tests/main.cpp")
-  target_link_libraries("${name}_tests" gtest_main)
+  target_link_libraries("${name}_tests" gtest_main -fsanitize=address)
+  target_compile_options("${name}_tests" PRIVATE -Wextra -Wall -fsanitize=address -g)
   add_test(NAME ${name} COMMAND "${name}_tests")
 endforeach()

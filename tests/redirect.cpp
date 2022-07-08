@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parser.cpp                                         :+:    :+:            */
+/*   redirect.cpp                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/08 15:07:17 by jhille        ########   odam.nl         */
+/*   Created: 2022/07/08 15:19:16 by jhille        #+#    #+#                 */
+/*   Updated: 2022/07/08 15:21:05 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 extern "C" {
 #include "parser.h"
+#include "utils.h"
 }
 
 // ---- input templates ---- //
@@ -48,17 +49,3 @@ TEST(rd_in, basic)
 	EXPECT_STREQ(output->child_node->value, "<");
 	EXPECT_STREQ(output->child_node->next_sib_node->value, "infile");
 }
-
-/*
-TEST(parser_token, basic)
-{
-	t_ast   *tree;
-	t_token *list;
-
-	list = create_list();
-	tree = parse_tokens(&list);
-	ASSERT_TRUE(tree->child_node != nullptr);
-	EXPECT_TRUE(tree->child_node->next_sib_node == nullptr);
-	EXPECT_STREQ(tree->child_node->child_node->child_node->child_node->child_node->child_node, "<");
-}
-*/

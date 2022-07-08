@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/07 18:09:26 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/08 16:52:37 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,9 @@ t_ast	*new_term_node(t_token **list)
 {
 	t_ast	*output;
 
-	output = malloc(sizeof(t_ast));
+	output = new_node(TERMINAL);
 	if (output)
-	{
 		output->value = (*list)->value;
-		output->type = TERMINAL;
-	}
 	*list = (*list)->next;
 	return (output);
 }
@@ -41,35 +38,6 @@ void	free_child_nodes(t_ast *parent)
 	}
 	parent->child_node = NULL;
 }
-
-t_ast	*rd_in(t_token **list, int *status)
-{
-	t_ast	*output;
-
-	if (!next_2_tkn(*list, RDR_IN, WORD))
-		return (NULL);
-	output = malloc(sizeof(t_ast));
-	if (output)
-	{
-		if (add_child(output, new_term_node(list)) == -1)
-		{
-			free(output);
-			return (set_error(status));
-		}
-		if (add_child(output, new_term_node(list)) == -1)
-		{
-			free_child_nodes(output);
-			free(output);
-			return (set_error(status));
-		}
-	}
-	return (output);
-}
-
-/*
-t_ast	*file()
-t_ast	*base()
-*/
 
 /*
 t_ast	*parse_tokens(t_token **list)

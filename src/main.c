@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/06 15:12:31 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/08 14:06:26 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 int	main(void)
 {
 	char	*ptr;
-	
 
 	ptr = NULL;
 	while (1)
