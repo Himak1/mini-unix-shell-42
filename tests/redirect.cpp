@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/08 15:19:16 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/08 15:21:05 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/11 13:21:03 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,15 @@ TEST(rd_in, basic)
 	EXPECT_TRUE(output->child_node->next_sib_node != nullptr);
 	EXPECT_STREQ(output->child_node->value, "<");
 	EXPECT_STREQ(output->child_node->next_sib_node->value, "infile");
+}
+
+TEST(rds, basic)
+{
+	int		status = 0;
+	t_token	*t1 = create_list();
+	t_token	*head = t1;
+
+	t_ast	*output = rds(&head, &status);
+	ASSERT_TRUE(output);
+	EXPECT_EQ(output->child_node->type, RD_IN);
 }

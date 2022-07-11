@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 12:41:17 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/07 18:03:07 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/11 13:18:04 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ typedef struct s_ast
 
 t_ast	*parse_tokens(t_token **list, int *status);
 
+t_ast	*rds(t_token **list, int *status);
 t_ast	*rd_in(t_token **list, int *status);
+t_ast	*rd_out(t_token **list, int *status);
 
 t_uint	peek_tkn(t_token *token);
 t_uint	next_2_tkn(t_token *token, t_uint type1, t_uint type2);

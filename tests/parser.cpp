@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/08 15:07:17 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/11 13:01:20 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,6 @@ t_token *create_list(void)
 }
 
 // ---- TESTS ---- //
-TEST(rd_in, basic)
-{
-	int		status = 0;
-	t_token	*t1 = create_list();
-	t_token	*head = t1;
-
-	t_ast	*output = rd_in(&head, &status);
-	ASSERT_TRUE(output);
-	EXPECT_TRUE(output->child_node != nullptr);
-	EXPECT_TRUE(output->child_node->next_sib_node != nullptr);
-	EXPECT_STREQ(output->child_node->value, "<");
-	EXPECT_STREQ(output->child_node->next_sib_node->value, "infile");
-}
 
 /*
 TEST(parser_token, basic)
