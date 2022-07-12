@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/11 13:01:20 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/12 16:10:16 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,30 @@ t_token *create_list(void)
 }
 
 // ---- TESTS ---- //
+TEST(exec_block, basic)
+{
+	t_token *input = create_list();
+	t_token	*head = input;
+	int		status = 0;
+
+	t_ast	*output = exec_block(&head, &status);
+	EXPECT_EQ(status, 0);
+	EXPECT_EQ(output->type, EXEC_BLOCK);
+}
+
+TEST(exec_block, only_rd)
+{
+	t_token	*t1 = lst_new(RDR_IN, ft_strdup("<"));
+	t_token	*t2 = lst_new(WORD, ft_strdup("file"));
+	t_token	*head = t1;
+	lst_add_bk(&t1, t2);
+
+	int		status = 0;
+	t_ast	*output = exec_block(&head, &status);
+	EXPECT_EQ(status, 0);
+	EXPECT_EQ(output->type, EXEC_BLOCK);
+	EXPECT_EQ(output->child_node->type, RDR_IN);
+}
 
 /*
 TEST(parser_token, basic)

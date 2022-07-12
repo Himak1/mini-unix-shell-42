@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/11 13:59:01 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/12 11:50:04 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/12 16:54:24 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	add_argument(t_ast *first_child, t_token **list, int *status)
 	return (0);
 }
 
-t_ast	*cmd(t_token **list, int *status)
+t_ast	*parse_cmd(t_token **list, int *status)
 {
 	t_ast	*output;
 

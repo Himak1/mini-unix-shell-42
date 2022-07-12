@@ -6,11 +6,23 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/12 14:33:30 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/12 16:54:31 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+t_ast	*exec_block(t_token **list, int *status)
+{
+	t_ast	*output;
+	t_ast	*rd;
+	t_ast	*cmd;
+
+	rd = rds(list, status);
+	if (*status == -1)
+		return (NULL);
+	cmd = parse_cmd(list, status);
+}
 
 t_ast	*parse_tokens(t_token **list, int *status)
 {
@@ -19,7 +31,7 @@ t_ast	*parse_tokens(t_token **list, int *status)
 
 	*status = *status;
 	new_token = *list;
-	tree = new_node(EXE_CHAIN);
+	tree = new_node(EXEC_CHAIN);
 	while (new_token)
 	{
 		new_token = new_token->next;

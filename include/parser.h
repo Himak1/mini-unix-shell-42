@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 12:41:17 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/11 15:45:53 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/12 15:54:06 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 
 enum e_ast_types
 {
-	EXE_CHAIN = 20,
+	EXEC_CHAIN = 20,
 	BASE,
 	ADD_BASE,
-	EXE_BLOCK,
+	EXEC_BLOCK,
 	RDS,
 	RD_IN,
 	RD_OUT,
@@ -38,6 +38,7 @@ typedef struct s_ast
 }					t_ast;
 
 t_ast	*parse_tokens(t_token **list, int *status);
+t_ast	*exec_block(t_token **list, int *status);
 
 t_ast	*cmd(t_token **list, int *status);
 
