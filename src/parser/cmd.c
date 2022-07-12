@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/11 13:59:01 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/11 15:51:51 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/12 11:50:04 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	add_argument(t_ast *first_child, t_token **list, int *status)
 	t_ast	*iter;
 
 	iter = first_child;
-	while (peek_tkn(*list) == WORD)
+	while (*list && peek_tkn(*list) == WORD)
 	{
 		iter->next_sib_node = new_term_node(list);
 		if (!iter->next_sib_node)

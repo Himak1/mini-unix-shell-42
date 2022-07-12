@@ -14,7 +14,8 @@ list(REMOVE_ITEM sources "${PROJECT_SOURCE_DIR}/src/main.c")
 ### CPP Test Files ###
 file(GLOB tests
       "${PROJECT_SOURCE_DIR}/tests/*.cpp"
-      "${PROJECT_SOURCE_DIR}/tests/utils_tests/*cpp"
+      "${PROJECT_SOURCE_DIR}/tests/utils_tests/*.cpp"
+      "${PROJECT_SOURCE_DIR}/tests/parser_tests/*.cpp"
     )
 list(REMOVE_ITEM tests "${PROJECT_SOURCE_DIR}/tests/main.cpp")
 
