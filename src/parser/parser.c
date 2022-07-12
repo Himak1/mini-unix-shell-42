@@ -22,6 +22,11 @@ t_ast	*exec_block(t_token **list, int *status)
 	if (*status == -1)
 		return (NULL);
 	cmd = parse_cmd(list, status);
+	if (*status == -1)
+	{
+		free_child_nodes()
+		return ()
+	}
 }
 
 t_ast	*parse_tokens(t_token **list, int *status)
