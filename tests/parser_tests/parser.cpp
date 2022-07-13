@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/12 16:10:16 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/13 11:41:42 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ TEST(exec_block, basic)
 {
 	t_token *input = create_list();
 	t_token	*head = input;
-	int		status = 0;
 
-	t_ast	*output = exec_block(&head, &status);
-	EXPECT_EQ(status, 0);
+	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
 }
 
@@ -53,9 +51,7 @@ TEST(exec_block, only_rd)
 	t_token	*head = t1;
 	lst_add_bk(&t1, t2);
 
-	int		status = 0;
-	t_ast	*output = exec_block(&head, &status);
-	EXPECT_EQ(status, 0);
+	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
 	EXPECT_EQ(output->child_node->type, RDR_IN);
 }

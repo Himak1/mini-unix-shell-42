@@ -6,27 +6,34 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/12 16:54:31 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/13 17:29:54 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_ast	*exec_block(t_token **list, int *status)
+static inline int	is_rdr(const t_token *list)
+{
+	return (peek_tkn(list) == RDR_IN || peek_tkn(list) == RDR_OUT);
+}
+
+t_ast	*exec_block(t_token **list)
 {
 	t_ast	*output;
-	t_ast	*rd;
-	t_ast	*cmd;
 
-	rd = rds(list, status);
-	if (*status == -1)
-		return (NULL);
-	cmd = parse_cmd(list, status);
-	if (*status == -1)
+	output = new_node(EXEC_BLOCK);
+	while (*list)
 	{
-		free_child_nodes()
-		return ()
+		if (is_rdr(*list) && rds(output, list) == -1)
+		{
+			free_child_nodes(output);
+			free(output);
+			return (NULL);
+		}
+		else if (peek_tkn(*list) == WORD)
+			add_child(output, parse_cmd(list));
 	}
+	return (output);
 }
 
 t_ast	*parse_tokens(t_token **list, int *status)

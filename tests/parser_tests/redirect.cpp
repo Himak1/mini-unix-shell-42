@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/08 15:19:16 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/12 14:25:17 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/13 11:32:45 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ TEST(rd_in, basic)
 	t_token	*head = t1;
 
 	t_ast	*output = rd_in(&head, &status);
-	ASSERT_TRUE(output);
 	EXPECT_TRUE(output->child_node != nullptr);
 	EXPECT_TRUE(output->child_node->next_sib_node != nullptr);
 	EXPECT_STREQ(output->child_node->value, "<");
@@ -57,6 +56,5 @@ TEST(rds, basic)
 	t_token	*head = t1;
 
 	t_ast	*output = rds(&head, &status);
-	ASSERT_TRUE(output);
 	EXPECT_EQ(output->child_node->type, RD_IN);
 }

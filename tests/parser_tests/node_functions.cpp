@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/12 14:27:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/12 14:28:17 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/13 11:41:13 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ TEST(new_node, basic)
 
 TEST(add_child, basic)
 {
-	t_ast	*p = new_node(EXE_CHAIN);
+	t_ast	*p = new_node(EXEC_CHAIN);
 	t_ast	*c1 = new_node(BASE);
 	t_ast	*c2 = new_node(ADD_BASE);
 

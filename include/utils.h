@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:36:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/07 16:51:51 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/13 11:29:08 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	lst_add_bk(t_token **list, t_token *node);
 void	lst_add_ft(t_token **list, t_token *node);
 void	lst_clear(t_token **list);
 
+void	*xmalloc(size_t bytes);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 int		ft_isalnum(int c);
 size_t	ft_strlen(const char *str);

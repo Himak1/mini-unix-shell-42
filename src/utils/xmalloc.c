@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   utility_functions.c                                :+:    :+:            */
+/*   xmalloc.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/07/04 17:29:11 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/13 11:44:09 by jhille        ########   odam.nl         */
+/*   Created: 2022/07/13 11:25:51 by jhille        #+#    #+#                 */
+/*   Updated: 2022/07/13 11:28:37 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include <stdlib.h>
 
-t_uint	peek_tkn(t_token *token)
+void	*xmalloc(size_t bytes)
 {
-	return (token->type);
-}
+	void	*output;
 
-t_uint	next_2_tkn(t_token *token, t_uint type1, t_uint type2)
-{
-	int	state;
-
-	state = 0;
-	if (peek_tkn(token) == type1)
-	{
-		if (token->next && peek_tkn(token->next) == type2)
-			state = 1;
-	}
-	return (state);
+	output = malloc(bytes);
+	if (!output)
+		exit(EXIT_FAILURE);
+	return (output);
 }

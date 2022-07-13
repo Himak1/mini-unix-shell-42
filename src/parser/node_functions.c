@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/12 14:11:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/12 14:13:16 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/13 15:41:40 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ t_ast	*new_node(int type)
 {
 	t_ast	*output;
 
-	output = malloc(sizeof(t_ast));
-	if (!output)
-		return (NULL);
+	output = xmalloc(sizeof(t_ast));
 	output->type = type;
 	output->num_children = 0;
 	output->value = NULL;
@@ -33,7 +31,7 @@ int	add_child(t_ast *parent, t_ast *child)
 	t_ast	*tmp;
 
 	tmp = NULL;
-	if (!parent || !child)
+	if (!child)
 		return (-1);
 	if (!parent->child_node)
 		parent->child_node = child;
@@ -53,8 +51,7 @@ t_ast	*new_term_node(t_token **list)
 	t_ast	*output;
 
 	output = new_node(TERMINAL);
-	if (output)
-		output->value = (*list)->value;
+	output->value = (*list)->value;
 	*list = (*list)->next;
 	return (output);
 }

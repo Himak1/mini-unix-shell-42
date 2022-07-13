@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/11 13:37:08 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/12 12:07:29 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/13 11:41:01 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ TEST(cmd, basic)
 {
 	t_token *list = create_list("echo", "hello", "world", "yeet");
 	t_token	*head = list;
-	int		status = 0;
 
-	t_ast	*output = cmd(&head, &status);
+	t_ast	*output = cmd(&head);
 	EXPECT_EQ(output->type, CMD);
 	EXPECT_STREQ(output->child_node->value, "echo");
 	EXPECT_STREQ(output->child_node->next_sib_node->value, "hello");
@@ -55,9 +54,7 @@ TEST(cmd, not_command)
 	t_token	*error_op = lst_new(RDR_IN, ft_strdup("<"));
 	lst_add_ft(&list, error_op);
 	t_token	*head = list;
-	int		status = 0;
 
-	t_ast	*output = cmd(&head, &status);
+	t_ast	*output = cmd(&head);
 	EXPECT_EQ(output, nullptr);
-	EXPECT_EQ(status, 0);
 }

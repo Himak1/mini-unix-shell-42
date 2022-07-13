@@ -6,78 +6,45 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/08 15:18:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/11 13:21:35 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/13 17:33:20 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-t_ast	*rd_in(t_token **list, int *status)
+t_ast	*rd_in(t_token **list)
 {
 	t_ast	*output;
 
 	output = new_node(RD_IN);
-	if (!output)
-		return (set_error(status));
-	if (add_child(output, new_term_node(list)) == -1)
-	{
-		free(output);
-		return (set_error(status));
-	}
-	if (add_child(output, new_term_node(list)) == -1)
-	{
-		free_child_nodes(output);
-		free(output);
-		return (set_error(status));
-	}
+	add_child(output, new_term_node(list));
+	add_child(output, new_term_node(list));
 	return (output);
 }
 
-t_ast	*rd_out(t_token **list, int *status)
+t_ast	*rd_out(t_token **list)
 {
 	t_ast	*output;
 
 	output = new_node(RD_OUT);
-	if (!output)
-		return (set_error(status));
-	if (add_child(output, new_term_node(list)) == -1)
-	{
-		free(output);
-		return (set_error(status));
-	}
-	if (add_child(output, new_term_node(list)) == -1)
-	{
-		free_child_nodes(output);
-		free(output);
-		return (set_error(status));
-	}
+	add_child(output, new_term_node(list));
+	add_child(output, new_term_node(list));
 	return (output);
 }
 
-t_ast	*rds(t_token **list, int *status)
+t_ast	*rds(t_ast *parent, t_token **list)
 {
 	t_ast	*output;
-	t_uint	io;
 
-	io = 0;
-	output = NULL;
+	if (!parent->child_node)
+		parent->child_node = new_node(RDS);
+	else if (parent->child_node->type != RDS)
+		add_child(parent, new_node(RDS));
 	if (next_2_tkn(*list, RDR_IN, WORD))
-		io = 1;
+		output = rd_in(list);
 	else if (next_2_tkn(*list, WORD, RDR_OUT))
-		io = 2;
+		output = rd_out(list);
 	else
 		return (NULL);
-	output = new_node(RDS);
-	if (!output)
-		return (set_error(status));
-	if (io == 1)
-		output->child_node = rd_in(list, status);
-	else
-		output->child_node = rd_out(list, status);
-	if (*status == -1)
-	{
-		free(output);
-		output = NULL;
-	}
 	return (output);
 }
