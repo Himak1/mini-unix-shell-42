@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/08 15:19:16 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/13 11:32:45 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/14 14:23:44 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ t_token *create_list(void)
 // ---- TESTS ---- //
 TEST(rd_in, basic)
 {
-	int		status = 0;
 	t_token	*t1 = create_list();
 	t_token	*head = t1;
 
-	t_ast	*output = rd_in(&head, &status);
+	t_ast	*output = rd_in(&head);
 	EXPECT_TRUE(output->child_node != nullptr);
 	EXPECT_TRUE(output->child_node->next_sib_node != nullptr);
 	EXPECT_STREQ(output->child_node->value, "<");
@@ -51,10 +50,11 @@ TEST(rd_in, basic)
 
 TEST(rds, basic)
 {
-	int		status = 0;
 	t_token	*t1 = create_list();
 	t_token	*head = t1;
+	t_ast	*output = new_node(EXEC_BLOCK);
 
-	t_ast	*output = rds(&head, &status);
-	EXPECT_EQ(output->child_node->type, RD_IN);
+	rds(output, &head);
+	EXPECT_EQ(output->child_node->type, RDS);
+	EXPECT_EQ(output->child_node->child_node->type, RD_IN);
 }

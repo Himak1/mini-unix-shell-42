@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/11 13:37:08 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/13 11:41:01 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/14 14:13:49 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ t_token *create_list(char *str1, char *str2, char *str3, char *str4)
 }
 
 // ---- TESTS ---- //
-TEST(cmd, basic)
+TEST(parse_cmd, basic)
 {
 	t_token *list = create_list("echo", "hello", "world", "yeet");
 	t_token	*head = list;
 
-	t_ast	*output = cmd(&head);
+	t_ast	*output = parse_cmd(&head);
 	EXPECT_EQ(output->type, CMD);
 	EXPECT_STREQ(output->child_node->value, "echo");
 	EXPECT_STREQ(output->child_node->next_sib_node->value, "hello");
@@ -48,13 +48,13 @@ TEST(cmd, basic)
 	EXPECT_STREQ(output->child_node->next_sib_node->next_sib_node->next_sib_node->value, "yeet");
 }
 
-TEST(cmd, not_command)
+TEST(parse_cmd, not_command)
 {
 	t_token *list = create_list("echo", "hello", "world", "yeet");
 	t_token	*error_op = lst_new(RDR_IN, ft_strdup("<"));
 	lst_add_ft(&list, error_op);
 	t_token	*head = list;
 
-	t_ast	*output = cmd(&head);
+	t_ast	*output = parse_cmd(&head);
 	EXPECT_EQ(output, nullptr);
 }
