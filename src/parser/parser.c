@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/18 12:10:15 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/18 16:34:18 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 static inline int	is_rdr(t_token *list)
 {
-	return (peek_tkn(list) == RDR_IN || peek_tkn(list) == RDR_OUT);
+	return (peek_tkn(list) == RDR_IN || peek_tkn(list) == RDR_OUT
+		|| peek_tkn(list) == RDR_DLM_IN || peek_tkn(list) == RDR_APND_OUT);
 }
 
 t_ast	*exec_block(t_token **list)
 {
 	t_ast	*output;
+	int		cmd_parsed;
 
+	cmd_parsed = 0;
 	output = new_node(EXEC_BLOCK);
 	while (*list)
 	{
@@ -30,22 +33,35 @@ t_ast	*exec_block(t_token **list)
 			free(output);
 			return (NULL);
 		}
-		else if (*list && peek_tkn(*list) == WORD)
+		else if (*list && !cmd_parsed && peek_tkn(*list) == WORD)
 			add_child(output, parse_cmd(list));
+		else if (*list && cmd_parsed && peek_tkn(*list) == WORD)
+		{
+			// need to free child_nodes
+			return (NULL);
+		}
 	}
 	return (output);
 }
 
+t_ast	*pipe(t_token **list)
+{
+
+}
+
 t_ast	*parse_tokens(t_token **list)
 {
-	t_token	*new_token;
 	t_ast	*tree;
 
-	new_token = *list;
 	tree = new_node(EXEC_CHAIN);
-	while (new_token)
+	if (add_child(tree, exec_block(list)) == -1)
 	{
-		new_token = new_token->next;
+		free(tree);
+		return (NULL);
+	}
+	while (*list)
+	{
+		if (pipe)
 	}
 	return (tree);
 }
