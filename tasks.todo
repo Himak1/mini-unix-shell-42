@@ -1,10 +1,5 @@
 tasks:
-    ☐ Implement parse_tokens() function
-        ☐ base()
-        ☐ exec_block()
-        ☐ rdrs()
-        ☐ in
-        ☐ out
+    ☐ rds() function will create new node if the first child node is the rds node
 
 
 problems:

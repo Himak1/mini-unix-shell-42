@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/08 15:18:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/14 14:37:22 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/18 13:57:13 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	rds(t_ast *parent, t_token **list)
 		add_child(parent, new_node(RDS));
 		output = parent->child_node->child_node;
 	}
+	else
+		output = parent->child_node;
 	if (next_2_tkn(*list, RDR_IN, WORD))
 		add_child(output, rd_in(list));
 	else if (next_2_tkn(*list, WORD, RDR_OUT))

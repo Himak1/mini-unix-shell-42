@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/13 11:41:42 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/18 12:16:46 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ TEST(exec_block, only_rd)
 
 	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
-	EXPECT_EQ(output->child_node->type, RDR_IN);
+	EXPECT_EQ(output->child_node->type, RDS);
 }
 
 /*

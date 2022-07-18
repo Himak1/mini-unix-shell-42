@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/08 15:19:16 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/14 14:23:44 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/18 14:09:40 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,17 @@ TEST(rds, basic)
 
 	rds(output, &head);
 	EXPECT_EQ(output->child_node->type, RDS);
+	EXPECT_EQ(output->child_node->child_node->type, RD_IN);
+}
+
+TEST(rds, rds_already_exists)
+{
+	t_ast	*output = new_node(EXEC_BLOCK);
+	add_child(output, new_node(RDS));
+	t_token	*t1 = create_list();
+	t_token	*head = t1;
+
+	rds(output, &head);
+	EXPECT_EQ(output->child_node->next_sib_node, nullptr);
 	EXPECT_EQ(output->child_node->child_node->type, RD_IN);
 }

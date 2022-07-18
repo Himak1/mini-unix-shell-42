@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/14 14:11:37 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/18 12:10:15 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_ast	*exec_block(t_token **list)
 			free(output);
 			return (NULL);
 		}
-		else if (peek_tkn(*list) == WORD)
+		else if (*list && peek_tkn(*list) == WORD)
 			add_child(output, parse_cmd(list));
 	}
 	return (output);
