@@ -46,7 +46,7 @@ t_ast	*exec_block(t_token **list)
 
 t_ast	*pipe(t_token **list)
 {
-
+	if ()
 }
 
 t_ast	*parse_tokens(t_token **list)
