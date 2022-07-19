@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/19 13:25:39 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/19 16:59:19 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ TEST(exec_block, basic)
 
 	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
+	free_child_nodes(output);
+	free(output);
 }
 
 TEST(exec_block, only_rd)
@@ -54,6 +56,8 @@ TEST(exec_block, only_rd)
 	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
 	EXPECT_EQ(output->child_node->type, RDS);
+	free_child_nodes(output);
+	free(output);
 }
 
 TEST(parse_pipe, basic)
@@ -64,9 +68,9 @@ TEST(parse_pipe, basic)
 	t_ast	*output = parse_pipe(&head);
 	EXPECT_EQ(output->type, TERMINAL);
 	EXPECT_STREQ(output->value, "|");
+	free(output);
 }
 
-/*
 TEST(parser_token, basic)
 {
 	t_ast   *tree;
@@ -75,7 +79,8 @@ TEST(parser_token, basic)
 	list = create_list();
 	tree = parse_tokens(&list);
 	ASSERT_TRUE(tree->child_node != nullptr);
-	EXPECT_TRUE(tree->child_node->next_sib_node == nullptr);
-	EXPECT_STREQ(tree->child_node->child_node->child_node->child_node->child_node->child_node, "<");
+	EXPECT_EQ(tree->child_node->next_sib_node, nullptr);
+	EXPECT_STREQ(tree->child_node->child_node->child_node->child_node->value, "<");
+	free_child_nodes(tree);
+	free(tree);
 }
-*/

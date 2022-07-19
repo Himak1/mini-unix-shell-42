@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/12 14:11:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/19 14:45:06 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/19 15:49:18 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,18 @@ t_ast	*new_term_node(t_token **list)
 void	free_child_nodes(t_ast *parent)
 {
 	t_ast	*iter;
-	t_ast	*tmp;
 
+	if (!parent->child_node)
+		return ;
 	iter = parent->child_node;
-	while (iter)
-	{
-		tmp = iter;
+	while (iter->next_sib_node)
 		iter = iter->next_sib_node;
-		free(tmp);
+	while (iter->prev_sib_node)
+	{
+		free_child_nodes(iter);
+		iter = iter->prev_sib_node;
+		free(iter->next_sib_node);
 	}
-	parent->child_node = NULL;
+	free_child_nodes(iter);
+	free(iter);
 }

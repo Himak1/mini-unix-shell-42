@@ -6,7 +6,7 @@
 /*   By: Tessa <tvan-der@student.codam.nl>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/26 15:35:18 by Tessa         #+#    #+#                 */
-/*   Updated: 2022/07/01 15:39:25 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/07/19 15:23:31 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!substr || s == NULL)
 		return (NULL);
 	count = 0;
-	while (count < len & start < ft_strlen(s))
+	while (count < len && start < ft_strlen(s))
 	{
 		substr[count] = s[start];
 		start++;
