@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/12 14:11:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/13 15:41:40 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/19 14:45:06 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	add_child(t_ast *parent, t_ast *child)
 		while (tmp->next_sib_node)
 			tmp = tmp->next_sib_node;
 		tmp->next_sib_node = child;
+		child->prev_sib_node = tmp;
 	}
 	return (0);
 }

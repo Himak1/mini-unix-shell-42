@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/12 14:27:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/13 11:41:13 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/19 14:35:24 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 extern "C" {
 #include "parser.h"
 }
+
 // -- input -- //
 t_token *create_list(void)
 {
@@ -32,7 +33,6 @@ t_token *create_list(void)
 	lst_add_bk(&t1, t4);
 	return (t1);
 }
-
 
 // ---- TESTS ---- //
 TEST(new_node, basic)
@@ -59,4 +59,21 @@ TEST(add_child, basic)
 	add_child(p, c2);
 	EXPECT_EQ(p->child_node->type, BASE);
 	EXPECT_EQ(p->child_node->next_sib_node->type, ADD_BASE);
+}
+
+TEST(add_child, reverse_traversible_list)
+{
+	t_ast	*t1 = new_node(RDS);
+	add_child(t1, new_node(RD_IN));
+	add_child(t1, new_node(RD_OUT));
+	add_child(t1, new_node(RD_AP));
+	add_child(t1, new_node(RD_DE));
+
+	t_ast	*iter = t1->child_node;
+	while (iter->next_sib_node)
+		iter = iter->next_sib_node;
+	EXPECT_EQ(iter->type, RD_DE);
+	while (iter->prev_sib_node)
+		iter = iter->prev_sib_node;
+	EXPECT_EQ(iter->type, RD_IN);
 }
