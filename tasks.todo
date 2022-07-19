@@ -1,5 +1,6 @@
 tasks:
-    ☐ rds() function will create new node if the first child node is the rds node
+    ✔ rds() function will create new node if the first child node is the rds node @done(22-07-19 13:23)
+    ☐ make free_child_nodes() a recursive function
 
 
 problems:

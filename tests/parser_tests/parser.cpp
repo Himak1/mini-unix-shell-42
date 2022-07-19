@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/18 12:16:46 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/19 13:25:39 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ TEST(exec_block, only_rd)
 	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
 	EXPECT_EQ(output->child_node->type, RDS);
+}
+
+TEST(parse_pipe, basic)
+{
+	t_token	*t1 = lst_new(PIPE, ft_strdup("|"));
+	t_token	*head = t1;
+
+	t_ast	*output = parse_pipe(&head);
+	EXPECT_EQ(output->type, TERMINAL);
+	EXPECT_STREQ(output->value, "|");
 }
 
 /*
