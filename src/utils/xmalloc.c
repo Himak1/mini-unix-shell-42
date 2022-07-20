@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strdup.c                                        :+:    :+:            */
+/*   xmalloc.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/07/20 14:46:12 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/20 14:46:53 by jhille        ########   odam.nl         */
+/*   Created: 2022/07/13 11:25:51 by jhille        #+#    #+#                 */
+/*   Updated: 2022/07/13 11:28:37 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-char	*ft_strdup(const char *str)
+void	*xmalloc(size_t bytes)
 {
-	char	*ret;
-	int		i;
-	int		strsize;
+	void	*output;
 
-	i = 0;
-	strsize = 0;
-	while (str[strsize] != '\0')
-		strsize++;
-	strsize++;
-	ret = (char *)malloc(strsize * sizeof(char));
-	if (ret == NULL)
-		return (NULL);
-	while (i < strsize)
-	{
-		ret[i] = str[i];
-		i++;
-	}
-	return (ret);
+	output = malloc(bytes);
+	if (!output)
+		exit(EXIT_FAILURE);
+	return (output);
 }

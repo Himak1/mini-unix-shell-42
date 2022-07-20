@@ -23,6 +23,7 @@ include_directories(
 file(GLOB sources
         "${PROJECT_SOURCE_DIR}/include/*.h"
         "${PROJECT_SOURCE_DIR}/src/lexer/*.c"
+        "${PROJECT_SOURCE_DIR}/src/parser/*.c"
         "${PROJECT_SOURCE_DIR}/src/utils/*.c"
         "${PROJECT_SOURCE_DIR}/src/*.c"
     )

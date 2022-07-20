@@ -15,8 +15,21 @@ notes:
 
 -   count token when:
         ->  there is no space found before " or '
+    ✔ rds() function will create new node if the first child node is the rds node @done(22-07-19 13:23)
+    ☐ make free_child_nodes() a recursive function
 
+
+problems:
+    i don't know how to make rd_in() an elegant readable function
+    it's just turning into spaghetti the moment i have to deal with a malloc fail
+
+    freeing list of child term_nodes
+    free_child_term_nodes
+
+    ☐ Create seperate test cases for peek_tkn()
+    
 edge-cases:
+    ☐ cat "lol""lols"
     ☐ e"$var"o
         where $var == ch
     ☐ e"cho hallo"

@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strdup.c                                        :+:    :+:            */
+/*   utility_functions.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/07/20 14:46:12 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/20 14:46:53 by jhille        ########   odam.nl         */
+/*   Created: 2022/07/04 17:29:11 by jhille        #+#    #+#                 */
+/*   Updated: 2022/07/13 11:44:09 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "parser.h"
 
-char	*ft_strdup(const char *str)
+t_uint	peek_tkn(t_token *token)
 {
-	char	*ret;
-	int		i;
-	int		strsize;
+	return (token->type);
+}
 
-	i = 0;
-	strsize = 0;
-	while (str[strsize] != '\0')
-		strsize++;
-	strsize++;
-	ret = (char *)malloc(strsize * sizeof(char));
-	if (ret == NULL)
-		return (NULL);
-	while (i < strsize)
+t_uint	next_2_tkn(t_token *token, t_uint type1, t_uint type2)
+{
+	int	state;
+
+	state = 0;
+	if (peek_tkn(token) == type1)
 	{
-		ret[i] = str[i];
-		i++;
+		if (token->next && peek_tkn(token->next) == type2)
+			state = 1;
 	}
-	return (ret);
+	return (state);
 }
