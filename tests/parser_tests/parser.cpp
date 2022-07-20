@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/19 16:59:19 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/20 14:37:20 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ extern "C" {
 }
 
 // ---- input templates ---- //
+/*
 t_token *create_list(void)
 {
 	t_token *t1;
@@ -33,11 +34,43 @@ t_token *create_list(void)
 	lst_add_bk(&t1, t4);
 	return (t1);
 }
+*/
+
+t_token	*parser_input(void)
+{
+	t_token	*t;
+
+	t = lst_new(RDR_IN, ft_strdup("<"));
+	lst_add_bk(&t, lst_new(WORD, ft_strdup("infile")));
+	lst_add_bk(&t, lst_new(WORD, ft_strdup("echo")));
+	lst_add_bk(&t, lst_new(WORD, ft_strdup("hello")));
+	lst_add_bk(&t, lst_new(PIPE, ft_strdup("|")));
+	lst_add_bk(&t, lst_new(WORD, ft_strdup("echo")));
+	lst_add_bk(&t, lst_new(WORD, ft_strdup("world")));
+	return (t);
+}
+
+t_token	*create_list(int *types, char const **terms)
+{
+	int		i;
+	t_token	*lst;
+
+	i = 1;
+	lst = lst_new(types[0], (char*)terms[0]);
+	while (terms[i])
+	{
+		lst_add_bk(&lst, lst_new(types[i], ft_strdup(terms[i])));
+		i++;
+	}
+	return (lst);
+}
 
 // ---- TESTS ---- //
 TEST(exec_block, basic)
 {
-	t_token *input = create_list();
+	int			types[] = {RDR_IN, WORD, WORD, WORD};
+	char const	*terms[] = {"<", "infile", "echo", "hello", NULL};
+	t_token *input = create_list(types, terms);
 	t_token	*head = input;
 
 	t_ast	*output = exec_block(&head);
@@ -71,16 +104,25 @@ TEST(parse_pipe, basic)
 	free(output);
 }
 
-TEST(parser_token, basic)
+TEST(parse_token, basic)
 {
-	t_ast   *tree;
-	t_token *list;
+	int			types[] = {RDR_IN, WORD, WORD, WORD};
+	char const	*terms[] = {"<", "infile", "echo", "hello", NULL};
+	t_token *input = create_list(types, terms);
 
-	list = create_list();
-	tree = parse_tokens(&list);
+	t_ast	*tree;
+	tree = parse_tokens(&input);
 	ASSERT_TRUE(tree->child_node != nullptr);
 	EXPECT_EQ(tree->child_node->next_sib_node, nullptr);
 	EXPECT_STREQ(tree->child_node->child_node->child_node->child_node->value, "<");
 	free_child_nodes(tree);
 	free(tree);
+}
+
+TEST(parse_token, 2_commands)
+{
+	t_token	*list = parser_input();
+
+	t_ast	*tree = parse_tokens(&list);
+	ASSERT_TRUE(tree != nullptr);
 }

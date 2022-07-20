@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/12 14:11:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/19 15:49:18 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/20 14:30:53 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,3 +75,5 @@ void	free_child_nodes(t_ast *parent)
 	free_child_nodes(iter);
 	free(iter);
 }
+
+
