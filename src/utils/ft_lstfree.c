@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_lstfree.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jhille <jhille@student.codam.nl>             +#+                     */
+/*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/20 11:50:23 by tvan-der      ########   odam.nl         */
+/*   Created: 2022/05/02 12:13:49 by tvan-der      #+#    #+#                 */
+/*   Updated: 2022/07/20 12:44:52 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
+#include "utils.h"
 
-int	main(void)
+void	ft_lstfree(t_token *tokenlist)
 {
-	char	*ptr;
+	t_token	*tmp;
 
-	ptr = NULL;
-	while (1)
+	while (tokenlist != NULL)
 	{
-		ptr = readline("Minishell:");
-		printf("%s\n", ptr);
-		free(ptr);
+		tmp = tokenlist->next;
+		free(tokenlist->value);
+		free(tokenlist);
+		tokenlist = tmp;
 	}
-	return (0);
 }

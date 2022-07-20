@@ -1,10 +1,26 @@
 tasks:
+- adjust parsing for single quotes
+- make norm proof and clean up
+- check for mem leaks
     
 
+notes:
 
+-   echo "hello $path" will be tokenized as dquote -> expander should also check dquote tokens
+    for env variables
+-   be aware of spaces between words and double quotes:
+    eg.     echo "hello" hi     -->         hello hi
+            echo "hello"    hi  -->         hello hi
+            echo "hello"hi      -->         hellohi
+
+-   count token when:
+        ->  there is no space found before " or '
 
 edge-cases:
     ☐ e"$var"o
         where $var == ch
     ☐ e"cho hallo"
     ☐ 3x export command, if the last one isn't valid the first two must still be executed
+
+
+

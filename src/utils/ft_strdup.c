@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_strdup.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jhille <jhille@student.codam.nl>             +#+                     */
+/*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/20 11:50:23 by tvan-der      ########   odam.nl         */
+/*   Created: 2022/07/13 15:54:22 by tvan-der      #+#    #+#                 */
+/*   Updated: 2022/07/13 15:54:41 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
+#include "utils.h"
 
-int	main(void)
+char	*ft_strdup(const char *s1)
 {
 	char	*ptr;
+	int		len;
 
-	ptr = NULL;
-	while (1)
-	{
-		ptr = readline("Minishell:");
-		printf("%s\n", ptr);
-		free(ptr);
-	}
-	return (0);
+	len = ft_strlen(s1);
+	ptr = malloc(len + 1);
+	if (!ptr)
+		return (NULL);
+	else
+		ft_strlcpy(ptr, s1, (len + 1));
+	return (ptr);
 }

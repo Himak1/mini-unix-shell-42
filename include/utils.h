@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:36:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/01 15:34:11 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/07/20 12:49:27 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ enum e_types
 	RDR_DLM_IN,
 	RDR_APND_OUT,
 	PIPE,
-	ENV_V,
-	EXIT_STAT,
 	SIG_INT,
 	SIG_EOF
 };
@@ -46,8 +44,10 @@ void	lst_add_ft(t_token **list, t_token *node);
 void	lst_clear(t_token **list);
 
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
-int		ft_isalnum(int c);
 size_t	ft_strlen(const char *str);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	**ft_free_2d_array(char **arr);
+char	*ft_strdup(const char *s1);
+void	ft_lstfree(t_token *tokenlist);
 
 #endif

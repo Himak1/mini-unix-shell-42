@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_isalnum.c                                       :+:    :+:            */
+/*   ft_free_2d_array.c                                 :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jhille <marvin@codam.nl>                     +#+                     */
+/*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/28 14:21:37 by jhille        #+#    #+#                 */
-/*   Updated: 2020/11/03 12:01:07 by jhille        ########   odam.nl         */
+/*   Created: 2022/06/22 16:16:00 by tvan-der      #+#    #+#                 */
+/*   Updated: 2022/07/18 13:17:47 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalnum(int c)
+#include "utils.h"
+
+char	**ft_free_2d_array(char **arr)
 {
-	if (c > 47 && c < 58)
-		return (8);
-	else if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-		return (8);
-	else
-		return (0);
+	int	i;
+
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+	return (NULL);
 }
