@@ -3,14 +3,16 @@ NAME = minishell
 
 VPATH = src:\
 		src/lexer:\
+		src/parser:\
+		src/expander:\
 		src/utils
 
 OBJ = $(addprefix obj/, $(SRC_FILES:.c=.o))
 
-SRC_FILES = main.c\
-				$(UTILS_FILES)\
-				$(LEXER_FILES)
-			
+SRC_FILES = $(UTILS_FILES)\
+				$(LEXER_FILES)\
+				$(PARSER_FILES)\
+				$(EXPANDER_FILES)
 
 LEXER_FILES = lexer.c\
 				split_command_line.c
@@ -25,7 +27,18 @@ UTILS_FILES = ft_strlen.c\
 				ft_strlcpy.c\
 				ft_strdup.c\
 				ft_free_2d_array.c\
-				lst_new.c
+				lst_new.c\
+				xmalloc.c\
+				ft_strnstr.c
+
+PARSER_FILES = cmd.c\
+				node_functions.c\
+				parser.c\
+				redirect.c\
+				utility_functions.c
+
+EXPANDER_FILES = expander.c
+
 INC = -Iinclude
 CFLAGS = -Wextra -Wall -Werror $(INC) -g
 

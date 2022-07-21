@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:36:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/20 14:42:55 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/21 15:40:38 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	**ft_free_2d_array(char **arr);
 void	ft_lstfree(t_token *tokenlist);
 char	*ft_strdup(const char *str);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 
 void	free_array(void **ptr_array, const int array_len);
 
