@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/20 14:54:28 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/21 15:06:28 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/22 16:10:47 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,5 @@ TEST(lexer_parser, lots_of_rds)
 	lst_head = lst;
 	tree = parse_tokens(&lst_head);
 	ASSERT_TRUE(tree != nullptr);
-	EXPECT_EQ(tree->child_node->type, RDS);
+	EXPECT_EQ(tree->child_node->child_node->type, RDS);
 }
