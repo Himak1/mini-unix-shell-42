@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/20 12:59:00 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/22 14:26:21 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ t_ast	*exec_block(t_token **list)
 		}
 		else if (*list && cmd_parsed && peek_tkn(*list) == WORD)
 			return (handle_syntax_error(output));
-		else if (*list && peek_tkn(*list) == PIPE)
+		else if (*list && !output->child_node && (peek_tkn(*list) == PIPE))
+			return (handle_syntax_error(output));
+		else if (*list && output->child_node && (peek_tkn(*list) == PIPE))
 			break ;
 	}
 	return (output);
