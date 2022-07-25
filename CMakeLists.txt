@@ -25,6 +25,7 @@ file(GLOB sources
         "${PROJECT_SOURCE_DIR}/src/lexer/*.c"
         "${PROJECT_SOURCE_DIR}/src/parser/*.c"
         "${PROJECT_SOURCE_DIR}/src/utils/*.c"
+        "${PROJECT_SOURCE_DIR}/src/expander/*.c"
         "${PROJECT_SOURCE_DIR}/src/*.c"
     )
 add_executable(minishell ${sources})
