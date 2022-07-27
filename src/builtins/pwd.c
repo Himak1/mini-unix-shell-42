@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   pwd.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/26 14:43:38 by jhille        ########   odam.nl         */
+/*   Created: 2022/07/25 12:43:21 by jhille        #+#    #+#                 */
+/*   Updated: 2022/07/26 14:44:14 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <readline/readline.h>
-#include "utils.h"
-#include "builtins.h"
 
-int	main(int argc, char *argv[])
+int	pwd(void)
 {
-	char	*ptr;
+	char	*env_var;
 
-	ptr = NULL;
-	if (argc == 100 && argv[0][0])
-		return (0); // filler
-	while (1)
+	env_var = getenv("PWD");
+	if (env_var)
 	{
-		ptr = readline("Minishell:");
-		if (!ft_strncmp(ptr, "pwd", 3))
-			pwd();
-		printf("\n");
-		free(ptr);
+		if (printf("%s", env_var) == -1)
+			exit(EXIT_FAILURE);
 	}
+	else
+		return (-1);
 	return (0);
 }

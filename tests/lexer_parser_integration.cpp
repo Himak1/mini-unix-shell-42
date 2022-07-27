@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/20 14:54:28 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/22 16:10:47 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/25 12:05:17 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,34 @@ TEST(lexer_parser, lots_of_rds)
 	tree = parse_tokens(&lst_head);
 	ASSERT_TRUE(tree != nullptr);
 	EXPECT_EQ(tree->child_node->child_node->type, RDS);
+}
+
+TEST(lexer_parser, valid_command_invalid_pipe)
+{
+	char	input[] = "cat generic-file |";
+	t_token *lst = nullptr;
+	t_token *lst_head;
+	t_ast   *tree;
+
+	ft_lexer(&lst, input);
+	EXPECT_EQ(lst->type, WORD);
+
+	lst_head = lst;
+	tree = parse_tokens(&lst_head);
+	EXPECT_EQ(tree, nullptr);
+}
+
+TEST(lexer_parser, single_cmd)
+{
+	char	input[] = "hello";
+	t_token *lst = nullptr;
+	t_token *lst_head;
+	t_ast   *tree;
+
+	ft_lexer(&lst, input);
+	EXPECT_EQ(lst->type, WORD);
+
+	lst_head = lst;
+	tree = parse_tokens(&lst_head);
+	EXPECT_TRUE(tree != nullptr);
 }
