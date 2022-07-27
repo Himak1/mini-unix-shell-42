@@ -17,13 +17,15 @@ int execute_cmds(t_ast *ast)
 {
 	t_ast	iter;
 	int		pid;
+	int		fork[]
 
 	pid = 0;
 	iter = ast->child_node;
 	while (iter != NULL)
 	{
 		pid = fork();
-		if (pid != 0)
+		if (pid == 0)
 			break ;
+		
 	}
 }
