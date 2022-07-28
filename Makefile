@@ -37,7 +37,8 @@ PARSER_FILES = cmd.c\
 				redirect.c\
 				utility_functions.c
 
-EXPANDER_FILES = expander.c
+EXPANDER_FILES = expander.c\
+					utils.c
 
 INC = -Iinclude
 CFLAGS = -Wextra -Wall -Werror $(INC) -g
