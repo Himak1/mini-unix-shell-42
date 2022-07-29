@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 11:51:40 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/07/28 15:02:45 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/07/29 16:24:57 by Tessa         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ t_env_var	*create_env_var(char *value);
 int			get_env_var_len(char *env_var);//, int i);
 char		**expand_input(char *input, t_env_var **env_var_list, int len);
 void		lst_add_bk_env_var(t_env_var **list, t_env_var *env_var);
-char	*find_exp_var(char *env_var, char **envp);
-void	check_env_var(t_env_var **env_var_list, char **envp);
-char	*save_exp_val(char *full_env_val, char *alias);
+char		*find_exp_var(char *env_var, char **envp);
+void		check_env_var(t_env_var **env_var_list, char **envp);
+char		*save_exp_val(char *full_env_val, char *alias);
+int			get_exp_len(t_env_var *env_var_list, int len_input);
 
 
 #endif

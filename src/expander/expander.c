@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/07/28 15:53:46 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/07/29 16:52:05 by Tessa         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,51 +125,58 @@ char	*find_exp_var(char *env_var, char **envp)
 
 void	check_env_var(t_env_var **env_var_list, char **envp)
 {
-	t_env_var *current;
-	t_env_var *prev;
-	t_env_var *next;
-	current = *env_var_list;
-	prev = NULL;
-	//printf("%s\n", (*env_var_list)->env_value);
-	while ((current != NULL))
+	t_env_var *head;
+	head = *env_var_list;
+	while (*env_var_list)
 	{
-		current->exp_env_value = find_exp_var(current->env_value, envp);
-		printf("%s\n", current->exp_env_value);
-		current->len_exp_env = ft_strlen(current->exp_env_value);
-		next = current->next;
-		current->next = prev;
-		prev = current;
-		current = next;
-		//*env_var_list = current->next;
+		(*env_var_list)->exp_env_value = find_exp_var((*env_var_list)->env_value, envp);
+		// printf("%s\n", (*env_var_list)->exp_env_value);
+		if ((*env_var_list)->exp_env_value)
+			(*env_var_list)->len_exp_env = ft_strlen((*env_var_list)->exp_env_value);
+		*env_var_list = (*env_var_list)->next;
 	}
-	*env_var_list = prev;
+	*env_var_list = head;
 }
 
-// int	main()
+int	get_exp_len(t_env_var *env_var_list, int len_input)
+{
+	int exp_len;
+
+	exp_len = 0;
+	while (env_var_list)
+	{
+		exp_len += env_var_list->len_exp_env - env_var_list->len_env;
+		env_var_list = env_var_list->next;
+	}
+	return (len_input + exp_len);
+}
+
+// int main ()
 // {
 //     char **envp = create_envp();
-//     char **env_var = get_env_var("hello $HOME and $PWD");
+//     char **env_var = get_env_var("hello $NAME");
+//     int len_input = ft_strlen("hello $NAME");
 //     t_env_var *env_var_list = NULL;
+//     int exp_len;
     
 //     create_env_var_list(&env_var_list, env_var);
-//     printf("before check: %s\n", env_var_list->exp_env_value);
-// 	check_env_var(&env_var_list, envp);
-//     printf("after check: %s\n", env_var_list->exp_env_value);
-//     // while (env_var_list)
-//     // {
-//     //     printf("%s\n", env_var_list->exp_env_value);
-//     //     env_var_list = env_var_list->next;
-//     // }
+//     check_env_var(&env_var_list, envp);
+//     exp_len = get_exp_len(env_var_list, len_input);
+    
 // }
-// char	**expand_input(char *input, t_env_var **env_var_list, int len)
-// {
-// 	char *expanded;
 
-// 	expanded = (char *)malloc(sizeof(char) * (len + 1));
-// 	if (!expanded)
-// 		return (NULL);
-// 	return (expanded);
-// }
+
+
+char	**expand_input(char *input, t_env_var *env_var_list, int len)
+{
+	char *expanded;
+
+	expanded = (char *)malloc(sizeof(char) * (len + 1));
+	if (!expanded)
+		return (NULL);
+	
+	return (expanded);
+}
 
 // char	*expand_dollar_sign(char *input);//, char **envp)
 // {

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 15:18:48 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/07/28 15:52:57 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/07/29 16:54:00 by Tessa         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ TEST(get_env_var, basic_test1)
     char **env_var = get_env_var(test);
 
     ASSERT_STREQ(env_var[0], "$hello");
-    ASSERT_EQ(env_var[1], NULL);
+    ASSERT_STREQ(env_var[1], NULL);
 }
 
 TEST(get_env_var, basic_test2)
@@ -132,7 +132,7 @@ TEST(get_env_var, basic_test2)
 
     ASSERT_STREQ(env_var[0], "$hello");
     ASSERT_STREQ(env_var[1], "$hi");
-    ASSERT_EQ(env_var[2], NULL);
+    ASSERT_STREQ(env_var[2], NULL);
 }
 
 TEST(get_env_var, basic_test3)
@@ -142,7 +142,7 @@ TEST(get_env_var, basic_test3)
 
     ASSERT_STREQ(env_var[0], "$hello");
     ASSERT_STREQ(env_var[1], "$");
-    ASSERT_EQ(env_var[2], NULL);
+    ASSERT_STREQ(env_var[2], NULL);
 }
 
 TEST(get_env_var, basic_test4)
@@ -152,7 +152,7 @@ TEST(get_env_var, basic_test4)
 
     ASSERT_STREQ(env_var[0], "$HOME");
     ASSERT_STREQ(env_var[1], "$PWD");
-    ASSERT_EQ(env_var[2], NULL);
+    ASSERT_STREQ(env_var[2], NULL);
 }
 
 TEST(create_env_var_list, basic_test1)
@@ -228,7 +228,7 @@ TEST(find_exp_var, test_not_found)
     ASSERT_STREQ(NULL, exp_val);
 }
 
-TEST(check_env_var, test_found)
+TEST(check_env_var, test_found1)
 {
     char **envp = create_envp();
     char **env_var = get_env_var("hello $HOME and $PWD");
@@ -239,8 +239,169 @@ TEST(check_env_var, test_found)
 
     check_env_var(&env_var_list, envp);
     ASSERT_STREQ("/root", env_var_list->exp_env_value);
-    // ASSERT_EQ(5, env_var_list->len_exp_env);
-    ASSERT_STREQ("/pwd/build", env_var_list->next->exp_env_value);
-    // ASSERT_EQ(10, env_var_list->next->len_exp_env);
+    ASSERT_EQ(ft_strlen("/root"), env_var_list->len_exp_env);
+    ASSERT_STREQ("/pwd/desktop/minishell", env_var_list->next->exp_env_value);
+    ASSERT_EQ(ft_strlen("/pwd/desktop/minishell"), env_var_list->next->len_exp_env);
+}
 
+TEST(check_env_var, test_found2)
+{
+    char **envp = create_envp();
+    char **env_var = get_env_var("hello $HOME and $");
+    t_env_var *env_var_list = NULL;
+    
+    create_env_var_list(&env_var_list, env_var);
+    ASSERT_STREQ("$HOME", env_var_list->env_value);
+
+    check_env_var(&env_var_list, envp);
+    ASSERT_STREQ("/root", env_var_list->exp_env_value);
+    ASSERT_EQ(ft_strlen("/root"), env_var_list->len_exp_env);
+    ASSERT_STREQ("$", env_var_list->next->exp_env_value);
+    ASSERT_EQ(ft_strlen("$"), env_var_list->next->len_exp_env);
+    ASSERT_EQ(NULL, env_var_list->next->next);
+}
+
+TEST(check_env_var, test_not_found3)
+{
+    char **envp = create_envp();
+    char **env_var = get_env_var("hello $HI");
+    t_env_var *env_var_list = NULL;
+    
+    create_env_var_list(&env_var_list, env_var);
+    ASSERT_STREQ("$HI", env_var_list->env_value);
+
+    check_env_var(&env_var_list, envp);
+    ASSERT_STREQ(NULL, env_var_list->exp_env_value);
+    ASSERT_EQ(0, env_var_list->len_exp_env);
+}
+
+TEST(check_env_var, test_found_and_not_found1)
+{
+    char **envp = create_envp();
+    char **env_var = get_env_var("hello $HOME and $HI");
+    t_env_var *env_var_list = NULL;
+    
+    create_env_var_list(&env_var_list, env_var);
+
+    check_env_var(&env_var_list, envp);
+    ASSERT_STREQ("/root", env_var_list->exp_env_value);
+    ASSERT_EQ(ft_strlen("/root"), env_var_list->len_exp_env);
+    ASSERT_STREQ(NULL, env_var_list->next->exp_env_value);
+    ASSERT_EQ(0, env_var_list->next->len_exp_env);
+}
+
+TEST(check_env_var, test_found_and_not_found2)
+{
+    char **envp = create_envp();
+    char **env_var = get_env_var("hello $HI and $HOME");
+    t_env_var *env_var_list = NULL;
+    
+    create_env_var_list(&env_var_list, env_var);
+
+    check_env_var(&env_var_list, envp);
+    ASSERT_STREQ(NULL, env_var_list->exp_env_value);
+    ASSERT_EQ(0, env_var_list->len_exp_env);
+    ASSERT_STREQ("/root", env_var_list->next->exp_env_value);
+    ASSERT_EQ(ft_strlen("/root"), env_var_list->next->len_exp_env);
+}
+
+TEST(get_exp_len, basic_test1)
+{
+    char **envp = create_envp();
+    char **env_var = get_env_var("hello $CHARSET");
+    int len_input = ft_strlen("hello $CHARSET");
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    
+    int expected = len_input + (ft_strlen("UTF-8") - ft_strlen("$CHARSET"));
+    ASSERT_EQ(expected, exp_len);
+}
+
+TEST(get_exp_len, basic_test2)
+{
+    char **envp = create_envp();
+    char **env_var = get_env_var("hello $LANG");
+    int len_input = ft_strlen("hello $LANG");
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    
+    int expansion = ft_strlen("C.UTF-8") - ft_strlen("$NAME");
+    int expected = len_input + expansion;
+    ASSERT_EQ(expected, exp_len);
+}
+
+TEST(get_exp_len, basic_test3)
+{
+    char **envp = create_envp();
+    char **env_var = get_env_var("hello $LANG and $");
+    int len_input = ft_strlen("hello $LANG and $");
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    
+    int expansion = (ft_strlen("C.UTF-8") + ft_strlen("$")) - (ft_strlen("$LANG") + ft_strlen("$"));
+    int expected = len_input + expansion;
+    ASSERT_EQ(expected, exp_len);
+}
+
+TEST(get_exp_len, basic_test4)
+{
+    char **envp = create_envp();
+    char **env_var = get_env_var("hello $hello");
+    int len_input = ft_strlen("hello $hello");
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    
+    int expansion = 0 - ft_strlen("$hello");
+    int expected = len_input + expansion;
+    ASSERT_EQ(expected, exp_len);
+}
+
+TEST(get_exp_len, basic_test5)
+{
+    char **envp = create_envp();
+    char **env_var = get_env_var("hello $hello and $");
+    int len_input = ft_strlen("hello $hello and $");
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    
+    int expansion = (0 + ft_strlen("$")) - (ft_strlen("$hello") + ft_strlen("$"));
+    int expected = len_input + expansion;
+    ASSERT_EQ(expected, exp_len);
+}
+
+TEST(expand_input, basic_test1)
+{
+    char **envp = create_envp();
+    char **env_var = get_env_var("hello $hello and $");
+    int len_input = ft_strlen("hello $hello and $");
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    
+    int expansion = (0 + ft_strlen("$")) - (ft_strlen("$hello") + ft_strlen("$"));
+    int expected = len_input + expansion;
+    ASSERT_EQ(expected, exp_len);
 }
