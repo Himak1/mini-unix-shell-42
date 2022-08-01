@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   execute_cmds.c                                     :+:    :+:            */
+/*   extract_cmds_ast.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/27 15:28:04 by jhille        ########   odam.nl         */
+/*   Created: 2022/08/01 13:32:57 by jhille        #+#    #+#                 */
+/*   Updated: 2022/08/01 15:35:40 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "executor.h"
 
-int execute_cmds(t_ast *ast)
+char	**extract_cmds_ast(t_ast *ast)
 {
-	t_ast	iter;
-	int		pid;
-	int		fork[]
-
-	pid = 0;
-	iter = ast->child_node;
-	while (iter != NULL)
-	{
-		pid = fork();
-		if (pid == 0)
-			break ;
-		
-	}
+	
 }

@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/26 14:43:38 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/01 15:35:40 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ int	main(int argc, char *argv[])
 	while (1)
 	{
 		ptr = readline("Minishell:");
-		if (!ft_strncmp(ptr, "pwd", 3))
-			pwd();
-		printf("\n");
+		
 		free(ptr);
 	}
 	return (0);
