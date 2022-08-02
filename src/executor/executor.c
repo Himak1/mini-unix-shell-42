@@ -6,11 +6,10 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/01 17:37:41 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/02 14:34:58 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "executor.h"
 
 void	execute_block(char **cmd, int fd_in, int fd_out)
@@ -47,7 +46,10 @@ int	executor(t_ast *ast, t_uint cmd_count)
 		if (data->pid == -1)
 			exit(EXIT_FAILURE);
 		else if (data->pid == 0)
-			execute_block(convert_cmd(), getfd_in(ast), getfd_out(ast));
+		{
+			extract_ast_data(exec_block, &data);
+			execute_block(data);
+		}
 		exec_block = exec_block->next_sib_node;
 	}
 	// save the last process return code;
