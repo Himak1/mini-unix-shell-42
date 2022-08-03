@@ -1,23 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   extract_ast_data.c                                 :+:    :+:            */
+/*   extract_ast_data.cpp                               :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/08/01 13:32:57 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/03 17:05:55 by jhille        ########   odam.nl         */
+/*   Created: 2022/08/03 14:16:42 by jhille        #+#    #+#                 */
+/*   Updated: 2022/08/03 14:46:30 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
+extern "C" {
 #include "executor.h"
-
-int	extract_ast_data(t_ast *exec_block, t_exec *data)
-{
-	data->fd_in = getfd(exec_block, RD_IN);
-	data->fd_out = getfd(exec_block, RD_OUT);
-	if (data->fd_in == -1 || data->fd_out == -1)
-		exit(EXIT_FAILURE);
-	data->cmd = getcmd(exec_block);
 }
+
+

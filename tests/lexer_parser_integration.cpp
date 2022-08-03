@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/20 14:54:28 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/25 12:05:17 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/03 14:43:09 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ TEST(lexer_parser, lots_of_rds)
 	EXPECT_EQ(tree->child_node->child_node->type, RDS);
 }
 
+/*
 TEST(lexer_parser, valid_command_invalid_pipe)
 {
 	char	input[] = "cat generic-file |";
@@ -108,6 +109,7 @@ TEST(lexer_parser, valid_command_invalid_pipe)
 	tree = parse_tokens(&lst_head);
 	EXPECT_EQ(tree, nullptr);
 }
+*/
 
 TEST(lexer_parser, single_cmd)
 {

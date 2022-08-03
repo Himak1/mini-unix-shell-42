@@ -1,23 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   extract_ast_data.c                                 :+:    :+:            */
+/*   getfd.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/08/01 13:32:57 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/03 17:05:55 by jhille        ########   odam.nl         */
+/*   Created: 2022/08/03 14:31:04 by jhille        #+#    #+#                 */
+/*   Updated: 2022/08/03 15:16:39 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "executor.h"
 
-int	extract_ast_data(t_ast *exec_block, t_exec *data)
+int	getfd(t_ast *exec_block, int rd_type)
 {
-	data->fd_in = getfd(exec_block, RD_IN);
-	data->fd_out = getfd(exec_block, RD_OUT);
-	if (data->fd_in == -1 || data->fd_out == -1)
-		exit(EXIT_FAILURE);
-	data->cmd = getcmd(exec_block);
+	t_ast	*iter;
+	t_ast	*rd;
+	int		fd_in;
+
+	rd = NULL;
+	iter = exec_block->child_node;
+	if (iter->type != RDS)
+		iter = iter->next_sib_node;
+	if (!iter)
+		return (0);
+	iter = iter->child_node;
+	while (iter)
+	{
+		if (iter->type == rd_type)
+			rd = iter;
+		iter = iter->next_sib_node;
+	}
+	if (rd)
+		return (open(rd->child_node->next_sib_node, O_RDONLY));
+	return (0);
 }

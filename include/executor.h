@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:30:21 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/02 14:01:09 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/03 16:05:52 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ typedef struct s_exec {
 	char	**cmd;
 }			t_exec;
 
-int	executor(t_ast *ast, t_uint cmd_count);
+int		executor(t_ast *ast, t_uint cmd_count);
 
-int	getfd_in(t_ast *exec_block);
-int	getfd_out(t_ast *exec_block);
+int		getfd(t_ast *exec_block, int rd_type);
+char	**getcmd(t_ast *exec_block);
 
 #endif

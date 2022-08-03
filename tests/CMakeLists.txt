@@ -17,6 +17,7 @@ file(GLOB tests
       "${PROJECT_SOURCE_DIR}/tests/utils_tests/*.cpp"
       "${PROJECT_SOURCE_DIR}/tests/parser_tests/*.cpp"
       "${PROJECT_SOURCE_DIR}/tests/lexer_tests/*.cpp"
+      "${PROJECT_SOURCE_DIR}/tests/executor_tests/*.cpp"
     )
 list(REMOVE_ITEM tests "${PROJECT_SOURCE_DIR}/tests/main.cpp")
 

@@ -6,12 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/02 14:34:58 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/03 14:43:44 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
+/*
 void	execute_block(char **cmd, int fd_in, int fd_out)
 {
 
@@ -41,7 +42,7 @@ int	executor(t_ast *ast, t_uint cmd_count)
 	while (i < cmd_count)
 	{
 		if (i < cmd_count - 1)
-			choose_pipe(data->pip1, data->pip2);
+			choose_pipe(data->pip1, data->pip2, i);
 		data->pid = fork();
 		if (data->pid == -1)
 			exit(EXIT_FAILURE);
@@ -54,3 +55,4 @@ int	executor(t_ast *ast, t_uint cmd_count)
 	}
 	// save the last process return code;
 }
+*/
