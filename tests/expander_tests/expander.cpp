@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 15:18:48 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/03 14:39:54 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/04 13:03:06 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -653,12 +653,11 @@ TEST(expander, basic_test4)
     ASSERT_STREQ("hello \'/pwd/desktop/minishell\' bye now", input);
 }
 
-TEST(expander, basic_test5)
-{
-    char *input = ft_strdup("\'hello \"$PWD\" bye now\'");
-    char **envp = create_envp();
-    expander(&input, envp);
+// TEST(expander, basic_test5)
+// {
+//     char *input = ft_strdup("\'hello \"$PWD\" bye now\'");
+//     char **envp = create_envp();
+//     expander(&input, envp);
     
-    ASSERT_STREQ("hello \"$PWD\" bye now", input);
-    
-}
+//     ASSERT_STREQ("hello \"$PWD\" bye now", input);
+// }

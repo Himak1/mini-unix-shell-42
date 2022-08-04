@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 12:41:17 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/03 16:46:39 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/04 12:46:38 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 enum e_ast_types
 {
 	EXEC_CHAIN = 20,
+	BASE,
+	ADD_BASE,
 	EXEC_BLOCK,
 	RDS,
 	RD_IN,

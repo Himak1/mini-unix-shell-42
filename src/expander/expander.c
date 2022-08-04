@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/04 12:33:15 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/04 13:05:58 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	*remove_quotes(char *value, char quote)
 	if (!new_value)
 		return (NULL);
 	ft_strlcpy(new_value, &value[1], (count + 1));
-	free(value);
 	return (new_value);
 }
 
@@ -126,26 +125,26 @@ void	expander(char **input, char **envp)
 	}
 }
 
-void	expand_tree(t_ast *parent, char **envp)
-{
-	t_ast	*iter;
+// void	expand_tree(t_ast *parent, char **envp)
+// {
+// 	t_ast	*iter;
 
-	if (!parent->child_node)
-		return ;
-	iter = parent->child_node;
-	while (iter->next_sib_node)
-		iter = iter->next_sib_node;
-	while (iter->prev_sib_node)
-	{
-		expand_tree(iter, envp);
-		if (iter->type == TERMINAL)
-			expander(iter->value, envp);
-		iter = iter->prev_sib_node;
-	}
-	expand_tree(iter, envp);
-	if (iter->type == TERMINAL)
-		expander(iter->value, envp);
-}
+// 	if (!parent->child_node)
+// 		return ;
+// 	iter = parent->child_node;
+// 	while (iter->next_sib_node)
+// 		iter = iter->next_sib_node;
+// 	while (iter->prev_sib_node)
+// 	{
+// 		expand_tree(iter, envp);
+// 		if (iter->type == TERMINAL)
+// 			expander(iter->value, envp);
+// 		iter = iter->prev_sib_node;
+// 	}
+// 	expand_tree(iter, envp);
+// 	if (iter->type == TERMINAL)
+// 		expander(iter->value, envp);
+// }
 
 // int main()
 // {
