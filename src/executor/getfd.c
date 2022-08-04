@@ -6,18 +6,17 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:31:04 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/03 15:16:39 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/04 17:03:54 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "executor.h"
 
-int	getfd(t_ast *exec_block, int rd_type)
+int	getfd(t_ast *exec_block, t_uint rd_type)
 {
 	t_ast	*iter;
 	t_ast	*rd;
-	int		fd_in;
 
 	rd = NULL;
 	iter = exec_block->child_node;
@@ -33,6 +32,6 @@ int	getfd(t_ast *exec_block, int rd_type)
 		iter = iter->next_sib_node;
 	}
 	if (rd)
-		return (open(rd->child_node->next_sib_node, O_RDONLY));
+		return (open(rd->child_node->next_sib_node->value, O_RDONLY));
 	return (0);
 }

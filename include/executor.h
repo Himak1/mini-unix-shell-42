@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:30:21 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/03 16:05:52 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/04 17:04:08 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "parser.h"
 
 typedef struct s_exec {
+	t_uint	cmd_count;
 	int		pip1[2];
 	int		pip2[2];
 	int		pid;
@@ -23,9 +24,12 @@ typedef struct s_exec {
 	char	**cmd;
 }			t_exec;
 
-int		executor(t_ast *ast, t_uint cmd_count);
+int		executor(t_ast *ast, t_uint cmd_count, char *envp[]);
 
-int		getfd(t_ast *exec_block, int rd_type);
+void	execute_block(t_exec *data, char *envp[], t_uint i);
+
+int		extract_ast_data(t_ast *exec_block, t_exec *data);
+int		getfd(t_ast *exec_block, t_uint rd_type);
 char	**getcmd(t_ast *exec_block);
 
 #endif
