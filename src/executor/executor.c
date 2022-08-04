@@ -6,10 +6,11 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/04 17:50:04 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/04 18:25:35 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/wait.h>
 #include "executor.h"
 
 #include <stdio.h>
@@ -43,6 +44,7 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 		if (i < cmd_count - 1)
 			choose_pipe(data.pip1, data.pip2, i);
 		data.pid = fork();
+		printf("pid: %d\n", data.pid);
 		if (data.pid == -1)
 			exit(EXIT_FAILURE);
 		else if (data.pid == 0)

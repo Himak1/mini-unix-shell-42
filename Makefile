@@ -5,6 +5,7 @@ VPATH = src:\
 		src/lexer:\
 		src/parser:\
 		src/expander:\
+		src/executor:\
 		src/builtins:\
 		src/utils
 
@@ -15,7 +16,8 @@ SRC_FILES = main.c\
 			$(LEXER_FILES)\
 			$(PARSER_FILES)\
 			$(EXPANDER_FILES)\
-			$(BUILTINS_FILES)
+			$(BUILTINS_FILES)\
+			$(EXECUTOR_FILES)
 			
 
 LEXER_FILES = lexer.c\
@@ -48,8 +50,14 @@ EXPANDER_FILES = expander.c\
 					env_var_utils.c\
 					lst_new.c
 
+EXECUTOR_FILES = executor.c\
+					execute_block.c\
+					extract_ast_data.c\
+					getcmd.c\
+					getfd.c
+
 INC = -Iinclude
-CFLAGS = -Wextra -Wall -Werror $(INC) -g
+CFLAGS = -Wextra -Wall -Werror -fsanitize=address $(INC) -g
 
 all: $(NAME)
 

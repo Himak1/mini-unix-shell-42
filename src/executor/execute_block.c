@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/04 14:19:58 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/04 17:40:16 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/04 18:01:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static inline void	close_pipes(t_exec *data)
 
 void	execute_block(t_exec *data, char *envp[], t_uint i)
 {
-	printf("%s\n%s\n%s", data->cmd[0], data->cmd[1], data->cmd[2]);
 	if (i == 0) // first command to be executed
 	{
 		if (data->cmd_count > 1)
