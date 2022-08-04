@@ -5,17 +5,23 @@ VPATH = src:\
 		src/lexer:\
 		src/parser:\
 		src/expander:\
+		src/builtins:\
 		src/utils
 
 OBJ = $(addprefix obj/, $(SRC_FILES:.c=.o))
 
-SRC_FILES = $(UTILS_FILES)\
-				$(LEXER_FILES)\
-				$(PARSER_FILES)\
-				$(EXPANDER_FILES)
+SRC_FILES = main.c\
+			$(UTILS_FILES)\
+			$(LEXER_FILES)\
+			$(PARSER_FILES)\
+			$(EXPANDER_FILES)\
+			$(BUILTINS_FILES)
+			
 
 LEXER_FILES = lexer.c\
 				split_command_line.c
+
+BUILTINS_FILES = pwd.c
 
 UTILS_FILES = ft_strlen.c\
 				ft_strncmp.c\
@@ -39,7 +45,8 @@ PARSER_FILES = cmd.c\
 
 EXPANDER_FILES = expander.c\
 					expand_utils.c\
-					env_var_utils.c
+					env_var_utils.c\
+					lst_new.c
 
 INC = -Iinclude
 CFLAGS = -Wextra -Wall -Werror $(INC) -g
@@ -47,7 +54,7 @@ CFLAGS = -Wextra -Wall -Werror $(INC) -g
 all: $(NAME)
 
 $(NAME): $(OBJ)
-		$(CC) $(CFLAGS) -o $@ $^
+		$(CC) $(CFLAGS) -lreadline -o $@ $^
 
 obj/%.o: %.c
 		@mkdir -p obj
@@ -60,3 +67,5 @@ fclean: clean
 		rm -rf $(NAME)
 
 re: fclean all
+
+PHONY: make re all clean fclean

@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/20 12:59:00 by jhille        ########   odam.nl         */
+/*   Updated: 2022/07/22 16:11:26 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,25 @@ t_ast	*exec_block(t_token **list)
 {
 	t_ast	*output;
 	int		cmd_parsed;
+	int		status;
 
 	cmd_parsed = 0;
 	output = new_node(EXEC_BLOCK);
 	while (*list)
 	{
-		if (is_rdr(*list) && rds(output, list) == -1)
-			return (handle_syntax_error(output));
-		else if (*list && !cmd_parsed && peek_tkn(*list) == WORD)
+		if (is_rdr(*list))
+			status = rds(output, list);
+		else if (!cmd_parsed && peek_tkn(*list) == WORD)
 		{
-			add_child(output, parse_cmd(list));
+			status = add_child(output, parse_cmd(list));
 			cmd_parsed = 1;
 		}
-		else if (*list && cmd_parsed && peek_tkn(*list) == WORD)
-			return (handle_syntax_error(output));
-		else if (*list && peek_tkn(*list) == PIPE)
+		else if (peek_tkn(*list) == PIPE && !cmd_parsed && !output->child_node)
+			status = -1;
+		else if (peek_tkn(*list) == PIPE)
 			break ;
+		if (status == -1)
+			return (handle_syntax_error(output));
 	}
 	return (output);
 }

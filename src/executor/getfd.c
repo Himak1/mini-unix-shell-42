@@ -1,33 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   getfd.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/01 15:35:40 by jhille        ########   odam.nl         */
+/*   Created: 2022/08/03 14:31:04 by jhille        #+#    #+#                 */
+/*   Updated: 2022/08/03 15:16:39 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include "utils.h"
-#include "builtins.h"
+#include <fcntl.h>
+#include "executor.h"
 
-int	main(int argc, char *argv[])
+int	getfd(t_ast *exec_block, int rd_type)
 {
-	char	*ptr;
+	t_ast	*iter;
+	t_ast	*rd;
+	int		fd_in;
 
-	ptr = NULL;
-	if (argc == 100 && argv[0][0])
-		return (0); // filler
-	while (1)
+	rd = NULL;
+	iter = exec_block->child_node;
+	if (iter->type != RDS)
+		iter = iter->next_sib_node;
+	if (!iter)
+		return (0);
+	iter = iter->child_node;
+	while (iter)
 	{
-		ptr = readline("Minishell:");
-		
-		free(ptr);
+		if (iter->type == rd_type)
+			rd = iter;
+		iter = iter->next_sib_node;
 	}
+	if (rd)
+		return (open(rd->child_node->next_sib_node, O_RDONLY));
 	return (0);
 }

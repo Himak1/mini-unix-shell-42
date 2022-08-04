@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   extract_ast_data.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/01 15:35:40 by jhille        ########   odam.nl         */
+/*   Created: 2022/08/01 13:32:57 by jhille        #+#    #+#                 */
+/*   Updated: 2022/08/04 13:39:06 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include "utils.h"
-#include "builtins.h"
+#include "executor.h"
 
-int	main(int argc, char *argv[])
+int	extract_ast_data(t_ast *exec_block, t_exec *data)
 {
-	char	*ptr;
-
-	ptr = NULL;
-	if (argc == 100 && argv[0][0])
-		return (0); // filler
-	while (1)
-	{
-		ptr = readline("Minishell:");
-		
-		free(ptr);
-	}
-	return (0);
+	data->fd_in = getfd(exec_block, RD_IN);
+	data->fd_out = getfd(exec_block, RD_OUT);
+	if (data->fd_in == -1 || data->fd_out == -1)
+		exit(EXIT_FAILURE);
+	data->cmd = getcmd(exec_block);
 }
