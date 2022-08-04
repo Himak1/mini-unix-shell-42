@@ -6,13 +6,12 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/04 13:05:58 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/04 15:42:00 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "utils.h"
 #include "expander.h"
+#include "lexer.h"
 #include <stdio.h>
 
 int	count_dollar_sign(char *value)
@@ -119,32 +118,76 @@ void	expander(char **input, char **envp)
 		else
 			expanded = remove_quotes(expanded, '\"');
 		// printf("expanded = %s\n", expanded);
-		free(*input);
+		//free(*input);
 		*input = ft_strdup(expanded);
 		free(expanded);
 	}
 }
 
-// void	expand_tree(t_ast *parent, char **envp)
-// {
-// 	t_ast	*iter;
+void	expand_tree(t_ast *parent, char **envp)
+{
+	int i = 0;
+	t_ast	*iter;
 
-// 	if (!parent->child_node)
-// 		return ;
-// 	iter = parent->child_node;
-// 	while (iter->next_sib_node)
-// 		iter = iter->next_sib_node;
-// 	while (iter->prev_sib_node)
-// 	{
-// 		expand_tree(iter, envp);
-// 		if (iter->type == TERMINAL)
-// 			expander(iter->value, envp);
-// 		iter = iter->prev_sib_node;
-// 	}
-// 	expand_tree(iter, envp);
-// 	if (iter->type == TERMINAL)
-// 		expander(iter->value, envp);
-// }
+	if (!parent->child_node)
+		return ;
+	iter = parent->child_node;
+	while (iter->next_sib_node)
+	{
+		printf("%s\n", iter->value);
+		iter = iter->next_sib_node;
+	}
+	// iter = iter->prev_sib_node;
+	// printf("%s\n", iter->value);
+	while (iter->prev_sib_node)
+	{
+		printf("\n\nNODE %d:\n", i);
+		expand_tree(iter, envp);
+		if (iter->type == TERMINAL)
+		{
+			printf("value before = %s\n", iter->value);
+			expander(&(iter->value), envp);
+			printf("value after = %s\n", iter->value);
+		}
+		iter = iter->prev_sib_node;
+		i++;
+	}
+	if (iter->type == TERMINAL)
+	{
+		printf("value before = %s\n", iter->value);
+		expander(&(iter->value), envp);
+		printf("value after = %s\n", iter->value);
+	}
+	expand_tree(iter, envp);
+}
+
+int main ()
+{
+	char input[] = "echo hello world";
+
+	t_token *lst;
+	t_token *lst_head;
+
+	t_ast *tree;
+
+	//char **envp = create_envp();
+
+	lst = NULL;
+	ft_lexer(&lst, input);
+	lst_head = lst;
+	tree = parse_tokens(&lst_head);
+	tree = tree->child_node->child_node->child_node;
+	printf("terminal 1: %s\n", tree->value);
+	tree = tree->next_sib_node;
+	printf("terminal 2: %s\n", tree->value);
+	tree = tree->next_sib_node;
+	printf("terminal 3: %s\n", tree->value);
+	
+	tree = tree->prev_sib_node;
+	printf("%p\n", tree);
+	//printf("terminal = %s\n", tree->value);
+	// expand_tree(tree, envp);
+}
 
 // int main()
 // {

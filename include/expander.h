@@ -6,12 +6,15 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 11:51:40 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/03 14:50:14 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/04 14:21:40 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANDER_H
 # define EXPANDER_H
+
+# include "parser.h"
+# include "utils.h"
 
 typedef struct s_env_var
 {
@@ -43,6 +46,7 @@ char		*remove_quotes(char *value, char quote);
 int			count_dollar_sign(char *value);
 char		*expand_dollar_sign(char *input, char **envp);
 void		expander(char **input, char **envp);
+void		expand_tree(t_ast *parent, char **envp);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/20 14:54:28 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/03 14:43:09 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/04 15:25:27 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,30 @@ TEST(lexer_parser, basic)
 	ft_lexer(&lst, input);
 	lst_head = lst;
 	tree = parse_tokens(&lst_head); 
+	EXPECT_TRUE(tree != nullptr);
+	EXPECT_EQ(tree->child_node->type, EXEC_BLOCK);
+	EXPECT_EQ(tree->child_node->child_node->type, CMD);
+	EXPECT_EQ(tree->child_node->child_node->child_node->type, TERMINAL);
+	EXPECT_STREQ(tree->child_node->child_node->\
+				child_node->next_sib_node->value, "hello");
+	EXPECT_STREQ(tree->child_node->child_node->child_node->\
+				next_sib_node->next_sib_node->value, "world");
+}
+
+TEST(lexer_parser, basic)
+{
+	char input[] = "echo hello world";
+
+	t_token *lst;
+	t_token *lst_head;
+
+	t_ast   *tree;
+
+	lst = NULL;
+	ft_lexer(&lst, input);
+	lst_head = lst;
+	tree = parse_tokens(&lst_head);
+	
 	EXPECT_TRUE(tree != nullptr);
 	EXPECT_EQ(tree->child_node->type, EXEC_BLOCK);
 	EXPECT_EQ(tree->child_node->child_node->type, CMD);
