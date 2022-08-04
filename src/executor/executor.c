@@ -6,14 +6,14 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/03 14:43:44 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/04 13:38:57 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
 /*
-void	execute_block(char **cmd, int fd_in, int fd_out)
+void	execute_block(t_exec *data)
 {
 
 }
@@ -49,7 +49,7 @@ int	executor(t_ast *ast, t_uint cmd_count)
 		else if (data->pid == 0)
 		{
 			extract_ast_data(exec_block, &data);
-			execute_block(data);
+			execute_block(&data);
 		}
 		exec_block = exec_block->next_sib_node;
 	}
