@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 15:18:48 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/07/29 16:54:00 by Tessa         ########   odam.nl         */
+/*   Updated: 2022/08/03 14:39:54 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,14 @@ TEST(get_env_var_len, basic_test2)
     ASSERT_EQ(count, 5);
 }
 
+TEST(get_env_var_len, basic_test3)
+{
+    char *test = "PWD\"";
+    int count = get_env_var_len(test);
+    
+    ASSERT_EQ(count, 3);
+}
+
 TEST(get_env_var, basic_test1)
 {
     char *test = "hi $hello";
@@ -154,6 +162,14 @@ TEST(get_env_var, basic_test4)
     ASSERT_STREQ(env_var[1], "$PWD");
     ASSERT_STREQ(env_var[2], NULL);
 }
+
+// TEST(get_env_var, basic_test5)
+// {
+//     char *test = "hello PWD";
+//     char **env_var = get_env_var(test);
+
+//     ASSERT_STREQ(env_var[0], NULL);
+// }
 
 TEST(create_env_var_list, basic_test1)
 {
@@ -369,6 +385,7 @@ TEST(get_exp_len, basic_test4)
     
     int expansion = 0 - ft_strlen("$hello");
     int expected = len_input + expansion;
+    printf("%d\n", expected);
     ASSERT_EQ(expected, exp_len);
 }
 
@@ -383,7 +400,6 @@ TEST(get_exp_len, basic_test5)
     create_env_var_list(&env_var_list, env_var);
     check_env_var(&env_var_list, envp);
     exp_len = get_exp_len(env_var_list, len_input);
-    
     int expansion = (0 + ft_strlen("$")) - (ft_strlen("$hello") + ft_strlen("$"));
     int expected = len_input + expansion;
     ASSERT_EQ(expected, exp_len);
@@ -392,16 +408,257 @@ TEST(get_exp_len, basic_test5)
 TEST(expand_input, basic_test1)
 {
     char **envp = create_envp();
-    char **env_var = get_env_var("hello $hello and $");
-    int len_input = ft_strlen("hello $hello and $");
+    char *input = "hello $HOME";
+    char **env_var = get_env_var(input);
+    int len_input = ft_strlen(input);
     t_env_var *env_var_list = NULL;
     int exp_len;
+    char *expanded;
     
     create_env_var_list(&env_var_list, env_var);
     check_env_var(&env_var_list, envp);
     exp_len = get_exp_len(env_var_list, len_input);
+    expanded = expand_input(input, env_var_list, exp_len);
+    ASSERT_STREQ("hello /root", expanded);
+}
+
+TEST(expand_input, basic_test2)
+{
+    char **envp = create_envp();
+    char *input = "hello $HI";
+    char **env_var = get_env_var(input);
+    int len_input = ft_strlen(input);
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    char *expanded;
     
-    int expansion = (0 + ft_strlen("$")) - (ft_strlen("$hello") + ft_strlen("$"));
-    int expected = len_input + expansion;
-    ASSERT_EQ(expected, exp_len);
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    expanded = expand_input(input, env_var_list, exp_len);
+    ASSERT_STREQ("hello ", expanded);
+}
+
+TEST(expand_input, basic_test3)
+{
+    char **envp = create_envp();
+    char *input = "hello $HOME and $PWD";
+    char **env_var = get_env_var(input);
+    int len_input = ft_strlen(input);
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    char *expanded;
+    
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    expanded = expand_input(input, env_var_list, exp_len);
+    ASSERT_STREQ("hello /root and /pwd/desktop/minishell", expanded);
+}
+
+TEST(expand_input, basic_test4)
+{
+    char **envp = create_envp();
+    char *input = "hello $HI and $PWD";
+    char **env_var = get_env_var(input);
+    int len_input = ft_strlen(input);
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    char *expanded;
+    
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    expanded = expand_input(input, env_var_list, exp_len);
+    ASSERT_STREQ("hello  and /pwd/desktop/minishell", expanded);
+}
+
+TEST(expand_input, basic_test5)
+{
+    char **envp = create_envp();
+    char *input = "hello $PWD and $HI";
+    char **env_var = get_env_var(input);
+    int len_input = ft_strlen(input);
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    char *expanded;
+    
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    expanded = expand_input(input, env_var_list, exp_len);
+    ASSERT_STREQ("hello /pwd/desktop/minishell and ", expanded);
+}
+
+TEST(expand_input, basic_test6)
+{
+    char **envp = create_envp();
+    char *input = "hello $PWD and hi to $HI $";
+    char **env_var = get_env_var(input);
+    int len_input = ft_strlen(input);
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    char *expanded;
+    
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    expanded = expand_input(input, env_var_list, exp_len);
+    ASSERT_STREQ("hello /pwd/desktop/minishell and hi to  $", expanded);
+}
+
+TEST(expand_input, basic_test7)
+{
+    char **envp = create_envp();
+    char *input = "hello PWD";
+    char **env_var = get_env_var(input);
+    int len_input = ft_strlen(input);
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    char *expanded;
+    
+    if (!env_var)
+        ASSERT_STREQ("hello PWD", input);
+    else
+    {
+        create_env_var_list(&env_var_list, env_var);
+        check_env_var(&env_var_list, envp);
+        exp_len = get_exp_len(env_var_list, len_input);
+        expanded = expand_input(input, env_var_list, exp_len);
+        ASSERT_STREQ("hello PWD", expanded);
+    }
+}
+
+TEST(expand_input, basic_test8)
+{
+    char **envp = create_envp();
+    char *input = "I am currently in $PWD";
+    char **env_var = get_env_var(input);
+    int len_input = ft_strlen(input);
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    char *expanded;
+
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    expanded = expand_input(input, env_var_list, exp_len);
+    ASSERT_STREQ("I am currently in /pwd/desktop/minishell", expanded);
+}
+
+TEST(expand_input, basic_test9)
+{
+    char **envp = create_envp();
+    char *input = "I am currently in /current/dir/is$PWD";
+    char **env_var = get_env_var(input);
+    int len_input = ft_strlen(input);
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    char *expanded;
+
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    expanded = expand_input(input, env_var_list, exp_len);
+    ASSERT_STREQ("I am currently in /current/dir/is/pwd/desktop/minishell", expanded);
+}
+
+TEST(expand_dollar_sign, basic_test1)
+{
+    char **envp = create_envp();
+    char *input = ft_strdup("\"I am currently in $PWD\"");
+    char *expanded = expand_dollar_sign(input, envp);
+
+    ASSERT_STREQ("\"I am currently in /pwd/desktop/minishell\"", expanded);
+}
+
+TEST(expand_dollar_sign, basic_test2)
+{
+    char **envp = create_envp();
+    char *input = ft_strdup("This is not a var $HELLO but this is $LANG");
+    char *expanded = expand_dollar_sign(input, envp);
+
+    ASSERT_STREQ("This is not a var  but this is C.UTF-8", expanded);
+}
+
+TEST(expand_dollar_sign, basic_test3)
+{
+    char **envp = create_envp();
+    char *input = ft_strdup("I am $ currently $ in $PWDnot this $hi");
+    char *expanded = expand_dollar_sign(input, envp);
+
+    ASSERT_STREQ("I am $ currently $ in  this ", expanded);
+}
+
+TEST(expand_dollar_sign, basic_test4)
+{
+    char **envp = create_envp();
+    char *input = ft_strdup("$hello");
+    char *expanded = expand_dollar_sign(input, envp);
+
+    ASSERT_STREQ("", expanded);
+}
+
+TEST(expander, only_env1)
+{
+    char *input = ft_strdup("$PWD");
+    char **envp = create_envp();
+    expander(&input, envp);
+    
+    ASSERT_STREQ("/pwd/desktop/minishell", input);
+}
+
+TEST(expander, only_env2)
+{
+    char *input = ft_strdup("$PWd");
+    char **envp = create_envp();
+    expander(&input, envp);
+    
+    ASSERT_STREQ("", input);
+}
+
+TEST(expander, basic_test1)
+{
+    char *input = ft_strdup("\"hello i am currently in $PWD\"");
+    char **envp = create_envp();
+    expander(&input, envp);
+    
+    ASSERT_STREQ("hello i am currently in /pwd/desktop/minishell", input);
+}
+
+TEST(expander, basic_test2)
+{
+    char *input = ft_strdup("\'hello i am currently in $PWD\'");
+    char **envp = create_envp();
+    expander(&input, envp);
+    
+    ASSERT_STREQ("hello i am currently in $PWD", input);
+}
+
+TEST(expander, basic_test3)
+{
+    char *input = ft_strdup("\"hello i am currently in $PWD        $      not an var $HELLO bye\"");
+    char **envp = create_envp();
+    expander(&input, envp);
+    
+    ASSERT_STREQ("hello i am currently in /pwd/desktop/minishell        $      not an var  bye", input);
+}
+
+TEST(expander, basic_test4)
+{
+    char *input = ft_strdup("\"hello \'$PWD\' bye now\"");
+    char **envp = create_envp();
+    expander(&input, envp);
+    
+    ASSERT_STREQ("hello \'/pwd/desktop/minishell\' bye now", input);
+}
+
+TEST(expander, basic_test5)
+{
+    char *input = ft_strdup("\'hello \"$PWD\" bye now\'");
+    char **envp = create_envp();
+    expander(&input, envp);
+    
+    ASSERT_STREQ("hello \"$PWD\" bye now", input);
+    
 }
