@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/20 14:54:28 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/05 11:44:13 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/05 14:06:53 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 extern "C" {
 #include "lexer.h"
 #include "parser.h"
+#include "expander.h"
 }
 
 // ---- Testing 
@@ -22,7 +23,7 @@ extern "C" {
 
 // ---- Tests ---- //
 
-TEST(lexer_parser, basic)
+TEST(lexer_parser, basic1)
 {
 	char input[] = "echo hello world";
 
@@ -45,21 +46,21 @@ TEST(lexer_parser, basic)
 				next_sib_node->next_sib_node->value, "world");
 }
 
-/*
-TEST(lexer_parser, basic)
+TEST(lexer_parser, basic2)
 {
-	char input[] = "echo hello world";
-
+	char input[] = "echo hello $PWD";
 	t_token *lst;
 	t_token *lst_head;
 
 	t_ast   *tree;
 
+	char **envp = create_envp();
+
 	lst = NULL;
 	ft_lexer(&lst, input);
 	lst_head = lst;
 	tree = parse_tokens(&lst_head);
-	
+	expand_tree(tree, envp);
 	EXPECT_TRUE(tree != nullptr);
 	EXPECT_EQ(tree->child_node->type, EXEC_BLOCK);
 	EXPECT_EQ(tree->child_node->child_node->type, CMD);
@@ -67,9 +68,8 @@ TEST(lexer_parser, basic)
 	EXPECT_STREQ(tree->child_node->child_node->\
 				child_node->next_sib_node->value, "hello");
 	EXPECT_STREQ(tree->child_node->child_node->child_node->\
-				next_sib_node->next_sib_node->value, "world");
+				next_sib_node->next_sib_node->value, "/pwd/desktop/minishell");
 }
-*/
 
 TEST(lexer_parser, 2_commands_with_pipe)
 {
