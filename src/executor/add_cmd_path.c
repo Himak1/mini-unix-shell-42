@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/05 17:25:22 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/05 17:43:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,23 @@
 
 static int	try_paths(char **cmd, char **split_path)
 {
-	int	i;
+	int		i;
+	int		status;
+	char	*tmp;
+
+	i = 0;
+	while (split_path[i])
+	{
+		tmp = ft_strjoin(split_path[i], cmd[0]);
+		if (!tmp)
+			exit(EXIT_FAILURE);
+		status = access(tmp, F_OK);
+		if (status == 0)
+		{
+			
+		}
+		i++;
+	}
 }
 
 int	add_cmd_path(char **cmd)
