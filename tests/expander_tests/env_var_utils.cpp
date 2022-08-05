@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/04 14:10:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/04 14:10:40 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/05 11:49:53 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ TEST(get_env_var, basic_test5)
     char *test = "hello PWD";
     char **env_var = get_env_var(test);
 
-    ASSERT_STREQ(env_var[0], NULL);
+    ASSERT_EQ(env_var, nullptr);
 }
 
 TEST(create_env_var_list, basic_test1)
