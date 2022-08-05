@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/20 14:54:28 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/04 15:25:27 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/05 11:44:13 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ TEST(lexer_parser, basic)
 				next_sib_node->next_sib_node->value, "world");
 }
 
+/*
 TEST(lexer_parser, basic)
 {
 	char input[] = "echo hello world";
@@ -68,6 +69,7 @@ TEST(lexer_parser, basic)
 	EXPECT_STREQ(tree->child_node->child_node->child_node->\
 				next_sib_node->next_sib_node->value, "world");
 }
+*/
 
 TEST(lexer_parser, 2_commands_with_pipe)
 {
