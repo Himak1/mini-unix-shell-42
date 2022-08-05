@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   extract_ast_data.c                                 :+:    :+:            */
+/*   ft_free_2d.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/08/01 13:32:57 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/05 15:20:30 by jhille        ########   odam.nl         */
+/*   Created: 2021/11/21 22:38:33 by jhille        #+#    #+#                 */
+/*   Updated: 2021/11/21 22:38:44 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include <stdlib.h>
 
-int	extract_ast_data(t_ast *exec_block, t_exec *data)
+void	ft_free_2d(void *two_d_array[])
 {
-	data->fd_in = getfd(exec_block, RD_IN);
-	data->fd_out = getfd(exec_block, RD_OUT);
-	if (data->fd_in == -1 || data->fd_out == -1)
-		exit(EXIT_FAILURE);
-	data->cmd = getcmd(exec_block);
-	if (!add_cmd_path(data->cmd))
-		return (0);
-	return (1);
+	int	i;
+
+	i = 0;
+	while (two_d_array[i] != 0)
+	{
+		free(two_d_array[i]);
+		i++;
+	}
 }

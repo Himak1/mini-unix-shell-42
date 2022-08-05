@@ -10,6 +10,7 @@ VPATH = src:\
 		src/utils
 
 OBJ = $(addprefix obj/, $(SRC_FILES:.c=.o))
+LIBFT = libft/libft.a
 
 SRC_FILES = main.c\
 			$(UTILS_FILES)\
@@ -25,19 +26,14 @@ LEXER_FILES = lexer.c\
 
 BUILTINS_FILES = pwd.c
 
-UTILS_FILES = ft_strlen.c\
-				ft_strncmp.c\
-				lst_new.c\
+UTILS_FILES = lst_new.c\
 				lst_add_ft.c\
 				lst_add_bk.c\
 				lst_clear.c\
 				ft_lstfree.c\
-				ft_strlcpy.c\
-				ft_strdup.c\
 				ft_free_2d_array.c\
 				lst_new.c\
 				xmalloc.c\
-				ft_strnstr.c
 
 PARSER_FILES = cmd.c\
 				node_functions.c\
@@ -54,22 +50,28 @@ EXECUTOR_FILES = executor.c\
 					execute_block.c\
 					extract_ast_data.c\
 					getcmd.c\
+					add_cmd_path\
 					getfd.c
 
-INC = -Iinclude
-CFLAGS = -Wextra -Wall -Werror -fsanitize=address $(INC) -g
+INC = -Ilibft -Iinclude
+CFLAGS = -Wextra -Wall -Werror -fsanitize=address -g
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-		$(CC) $(CFLAGS) -lreadline -o $@ $^
+$(NAME): $(LIBFT) $(OBJ)
+		$(CC) $(CFLAGS) $(INC) -lreadline -o $@ $^
 
 obj/%.o: %.c
 		@mkdir -p obj
-		$(CC) -c $(CFLAGS) -o $@ $^
+		$(CC) $(CFLAGS) $(INC) -c -o $@ $^
+
+$(LIBFT): 
+		make -sC libft
+		make clean -sC libft
 
 clean:
 		rm -rf obj
+		make fclean -C libft
 
 fclean: clean
 		rm -rf $(NAME)
