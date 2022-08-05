@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/04 18:25:35 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/05 13:08:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 	t_uint	i;
 	int		status;
 
-	printf("%d\n", cmd_count);
 	i = 0;
 	status = 0;
 	exec_block = ast->child_node;
@@ -56,5 +55,5 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 		exec_block = exec_block->next_sib_node;
 	}
 	waitpid(data.pid, &status, 0);
-	return (WIFEXITED(status));
+	return (WEXITSTATUS(status));
 }

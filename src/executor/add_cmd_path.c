@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   extract_ast_data.c                                 :+:    :+:            */
+/*   add_cmd_path.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/08/01 13:32:57 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/05 13:38:56 by jhille        ########   odam.nl         */
+/*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
+/*   Updated: 2022/08/05 14:13:10 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	extract_ast_data(t_ast *exec_block, t_exec *data)
+int	add_cmd_path(char **cmd)
 {
-	data->fd_in = getfd(exec_block, RD_IN);
-	data->fd_out = getfd(exec_block, RD_OUT);
-	if (data->fd_in == -1 || data->fd_out == -1)
-		exit(EXIT_FAILURE);
-	data->cmd = getcmd(exec_block);
-	return (0);
+	char	*path;
+
+	path = getenv("PATH");
+	if (!path)
+		return (-1);
 }

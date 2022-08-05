@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:30:21 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/04 17:04:08 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/05 13:48:03 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ void	execute_block(t_exec *data, char *envp[], t_uint i);
 int		extract_ast_data(t_ast *exec_block, t_exec *data);
 int		getfd(t_ast *exec_block, t_uint rd_type);
 char	**getcmd(t_ast *exec_block);
+int		add_cmd_path(char **cmd);
 
 #endif
