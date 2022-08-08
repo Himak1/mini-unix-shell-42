@@ -6,14 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/04 14:19:58 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/05 13:08:46 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/08 16:00:06 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "executor.h"
 
-#include <stdio.h>
 static inline void	close_pipes(t_exec *data)
 {
 	if (data->pip1[0] == 0)

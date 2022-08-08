@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/05 13:08:00 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/08 15:45:11 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 			extract_ast_data(exec_block, &data);
 			execute_block(&data, envp, i);
 		}
-		i++;
 		exec_block = exec_block->next_sib_node;
+		i++;
 	}
 	waitpid(data.pid, &status, 0);
 	return (WEXITSTATUS(status));

@@ -6,13 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/05 17:43:00 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/08 15:44:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static int	try_paths(char **cmd, char **split_path)
+static void	try_paths(char **cmd, char **split_path)
 {
 	int		i;
 	int		status;
@@ -27,13 +27,15 @@ static int	try_paths(char **cmd, char **split_path)
 		status = access(tmp, F_OK);
 		if (status == 0)
 		{
-			
+			free(cmd[0]);
+			cmd[0] = tmp;
+			return (1); 
 		}
 		i++;
 	}
 }
 
-int	add_cmd_path(char **cmd)
+void	add_cmd_path(char **cmd)
 {
 	char	*path;
 	char	**split_path;
@@ -48,7 +50,6 @@ int	add_cmd_path(char **cmd)
 		split_path = ft_split(path, ':');
 		if (!split_path)
 			exit(EXIT_FAILURE);
-		return (try_paths(cmd, split_path));
+		try_paths(cmd, split_path);
 	}
-	return (0);
 }
