@@ -6,7 +6,7 @@
 #    By: jhille <marvin@codam.nl>                     +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/10/29 16:15:51 by jhille        #+#    #+#                  #
-#    Updated: 2022/08/05 15:00:36 by jhille        ########   odam.nl          #
+#    Updated: 2022/08/08 16:42:46 by jhille        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,12 +89,19 @@ else
  OBJ = $(addprefix obj/, $(REG_OBJ_FILES))
 endif
 
-CFLAGS = -Wextra -Wall -Werror
+ifdef DEBUG
+ CFLAGS = -Wextra -Wall -Werror -fsanitize=address -g
+else
+ CFLAGS = -Wextra -Wall -Werror
+endif
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 		ar -cr $@ $^
+
+debug:
+	$(MAKE) DEBUG=1 all
 
 obj/%.o: %.c
 		@mkdir -p obj

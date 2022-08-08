@@ -50,23 +50,33 @@ EXECUTOR_FILES = executor.c\
 					execute_block.c\
 					extract_ast_data.c\
 					getcmd.c\
-					add_cmd_path\
+					add_cmd_path.c\
 					getfd.c
 
 INC = -Ilibft -Iinclude
-CFLAGS = -Wextra -Wall -Werror -fsanitize=address -g
+
+ifdef DEBUG
+ CFLAGS = -Wextra -Wall -Werror -fsanitize=address -g
+ LIBFT_MAKE = make debug -sC libft
+else
+ CFLAGS = -Wextra -Wall -Werror
+ LIBFT_MAKE = make -sC libft
+endif
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
 		$(CC) $(CFLAGS) $(INC) -lreadline -o $@ $^
 
+debug:
+	$(MAKE) DEBUG=1 all
+
 obj/%.o: %.c
 		@mkdir -p obj
 		$(CC) $(CFLAGS) $(INC) -c -o $@ $^
 
 $(LIBFT): 
-		make -sC libft
+		$(LIBFT_MAKE)
 		make clean -sC libft
 
 clean:

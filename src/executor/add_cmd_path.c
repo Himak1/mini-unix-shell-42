@@ -6,10 +6,11 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/08 16:19:04 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/08 16:46:14 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "executor.h"
 
 static void	try_paths(char **cmd, char **split_path)
