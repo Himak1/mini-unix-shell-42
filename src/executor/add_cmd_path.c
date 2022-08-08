@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/08 15:44:00 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/08 16:19:04 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	try_paths(char **cmd, char **split_path)
 		{
 			free(cmd[0]);
 			cmd[0] = tmp;
-			return (1); 
+			return ;
 		}
 		i++;
 	}
@@ -43,7 +43,7 @@ void	add_cmd_path(char **cmd)
 
 	i = 0;
 	if (!ft_strchr(cmd[0], '/'))
-		return (0);
+		return ;
 	path = getenv("PATH");
 	if (!path)
 	{
