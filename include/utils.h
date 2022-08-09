@@ -6,15 +6,15 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:36:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/04 13:47:01 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/05 14:22:33 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
-# include <stddef.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include "libft.h"
 
 typedef unsigned int	t_uint;
 
@@ -43,14 +43,8 @@ void	lst_add_ft(t_token **list, t_token *node);
 void	lst_clear(t_token **list);
 
 void	*xmalloc(size_t bytes);
-int		ft_strncmp(const char *str1, const char *str2, size_t n);
-size_t	ft_strlen(const char *str);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 char	**ft_free_2d_array(char **arr);
 void	ft_lstfree(t_token *tokenlist);
-char	*ft_strdup(const char *str);
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
-
 void	free_array(void **ptr_array, const int array_len);
 
 #endif

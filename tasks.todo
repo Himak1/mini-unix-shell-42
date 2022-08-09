@@ -34,6 +34,15 @@ edge-cases:
         where $var == ch
     ☐ e"cho hallo"
     ☐ 3x export command, if the last one isn't valid the first two must still be executed
-
-
-
+    ☐ < echo VS < /bin/echo
+    ☐ "< infile cat < infile file" has to work
+    ☐ heredoc does expansion
+    ☐ << "end" cat $USER
+    ☐ << end cat $USER
+    ☐ builtins usually run from main process unless a pipe is available
+    ☐ exit | exit
+    ☐ top ctrl-\
+    ☐ ./minishell in minishell
+    ☐ env | grep SHLVL
+    ☐ export
+    ☐ export a, env

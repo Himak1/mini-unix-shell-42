@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_strdup.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: jhille <jhille@student.codam.nl>             +#+                     */
+/*   By: jhille <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/07/20 14:46:12 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/20 14:46:53 by jhille        ########   odam.nl         */
+/*   Created: 2020/10/28 18:12:04 by jhille        #+#    #+#                 */
+/*   Updated: 2021/02/25 16:48:32 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
