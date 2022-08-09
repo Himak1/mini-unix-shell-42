@@ -6,14 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/04 14:19:58 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/08 16:53:33 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/09 12:07:08 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "executor.h"
 
-#include <stdio.h>
 static inline void	close_pipes(t_exec *data)
 {
 	if (data->pip1[0] == 0)
@@ -63,7 +62,6 @@ static inline void	mid_cmd(t_exec *data, t_uint i)
 
 void	execute_block(t_exec *data, char *envp[], t_uint i)
 {
-	printf("%s\n", data->cmd[0]);
 	if (i == 0)
 		first_cmd(data);
 	else if (i == data->cmd_count - 1)

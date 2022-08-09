@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/09 11:31:17 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/09 12:04:54 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,19 @@
 #include "executor.h"
 
 #include <stdio.h>
-/*
-static void	concatenate_path(const char *path_dir, const char *cmd[0])
+
+static char	*concatenate_path(const char *path_dir, const char *cmd)
 {
 	t_uint	total_len;
+	char	*cmd_with_path;
 
-	total_len = ft_strlen(path_dir) + ft_strlen(cmd[0]) + 1;
+	total_len = ft_strlen(path_dir) + ft_strlen(cmd) + 2;
+	cmd_with_path = xmalloc(total_len * sizeof(char));
+	ft_strlcpy(cmd_with_path, path_dir, total_len);
+	ft_strlcat(cmd_with_path, "/", total_len);
+	ft_strlcat(cmd_with_path, cmd, total_len);
+	return (cmd_with_path);
 }
-*/
 
 static void	try_paths(char **cmd, char **split_path)
 {
@@ -32,9 +37,7 @@ static void	try_paths(char **cmd, char **split_path)
 	i = 0;
 	while (split_path[i])
 	{
-		tmp = ft_strjoin(split_path[i], cmd[0]);
-		if (!tmp)
-			exit(EXIT_FAILURE);
+		tmp = concatenate_path(split_path[i], cmd[0]);
 		status = access(tmp, F_OK);
 		if (status == 0)
 		{
@@ -42,6 +45,7 @@ static void	try_paths(char **cmd, char **split_path)
 			cmd[0] = tmp;
 			return ;
 		}
+		free(tmp);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/09 11:39:08 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/09 12:06:11 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,6 @@ static int	count_cmds(t_ast *tree)
 	}
 	return (i);
 }
-
-// int	main(int argc, char *argv[])
-// {
-// 	char	*ptr;
-
-// 	ptr = NULL;
-// 	if (argc == 100 && argv[0][0])
-// 		return (0); // filler
-// 	while (1)
-// 	{
-// 		ptr = readline("Minishell:");
-		
-// 		free(ptr);
-// 	}
-// 	return (0);
-// }
 
 int	main(int argc, char *argv[], char *envp[])
 {

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/04 15:42:00 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/09 12:05:04 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void	expand_tree(t_ast *parent, char **envp)
 	expand_tree(iter, envp);
 }
 
+/*
 int main ()
 {
 	char input[] = "echo hello world";
@@ -188,6 +189,7 @@ int main ()
 	//printf("terminal = %s\n", tree->value);
 	// expand_tree(tree, envp);
 }
+*/
 
 // int main()
 // {
