@@ -6,12 +6,22 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/08 16:46:14 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/09 11:31:17 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "executor.h"
+
+#include <stdio.h>
+/*
+static void	concatenate_path(const char *path_dir, const char *cmd[0])
+{
+	t_uint	total_len;
+
+	total_len = ft_strlen(path_dir) + ft_strlen(cmd[0]) + 1;
+}
+*/
 
 static void	try_paths(char **cmd, char **split_path)
 {
@@ -43,10 +53,10 @@ void	add_cmd_path(char **cmd)
 	int		i;
 
 	i = 0;
-	if (!ft_strchr(cmd[0], '/'))
+	if (ft_strchr(cmd[0], '/'))
 		return ;
 	path = getenv("PATH");
-	if (!path)
+	if (path)
 	{
 		split_path = ft_split(path, ':');
 		if (!split_path)

@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/27 14:37:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/05 13:03:56 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/08 16:55:52 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_lexer(&lst, line);
 		lst_head = lst;
 		tree = parse_tokens(&lst_head);
-		printf("%u\n", executor(tree, count_cmds(tree), envp));
+		executor(tree, count_cmds(tree), envp);
 		free(line);
 	}
 	return (0);

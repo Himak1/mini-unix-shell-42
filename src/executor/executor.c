@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/08 15:45:11 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/08 16:56:18 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 		if (i < cmd_count - 1)
 			choose_pipe(data.pip1, data.pip2, i);
 		data.pid = fork();
-		printf("pid: %d\n", data.pid);
 		if (data.pid == -1)
 			exit(EXIT_FAILURE);
 		else if (data.pid == 0)
