@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/05 11:55:04 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/10 13:29:37 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,3 +135,48 @@ void	expand_tree(t_ast *parent, char **envp)
 		expander(&(iter->value), envp);
 	expand_tree(iter, envp);
 }
+<<<<<<< HEAD
+=======
+
+/*
+int main ()
+{
+	char input[] = "echo hello world";
+
+	t_token *lst;
+	t_token *lst_head;
+
+	t_ast *tree;
+
+	//char **envp = create_envp();
+
+	lst = NULL;
+	ft_lexer(&lst, input);
+	lst_head = lst;
+	tree = parse_tokens(&lst_head);
+	tree = tree->child_node->child_node->child_node;
+	printf("terminal 1: %s\n", tree->value);
+	tree = tree->next_sib_node;
+	printf("terminal 2: %s\n", tree->value);
+	tree = tree->next_sib_node;
+	printf("terminal 3: %s\n", tree->value);
+	
+	tree = tree->prev_sib_node;
+	printf("%p\n", tree);
+	//printf("terminal = %s\n", tree->value);
+	// expand_tree(tree, envp);
+}
+*/
+
+// int main()
+// {
+// 	char **envp = create_envp();
+// 	char *input = ft_strdup("\"hello $PWD\"");
+	
+// 	printf("before: %s\n", input);
+// 	expander(&input, envp);
+// 	printf("after: %s\n", input);
+// 	free(input);
+// 	ft_free_2d_array(envp);
+// 	return (0);
+// }

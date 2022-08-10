@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/20 14:54:28 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/05 14:06:53 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/10 13:29:41 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,6 @@ TEST(lexer_parser, basic1)
 				child_node->next_sib_node->value, "hello");
 	EXPECT_STREQ(tree->child_node->child_node->child_node->\
 				next_sib_node->next_sib_node->value, "world");
-}
-
-TEST(lexer_parser, basic2)
-{
-	char input[] = "echo hello $PWD";
-	t_token *lst;
-	t_token *lst_head;
-
-	t_ast   *tree;
-
-	char **envp = create_envp();
-
-	lst = NULL;
-	ft_lexer(&lst, input);
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
-	expand_tree(tree, envp);
-	EXPECT_TRUE(tree != nullptr);
-	EXPECT_EQ(tree->child_node->type, EXEC_BLOCK);
-	EXPECT_EQ(tree->child_node->child_node->type, CMD);
-	EXPECT_EQ(tree->child_node->child_node->child_node->type, TERMINAL);
-	EXPECT_STREQ(tree->child_node->child_node->\
-				child_node->next_sib_node->value, "hello");
-	EXPECT_STREQ(tree->child_node->child_node->child_node->\
-				next_sib_node->next_sib_node->value, "/pwd/desktop/minishell");
 }
 
 TEST(lexer_parser, 2_commands_with_pipe)
