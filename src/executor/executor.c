@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/08 16:56:18 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/10 14:09:10 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 	data.cmd_count = cmd_count;
 	while (i < cmd_count && exec_block)
 	{
-		if (i < cmd_count - 1)
+		if (i < cmd_count - 1 && cmd_count > 1)
 			choose_pipe(data.pip1, data.pip2, i);
 		data.pid = fork();
 		if (data.pid == -1)
