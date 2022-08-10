@@ -6,14 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/10 14:09:10 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/10 17:41:11 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
 #include "executor.h"
 
-#include <stdio.h>
 static void	choose_pipe(int *pip1, int *pip2, int i)
 {
 	int	pipe_status;
@@ -27,6 +26,14 @@ static void	choose_pipe(int *pip1, int *pip2, int i)
 		exit(EXIT_FAILURE);
 }
 
+void	init_pipes(t_exec *data)
+{
+	data->pip1[0] = 0;
+	data->pip1[1] = 0;
+	data->pip2[0] = 0;
+	data->pip2[1] = 0;
+}
+
 int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 {
 	t_exec	data;
@@ -38,6 +45,7 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 	status = 0;
 	exec_block = ast->child_node;
 	data.cmd_count = cmd_count;
+	init_pipes(&data);
 	while (i < cmd_count && exec_block)
 	{
 		if (i < cmd_count - 1 && cmd_count > 1)
@@ -52,6 +60,7 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 		}
 		exec_block = exec_block->next_sib_node;
 		i++;
+		waitpid(data.pid, &status, 0);
 	}
 	waitpid(data.pid, &status, 0);
 	return (WEXITSTATUS(status));
