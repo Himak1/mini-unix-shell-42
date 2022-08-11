@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/11 15:21:57 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/11 17:31:28 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 			extract_ast_data(exec_block, &data);
 			execute_block(&data, envp, i);
 		}
+		close_pipes(&data, i);
 		exec_block = next_block(exec_block);
 		i++;
 	}
-	close_pipes(&data, i);
 	wait_loop(data.cmd_count);
 	waitpid(data.pid, &status, 0);
 	return (WEXITSTATUS(status));

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/04 12:35:12 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/04 14:25:57 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/11 17:45:24 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ TEST(lexer_parser_expander, basic_no_env)
 	char input[] = "echo hello world";
 
 	t_token *lst;
-	t_token *lst_head;
 
 	t_ast   *tree;
 
@@ -32,8 +31,7 @@ TEST(lexer_parser_expander, basic_no_env)
 
 	lst = NULL;
 	ft_lexer(&lst, input);
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	expand_tree(tree, envp);
 	EXPECT_TRUE(tree != nullptr);
 	EXPECT_EQ(tree->child_node->type, EXEC_BLOCK);
