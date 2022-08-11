@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/11 14:45:00 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/11 15:21:57 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,6 @@ static void	choose_pipe(int *pip1, int *pip2, int i)
 		pipe_status = pipe(pip2);
 	if (pipe_status == -1)
 		exit(EXIT_FAILURE);
-}
-
-void	init_pipes(t_exec *data)
-{
-	data->pip1[0] = 0;
-	data->pip1[1] = 0;
-	data->pip2[0] = 0;
-	data->pip2[1] = 0;
 }
 
 static inline t_ast	*next_block(t_ast *exec_block)
@@ -59,6 +51,18 @@ static inline void	close_pipes(t_exec *data, int i)
 	}
 }
 
+static void	wait_loop(int cmd_count)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd_count - 1)
+	{
+		wait(0);
+		i++;
+	}
+}
+
 int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 {
 	t_exec	data;
@@ -70,7 +74,6 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 	status = 0;
 	exec_block = ast->child_node;
 	data.cmd_count = cmd_count;
-	init_pipes(&data);
 	while (i < cmd_count && exec_block)
 	{
 		if (i < cmd_count - 1 && cmd_count > 1)
@@ -87,6 +90,7 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 		i++;
 	}
 	close_pipes(&data, i);
-	waitpid(data.pid, &status, WUNTRACED);
+	wait_loop(data.cmd_count);
+	waitpid(data.pid, &status, 0);
 	return (WEXITSTATUS(status));
 }

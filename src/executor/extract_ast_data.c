@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/01 13:32:57 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/11 11:33:46 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/11 15:20:48 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,8 @@ void	extract_ast_data(t_ast *exec_block, t_exec *data)
 		exit(EXIT_FAILURE);
 	data->cmd = getcmd(exec_block);
 	add_cmd_path(data->cmd);
+	data->pip1[0] = 0;
+	data->pip1[1] = 0;
+	data->pip2[0] = 0;
+	data->pip2[1] = 0;
 }
