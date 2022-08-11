@@ -6,20 +6,23 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/10 17:41:11 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/11 14:45:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
 #include "executor.h"
 
+#include <stdio.h>
 static void	choose_pipe(int *pip1, int *pip2, int i)
 {
 	int	pipe_status;
 
 	pipe_status = 0;
 	if (i % 2 == 0)
+	{
 		pipe_status = pipe(pip1);
+	}
 	else
 		pipe_status = pipe(pip2);
 	if (pipe_status == -1)
@@ -32,6 +35,28 @@ void	init_pipes(t_exec *data)
 	data->pip1[1] = 0;
 	data->pip2[0] = 0;
 	data->pip2[1] = 0;
+}
+
+static inline t_ast	*next_block(t_ast *exec_block)
+{
+	exec_block = exec_block->next_sib_node;
+	if (exec_block && exec_block->type == TERMINAL)
+		exec_block = exec_block->next_sib_node;
+	return (exec_block);
+}
+
+static inline void	close_pipes(t_exec *data, int i)
+{
+	if (i % 2 == 0)
+	{
+		close(data->pip1[0]);
+		close(data->pip1[1]);
+	}
+	else
+	{
+		close(data->pip2[0]);
+		close(data->pip2[1]);
+	}
 }
 
 int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
@@ -58,10 +83,10 @@ int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
 			extract_ast_data(exec_block, &data);
 			execute_block(&data, envp, i);
 		}
-		exec_block = exec_block->next_sib_node;
+		exec_block = next_block(exec_block);
 		i++;
-		waitpid(data.pid, &status, 0);
 	}
-	waitpid(data.pid, &status, 0);
+	close_pipes(&data, i);
+	waitpid(data.pid, &status, WUNTRACED);
 	return (WEXITSTATUS(status));
 }
