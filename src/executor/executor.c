@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/11 17:31:28 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/12 17:48:39 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,9 @@
 #include "executor.h"
 
 #include <stdio.h>
-static void	choose_pipe(int *pip1, int *pip2, int i)
+static inline void	close_pipe(t_exec *data, t_uint i)
 {
-	int	pipe_status;
-
-	pipe_status = 0;
-	if (i % 2 == 0)
-	{
-		pipe_status = pipe(pip1);
-	}
-	else
-		pipe_status = pipe(pip2);
-	if (pipe_status == -1)
-		exit(EXIT_FAILURE);
-}
-
-static inline t_ast	*next_block(t_ast *exec_block)
-{
-	exec_block = exec_block->next_sib_node;
-	if (exec_block && exec_block->type == TERMINAL)
-		exec_block = exec_block->next_sib_node;
-	return (exec_block);
-}
-
-static inline void	close_pipes(t_exec *data, int i)
-{
-	if (i % 2 == 0)
+	if (i % 2 != 0)
 	{
 		close(data->pip1[0]);
 		close(data->pip1[1]);
@@ -51,46 +28,73 @@ static inline void	close_pipes(t_exec *data, int i)
 	}
 }
 
-static void	wait_loop(int cmd_count)
+static void	choose_pipe(t_exec *data, t_uint i)
 {
-	int	i;
+	int	pipe_status;
 
-	i = 0;
-	while (i < cmd_count - 1)
+	if (i != 1 && data->cmd_count > 1)
 	{
-		wait(0);
-		i++;
+		pipe_status = 0;
+		if (i % 2 != 0)
+			pipe_status = pipe(data->pip1);
+		else
+			pipe_status = pipe(data->pip2);
+		if (pipe_status == -1)
+			exit(EXIT_FAILURE);
 	}
 }
 
-int	executor(t_ast *ast, t_uint cmd_count, char *envp[])
+static inline t_ast	*prev_block(t_ast *exec_block)
+{
+	exec_block = exec_block->prev_sib_node;
+	if (exec_block && exec_block->type == TERMINAL)
+		exec_block = exec_block->prev_sib_node;
+	return (exec_block);
+}
+
+void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[])
+{
+	t_uint	i;
+
+	i = data->cmd_count;
+	while (i != 0 && exec_block)
+	{
+		choose_pipe(data, i);
+		extract_ast_data(exec_block, data);
+		handle_redirects(data, i);
+		if (i != 1)
+		{
+			data->pid = fork();
+			if (data->pid == -1)
+				exit(EXIT_FAILURE);
+			else if (data->pid != 0)
+				break ;
+		}
+		exec_block = prev_block(exec_block);
+		i--;
+	}
+	close_pipe(data, i);
+	if (data->pid != 0)
+		wait(0);
+	if (access(data->cmd[0], X_OK) != 0)
+		exit(EXIT_FAILURE);
+	execve(data->cmd[0], data->cmd, envp);
+}
+
+int	executor(t_ast *exec_block, t_uint cmd_count, char *envp[])
 {
 	t_exec	data;
-	t_ast	*exec_block;
-	t_uint	i;
+	t_ast	*last_cmd;
 	int		status;
 
-	i = 0;
 	status = 0;
-	exec_block = ast->child_node;
 	data.cmd_count = cmd_count;
-	while (i < cmd_count && exec_block)
-	{
-		if (i < cmd_count - 1 && cmd_count > 1)
-			choose_pipe(data.pip1, data.pip2, i);
-		data.pid = fork();
-		if (data.pid == -1)
-			exit(EXIT_FAILURE);
-		else if (data.pid == 0)
-		{
-			extract_ast_data(exec_block, &data);
-			execute_block(&data, envp, i);
-		}
-		close_pipes(&data, i);
-		exec_block = next_block(exec_block);
-		i++;
-	}
-	wait_loop(data.cmd_count);
+	last_cmd = exec_block;
+	while (last_cmd && last_cmd->next_sib_node)
+		last_cmd = last_cmd->next_sib_node;
+	data.pid = fork();
+	if (data.pid == 0)
+		executor_loop(last_cmd, &data, envp);
 	waitpid(data.pid, &status, 0);
 	return (WEXITSTATUS(status));
 }

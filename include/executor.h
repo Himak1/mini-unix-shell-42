@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:30:21 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/08 16:05:52 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/12 15:43:10 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct s_exec {
 }			t_exec;
 
 int		executor(t_ast *ast, t_uint cmd_count, char *envp[]);
-
-void	execute_block(t_exec *data, char *envp[], t_uint i);
+void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[]);
+void	handle_redirects(t_exec *data, t_uint i);
 
 void	extract_ast_data(t_ast *exec_block, t_exec *data);
 int		getfd(t_ast *exec_block, t_uint rd_type);
