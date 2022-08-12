@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/10 13:29:15 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/10 13:33:49 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ void	add_cmd_path(char **cmd)
 {
 	char	*path;
 	char	**split_path;
-	int		i;
 
-	i = 0;
 	if (ft_strchr(cmd[0], '/'))
 		return ;
 	path = getenv("PATH");

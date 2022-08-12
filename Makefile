@@ -44,7 +44,7 @@ PARSER_FILES = cmd.c\
 EXPANDER_FILES = expander.c\
 					expand_utils.c\
 					env_var_utils.c\
-					lst_new.c
+					remove_quotes.c
 
 EXECUTOR_FILES = executor.c\
 					execute_block.c\

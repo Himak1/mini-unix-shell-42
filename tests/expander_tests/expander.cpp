@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 15:18:48 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/04 14:11:32 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/12 12:42:33 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,38 +34,6 @@ TEST(create_envp, basic_test)
     ASSERT_STREQ(envp[8], "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
     ASSERT_STREQ(envp[9], "OLDPWD=/pwd/desktop/minishell/build");
     ASSERT_STREQ(envp[10], "_=/usr/bin/env");
-}
-
-TEST(remove_quotes, basic_test_dquote)
-{
-    char *test = strdup("\"hello\"");
-    char *new_str = remove_quotes(test, test[0]);
-    
-    ASSERT_STREQ(new_str, "hello");
-}
-
-TEST(remove_quotes, basic_test_squote)
-{
-    char *test = strdup("\'hello\'");
-    char *new_str = remove_quotes(test, test[0]);
-    
-    ASSERT_STREQ(new_str, "hello");
-}
-
-TEST(remove_quotes, basic_test_combi1)
-{
-    char *test = strdup("\"hel\'l\'o\"");
-    char *new_str = remove_quotes(test, test[0]);
-    
-    ASSERT_STREQ(new_str, "hel\'l\'o");
-}
-
-TEST(remove_quotes, basic_test_combi2)
-{
-    char *test = strdup("\'hell\"o\"");
-    char *new_str = remove_quotes(test, test[0]);
-    
-    ASSERT_STREQ(new_str, "hell\"o\"");
 }
 
 TEST(count_dollar_sign, basic_test1)
@@ -190,11 +158,38 @@ TEST(expander, basic_test4)
     ASSERT_STREQ("hello \'/pwd/desktop/minishell\' bye now", input);
 }
 
-// TEST(expander, basic_test5)
-// {
-//     char *input = ft_strdup("\'hello \"$PWD\" bye now\'");
-//     char **envp = create_envp();
-//     expander(&input, envp);
+TEST(expander, basic_test5)
+{
+    char *input = ft_strdup("echo he\"ll\"o");
+    char **envp = create_envp();
+    expander(&input, envp);
     
-//     ASSERT_STREQ("hello \"$PWD\" bye now", input);
-// }
+    ASSERT_STREQ("echo hello", input);
+}
+
+TEST(expander, basic_test6)
+{
+    char *input = ft_strdup("e\"ch\"o \'he\"ll\"o\'");
+    char **envp = create_envp();
+    expander(&input, envp);
+    
+    ASSERT_STREQ("echo he\"ll\"o", input);
+}
+
+TEST(expander, basic_test7)
+{
+    char *input = ft_strdup("echo he\"l\'l\'\"o");
+    char **envp = create_envp();
+    expander(&input, envp);
+    
+    ASSERT_STREQ("echo hel\'l\'o", input);
+}
+
+TEST(expander, basic_test8)
+{
+    char *input = ft_strdup("echo current dir is\" $PWD\"");
+    char **envp = create_envp();
+    expander(&input, envp);
+    
+    ASSERT_STREQ("echo current dir is /pwd/desktop/minishell", input);
+}

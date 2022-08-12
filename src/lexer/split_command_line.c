@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 15:03:07 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/07/20 11:46:41 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/12 15:55:41 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	find_quotes(const char *s, int i)
 		if (s[i] == ' ' && (dquote == 1 || squote == 1))
 			i++;
 	}
+	// insert error message if quote is not closed
 	new_i = i;
 	return (new_i);
 }
@@ -85,8 +86,6 @@ static	char	**fill_array(char **arr, char const *s, int len)
 	{
 		i = 0;
 		i = find_quotes(s, i);
-		//if (!s[i] && dquote == 1)       // if quote is not closed. ask for more input
-			//print > and read_more();
 		arr[j] = (char *)malloc(sizeof(char) * (i + 1));
 		if (!arr[j])
 			return (ft_free_2d_array(arr));

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/10 13:29:37 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/12 13:06:37 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,43 +16,28 @@
 
 int	count_dollar_sign(char *value)
 {
+	int dquote;
+	int squote;
 	int	count;
 
 	count = 0;
+	squote = 0;
+	dquote = 0;
 	while (*value)
 	{
-		if (*value == '$')
+		if (*value == '\"')
+			dquote++;
+		if (*value == '\'' && !dquote)
+			squote++;
+		if (*value == '$' && !squote)
 			count++;
+		if (squote == 2)
+			squote = 0;
+		if (dquote == 2)
+			dquote = 0;
 		value++;
 	}
 	return (count);
-}
-
-char	*remove_quotes(char *value, char quote)
-{
-	int		i;
-	int		count;
-	char	*new_value;
-
-	i = 0;
-	count = 0;
-	if (value[i] != quote)
-	{
-		new_value = ft_strdup(value);
-		free(value);
-		return (new_value);
-	}
-	while (value[i] != '\0')
-	{
-		if (value[i] != quote)
-			count++;
-		i++;
-	}
-	new_value = (char *)malloc(sizeof(char) * (count + 1));
-	if (!new_value)
-		return (NULL);
-	ft_strlcpy(new_value, &value[1], (count + 1));
-	return (new_value);
 }
 
 void	free_env_var_list(t_env_var *list)
@@ -93,27 +78,29 @@ char	*expand_dollar_sign(char *input, char **envp)
 void	expander(char **input, char **envp)
 {
 	char	*expanded;
-
-	expanded = NULL;
-	if (**input == '\'')
-	{
-		expanded = remove_quotes(*input, '\'');
-		free(*input);
-		*input = ft_strdup(expanded);
-		free(expanded);
-	}
+	
+	expanded = expand_dollar_sign(*input, envp);
+	if (!expanded)
+		expanded = remove_quotes(*input);
 	else
-	{
-		expanded = expand_dollar_sign(*input, envp);
-		if (!expanded)
-			expanded = remove_quotes(*input, '\"');
-		else
-			expanded = remove_quotes(expanded, '\"');
-		//free(*input);
-		*input = ft_strdup(expanded);
-		free(expanded);
-	}
+		expanded = remove_quotes(expanded);
+	// free(*input);
+	*input = ft_strdup(expanded);
+	free(expanded);
 }
+
+// int main()
+// {
+// 	char **envp = create_envp();
+// 	char *input = ft_strdup("\"hello $PWD\"");
+	
+// 	printf("before: %s\n", input);
+// 	expander(&input, envp);
+// 	printf("after: %s\n", input);
+// 	free(input);
+// 	ft_free_2d_array(envp);
+// 	return (0);
+// }
 
 void	expand_tree(t_ast *parent, char **envp)
 {
@@ -135,8 +122,6 @@ void	expand_tree(t_ast *parent, char **envp)
 		expander(&(iter->value), envp);
 	expand_tree(iter, envp);
 }
-<<<<<<< HEAD
-=======
 
 /*
 int main ()
@@ -167,16 +152,3 @@ int main ()
 	// expand_tree(tree, envp);
 }
 */
-
-// int main()
-// {
-// 	char **envp = create_envp();
-// 	char *input = ft_strdup("\"hello $PWD\"");
-	
-// 	printf("before: %s\n", input);
-// 	expander(&input, envp);
-// 	printf("after: %s\n", input);
-// 	free(input);
-// 	ft_free_2d_array(envp);
-// 	return (0);
-// }
