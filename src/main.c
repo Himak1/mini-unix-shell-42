@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/15 16:56:47 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/15 17:31:47 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "utils.h"
 #include "lexer.h"
 #include "parser.h"
+#include "expander.h"
 #include "executor.h"
 
 static int	count_cmds(t_ast *tree)
@@ -51,7 +52,10 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_lexer(&lst, line);
 		tree = parse_tokens(lst);
 		if (tree)
+		{
+			expand_tree(tree, envp);
 			executor(tree->child_node, count_cmds(tree), envp);
+		}
 		free(line);
 	}
 	return (0);
