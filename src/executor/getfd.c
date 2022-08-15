@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:31:04 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/15 15:13:37 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/15 16:38:36 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	fd_out(char *filename)
 {
 	if (access(filename, R_OK | W_OK) == 0)
 		unlink(filename);
-	return (open(filename, O_CREAT, 0666));
+	return (open(filename, O_CREAT | O_WRONLY, 0666));
 }
 
 static int	fd_in(char *filename)
