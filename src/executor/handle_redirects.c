@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/12 15:27:38 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/12 17:49:07 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/15 12:16:38 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static inline void	last_cmd(t_exec *data)
 	if (data->cmd_count % 2 == 0)
 	{
 		dup2(data->pip1[0], STDIN_FILENO);
-		fprintf(stderr, "hahahaahha\n");
 	}
 	else
 	{
@@ -59,9 +58,9 @@ static inline void	mid_cmd(t_exec *data, t_uint i)
 
 void	handle_redirects(t_exec *data, t_uint i)
 {
-	if (i == data->cmd_count)
+	if (i == 1)
 		first_cmd(data);
-	else if (i == 1)
+	else if (i == data->cmd_count)
 		last_cmd(data);
 	else
 		mid_cmd(data, i);

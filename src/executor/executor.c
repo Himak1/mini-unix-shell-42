@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/12 17:48:39 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/15 12:22:59 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 static inline void	close_pipe(t_exec *data, t_uint i)
 {
-	if (i % 2 != 0)
+	if (i % 2 == 0 || i == 1)
 	{
 		close(data->pip1[0]);
 		close(data->pip1[1]);
@@ -35,7 +35,7 @@ static void	choose_pipe(t_exec *data, t_uint i)
 	if (i != 1 && data->cmd_count > 1)
 	{
 		pipe_status = 0;
-		if (i % 2 != 0)
+		if (i % 2 == 0)
 			pipe_status = pipe(data->pip1);
 		else
 			pipe_status = pipe(data->pip2);
@@ -70,6 +70,8 @@ void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[])
 			else if (data->pid != 0)
 				break ;
 		}
+		else if (i == 1)
+			break ;
 		exec_block = prev_block(exec_block);
 		i--;
 	}
