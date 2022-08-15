@@ -48,6 +48,7 @@ EXPANDER_FILES = expander.c\
 
 EXECUTOR_FILES = executor.c\
 					handle_redirects.c\
+					handle_pipes.c\
 					extract_ast_data.c\
 					getcmd.c\
 					add_cmd_path.c\

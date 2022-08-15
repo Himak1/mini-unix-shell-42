@@ -6,43 +6,12 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/15 12:22:59 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/15 12:36:17 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
 #include "executor.h"
-
-#include <stdio.h>
-static inline void	close_pipe(t_exec *data, t_uint i)
-{
-	if (i % 2 == 0 || i == 1)
-	{
-		close(data->pip1[0]);
-		close(data->pip1[1]);
-	}
-	else
-	{
-		close(data->pip2[0]);
-		close(data->pip2[1]);
-	}
-}
-
-static void	choose_pipe(t_exec *data, t_uint i)
-{
-	int	pipe_status;
-
-	if (i != 1 && data->cmd_count > 1)
-	{
-		pipe_status = 0;
-		if (i % 2 == 0)
-			pipe_status = pipe(data->pip1);
-		else
-			pipe_status = pipe(data->pip2);
-		if (pipe_status == -1)
-			exit(EXIT_FAILURE);
-	}
-}
 
 static inline t_ast	*prev_block(t_ast *exec_block)
 {
@@ -50,6 +19,15 @@ static inline t_ast	*prev_block(t_ast *exec_block)
 	if (exec_block && exec_block->type == TERMINAL)
 		exec_block = exec_block->prev_sib_node;
 	return (exec_block);
+}
+
+static inline void	execute(t_exec *data, char *envp[])
+{
+	if (data->pid != 0)
+		wait(0);
+	if (access(data->cmd[0], X_OK) != 0)
+		exit(EXIT_FAILURE);
+	execve(data->cmd[0], data->cmd, envp);
 }
 
 void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[])
@@ -76,11 +54,7 @@ void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[])
 		i--;
 	}
 	close_pipe(data, i);
-	if (data->pid != 0)
-		wait(0);
-	if (access(data->cmd[0], X_OK) != 0)
-		exit(EXIT_FAILURE);
-	execve(data->cmd[0], data->cmd, envp);
+	execute(data, envp);
 }
 
 int	executor(t_ast *exec_block, t_uint cmd_count, char *envp[])
