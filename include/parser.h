@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 12:41:17 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/04 12:46:38 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/11 15:56:30 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_ast
 	struct s_ast	*prev_sib_node;
 }					t_ast;
 
-t_ast	*parse_tokens(t_token **list);
+t_ast	*parse_tokens(t_token *list);
 
 t_ast	*parse_pipe(t_token **list);
 

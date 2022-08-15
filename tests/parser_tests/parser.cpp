@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/20 14:37:20 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/11 17:35:30 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ TEST(parse_token, basic)
 	t_token *input = create_list(types, terms);
 
 	t_ast	*tree;
-	tree = parse_tokens(&input);
+	tree = parse_tokens(input);
 	ASSERT_TRUE(tree->child_node != nullptr);
 	EXPECT_EQ(tree->child_node->next_sib_node, nullptr);
 	EXPECT_STREQ(tree->child_node->child_node->child_node->child_node->value, "<");
@@ -123,6 +123,6 @@ TEST(parse_token, 2_commands)
 {
 	t_token	*list = parser_input();
 
-	t_ast	*tree = parse_tokens(&list);
+	t_ast	*tree = parse_tokens(list);
 	ASSERT_TRUE(tree != nullptr);
 }
