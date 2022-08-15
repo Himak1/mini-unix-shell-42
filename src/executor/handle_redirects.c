@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/12 15:27:38 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/15 12:16:38 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/15 13:50:40 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 static inline void	first_cmd(t_exec *data)
 {
+	if (data->fd_in != 0)
+		dup2(data->fd_in, STDIN_FILENO);
 	if (data->cmd_count > 1)
 		dup2(data->pip1[1], STDOUT_FILENO);
 }
@@ -37,6 +39,8 @@ static inline void	last_cmd(t_exec *data)
 	{
 		dup2(data->pip2[0], STDIN_FILENO);
 	}
+	if (data->fd_in != 0)
+		dup2(data->fd_in, STDIN_FILENO);
 }
 
 /*
@@ -44,6 +48,8 @@ static inline void	last_cmd(t_exec *data)
 */
 static inline void	mid_cmd(t_exec *data, t_uint i)
 {
+	if (data->fd_in != 0)
+		dup2(data->fd_in, STDIN_FILENO);
 	if (i % 2 != 1)
 	{
 		dup2(data->pip1[0], STDIN_FILENO);
