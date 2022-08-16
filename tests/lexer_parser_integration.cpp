@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/20 14:54:28 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/16 14:55:41 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 15:38:45 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ extern "C" {
 
 // ---- Tests ---- //
 
-/*
 TEST(lexer_parser, basic1)
 {
 	char input[] = "echo hello world";
@@ -97,7 +96,7 @@ TEST(lexer_parser, lots_of_rds)
 	ft_lstfree(lst);
 	free_ast(tree);
 }
-*/
+
 /*
 TEST(lexer_parser, valid_command_invalid_pipe)
 {

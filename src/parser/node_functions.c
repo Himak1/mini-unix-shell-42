@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/12 14:11:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/16 15:05:22 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 15:47:43 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,20 @@ t_ast	*new_term_node(t_token **list)
 void	free_ast(t_ast *parent)
 {
 	t_ast	*iter;
+	t_ast	*tmp;
 
-	if (!parent->child_node)
+	iter = parent;
+	if (!iter)
 		return ;
-	iter = parent->child_node;
 	while (iter->next_sib_node)
 		iter = iter->next_sib_node;
-	while (iter->prev_sib_node)
+	while (iter)
 	{
-		free_ast(iter);
+		free_ast(iter->child_node);
+		tmp = iter;
 		iter = iter->prev_sib_node;
-		if (iter->next_sib_node->type == TERMINAL)
-			free(iter->next_sib_node->value);
-		free(iter->next_sib_node);
+		if (tmp->type == TERMINAL)
+			free(tmp->value);
+		free(tmp);
 	}
-	free_ast(iter);
-	if (iter->type == TERMINAL)
-		free(iter->value);
-	free(iter);
 }
