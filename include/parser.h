@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 12:41:17 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/11 15:56:30 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 12:20:55 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_uint	peek_tkn(t_token *token);
 t_uint	next_2_tkn(t_token *token, t_uint type1, t_uint type2);
 
 void	free_child_nodes(t_ast *parent);
+void	free_ast(t_ast *parent);
 
 t_ast	*new_node(int type);
 t_ast	*new_term_node(t_token **list);

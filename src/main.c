@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/15 17:31:47 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 12:21:05 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static int	count_cmds(t_ast *tree)
 	return (i);
 }
 
+//static void	free_tree()
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*line;
@@ -43,11 +45,11 @@ int	main(int argc, char *argv[], char *envp[])
 	t_ast	*tree;
 
 	line = NULL;
-	lst = NULL;
 	if (argc == 100 && argv[0][0])
 		return (0); // filler
 	while (1)
 	{
+		lst = NULL;
 		line = readline("Minishell:");
 		ft_lexer(&lst, line);
 		tree = parse_tokens(lst);
@@ -55,7 +57,9 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			expand_tree(tree, envp);
 			executor(tree->child_node, count_cmds(tree), envp);
+			free_ast(tree);
 		}
+		lst_clear(lst);
 		free(line);
 	}
 	return (0);
