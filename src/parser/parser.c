@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/11 17:42:10 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 14:48:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static inline int	is_rdr(t_token *list)
 
 static inline t_ast	*handle_syntax_error(t_ast *output)
 {
-	free_child_nodes(output);
+	free_ast(output);
 	free(output);
 	return (NULL);
 }

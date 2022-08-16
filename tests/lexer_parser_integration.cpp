@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/20 14:54:28 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/16 14:23:03 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 14:55:41 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ extern "C" {
 
 // ---- Tests ---- //
 
+/*
 TEST(lexer_parser, basic1)
 {
 	char input[] = "echo hello world";
@@ -42,10 +43,9 @@ TEST(lexer_parser, basic1)
 				child_node->next_sib_node->value, "hello");
 	EXPECT_STREQ(tree->child_node->child_node->child_node->\
 				next_sib_node->next_sib_node->value, "world");
-	//lst_clear(lst);
-	//free_ast(tree);
+
 	ft_lstfree(lst);
-	free_child_nodes(tree);
+	free_ast(tree);
 }
 
 TEST(lexer_parser, 2_commands_with_pipe)
@@ -62,10 +62,9 @@ TEST(lexer_parser, 2_commands_with_pipe)
 	EXPECT_EQ(tree->child_node->type, EXEC_BLOCK);
 	EXPECT_EQ(tree->child_node->next_sib_node->type, TERMINAL);
 	EXPECT_EQ(tree->child_node->next_sib_node->next_sib_node->type, EXEC_BLOCK);
-	// lst_clear(lst);
-	// free_ast(tree);
+
 	ft_lstfree(lst);
-	free_child_nodes(tree);
+	free_ast(tree);
 }
 
 TEST(lexer_parser, invalid_pipe)
@@ -79,7 +78,6 @@ TEST(lexer_parser, invalid_pipe)
 
 	tree = parse_tokens(lst);
 	EXPECT_EQ(tree, nullptr);
-	// lst_clear(lst);
 	ft_lstfree(lst);
 }
 
@@ -95,12 +93,11 @@ TEST(lexer_parser, lots_of_rds)
 	tree = parse_tokens(lst);
 	ASSERT_TRUE(tree != nullptr);
 	EXPECT_EQ(tree->child_node->child_node->type, RDS);
-	// lst_clear(lst);
-	// free_ast(tree);
-	ft_lstfree(lst);
-	free_child_nodes(tree);
-}
 
+	ft_lstfree(lst);
+	free_ast(tree);
+}
+*/
 /*
 TEST(lexer_parser, valid_command_invalid_pipe)
 {
@@ -129,8 +126,7 @@ TEST(lexer_parser, single_cmd)
 
 	tree = parse_tokens(lst);
 	EXPECT_TRUE(tree != nullptr);
-	// lst_clear(lst);
-	// free_ast(tree);
+
 	ft_lstfree(lst);
-	free_child_nodes(tree);
+	free_ast(tree);
 }

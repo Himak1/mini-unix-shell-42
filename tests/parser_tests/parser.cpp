@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/11 17:35:30 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 14:49:29 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,6 @@ extern "C" {
 }
 
 // ---- input templates ---- //
-/*
-t_token *create_list(void)
-{
-	t_token *t1;
-	t_token *t2;
-	t_token *t3;
-	t_token *t4;
-
-	t1 = lst_new(RDR_IN, ft_strdup("<"));
-	t2 = lst_new(WORD, ft_strdup("infile"));
-	t3 = lst_new(WORD, ft_strdup("echo"));
-	t4 = lst_new(WORD, ft_strdup("hello"));
-	lst_add_bk(&t1, t2);
-	lst_add_bk(&t1, t3);
-	lst_add_bk(&t1, t4);
-	return (t1);
-}
-*/
 
 t_token	*parser_input(void)
 {
@@ -75,7 +57,7 @@ TEST(exec_block, basic)
 
 	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
-	free_child_nodes(output);
+	free_ast(output);
 	free(output);
 }
 
@@ -89,7 +71,7 @@ TEST(exec_block, only_rd)
 	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
 	EXPECT_EQ(output->child_node->type, RDS);
-	free_child_nodes(output);
+	free_ast(output);
 	free(output);
 }
 
@@ -115,7 +97,7 @@ TEST(parse_token, basic)
 	ASSERT_TRUE(tree->child_node != nullptr);
 	EXPECT_EQ(tree->child_node->next_sib_node, nullptr);
 	EXPECT_STREQ(tree->child_node->child_node->child_node->child_node->value, "<");
-	free_child_nodes(tree);
+	free_ast(tree);
 	free(tree);
 }
 
