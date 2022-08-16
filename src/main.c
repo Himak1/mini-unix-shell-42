@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/16 14:39:05 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 15:53:32 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ static int	count_cmds(t_ast *tree)
 	}
 	return (i);
 }
-
-//static void	free_tree()
 
 int	main(int argc, char *argv[], char *envp[])
 {

@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/20 14:54:28 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/16 15:38:45 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 17:23:13 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,18 @@ TEST(lexer_parser, single_cmd)
 
 	ft_lstfree(lst);
 	free_ast(tree);
+}
+
+TEST(lexer_parser, shuffled_cmd_and_redirects)
+{
+	char	input[] = "< infile cat > outfile Makefile";
+	t_token *lst = nullptr;
+	t_ast   *tree;
+
+	ft_lexer(&lst, input);
+	ASSERT_TRUE(lst != nullptr);
+
+	tree = parse_tokens(lst);
+	ASSERT_TRUE(tree != nullptr);
+	EXPECT_EQ(tree->child_node->child_node->type, RDS);
 }

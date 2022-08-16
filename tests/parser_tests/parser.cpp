@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/16 14:49:29 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 17:01:03 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ TEST(exec_block, basic)
 	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
 	free_ast(output);
-	free(output);
 }
 
 TEST(exec_block, only_rd)
@@ -72,7 +71,6 @@ TEST(exec_block, only_rd)
 	EXPECT_EQ(output->type, EXEC_BLOCK);
 	EXPECT_EQ(output->child_node->type, RDS);
 	free_ast(output);
-	free(output);
 }
 
 TEST(parse_pipe, basic)
@@ -98,7 +96,6 @@ TEST(parse_token, basic)
 	EXPECT_EQ(tree->child_node->next_sib_node, nullptr);
 	EXPECT_STREQ(tree->child_node->child_node->child_node->child_node->value, "<");
 	free_ast(tree);
-	free(tree);
 }
 
 TEST(parse_token, 2_commands)
