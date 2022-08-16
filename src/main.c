@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/16 12:21:05 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 14:33:22 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			expand_tree(tree, envp);
 			executor(tree->child_node, count_cmds(tree), envp);
-			free_ast(tree);
+			free_child_nodes(tree);
 		}
-		lst_clear(lst);
+		lst_clear();
 		free(line);
 	}
 	return (0);

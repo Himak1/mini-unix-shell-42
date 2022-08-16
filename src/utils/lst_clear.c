@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:58:02 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/16 12:14:01 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 13:29:55 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 void	lst_clear(t_token *list)
 {
 	t_token	*iter;
+	t_token	*prev;
 
 	iter = list;
 	while (iter)
 	{
-		free(iter);
+		prev = iter;
 		iter = iter->next;
+		free(prev);
 	}
 }
