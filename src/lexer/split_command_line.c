@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 15:03:07 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/12 15:55:41 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/15 10:11:44 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	find_quotes(const char *s, int i)
 		if (s[i] == ' ' && (dquote == 1 || squote == 1))
 			i++;
 	}
-	// insert error message if quote is not closed
+	// if (dquote != 2 || squote != 2) ----> error message
+	// 	return (error);
 	new_i = i;
 	return (new_i);
 }

@@ -29,6 +29,7 @@ file(GLOB sources
 	"${PROJECT_SOURCE_DIR}/src/utils/*.c"
 	"${PROJECT_SOURCE_DIR}/src/expander/*.c"
 	"${PROJECT_SOURCE_DIR}/src/executor/*.c"
+	"${PROJECT_SOURCE_DIR}/src/builtins/*.c"
 	"${PROJECT_SOURCE_DIR}/src/*.c"
 )
 

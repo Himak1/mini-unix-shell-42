@@ -11,6 +11,7 @@ file(GLOB sources
 			"${PROJECT_SOURCE_DIR}/src/expander/*.c"
 			"${PROJECT_SOURCE_DIR}/src/executor/*.c"
 			"${PROJECT_SOURCE_DIR}/src/utils/*.c"
+			"${PROJECT_SOURCE_DIR}/src/builtins/*.c"
 		)
 list(REMOVE_ITEM sources "${PROJECT_SOURCE_DIR}/src/main.c")
 
@@ -22,7 +23,8 @@ file(GLOB tests
 			"${PROJECT_SOURCE_DIR}/tests/lexer_tests/*.cpp"
 			"${PROJECT_SOURCE_DIR}/tests/expander_tests/*.cpp"
 			"${PROJECT_SOURCE_DIR}/tests/executor_tests/*.cpp"
-		)
+			"${PROJECT_SOURCE_DIR}/tests/builtins_tests/*.cpp"
+			)
 list(REMOVE_ITEM tests "${PROJECT_SOURCE_DIR}/tests/main.cpp")
 
 foreach(file ${tests})

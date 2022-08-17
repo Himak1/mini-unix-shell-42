@@ -22,24 +22,27 @@ SRC_FILES = main.c\
 			
 
 LEXER_FILES = lexer.c\
-				split_command_line.c
+					split_command_line.c
 
-BUILTINS_FILES = pwd.c
+BUILTINS_FILES = pwd.c\
+					echo.c\
+					cd.c\
+					env.c
 
 UTILS_FILES = lst_new.c\
-				lst_add_ft.c\
-				lst_add_bk.c\
-				lst_clear.c\
-				ft_lstfree.c\
-				ft_free_2d_array.c\
-				lst_new.c\
-				xmalloc.c\
+					lst_add_ft.c\
+					lst_add_bk.c\
+					lst_clear.c\
+					ft_lstfree.c\
+					ft_free_2d_array.c\
+					lst_new.c\
+					xmalloc.c\
 
 PARSER_FILES = cmd.c\
-				node_functions.c\
-				parser.c\
-				redirect.c\
-				utility_functions.c
+					node_functions.c\
+					parser.c\
+					redirect.c\
+					utility_functions.c
 
 EXPANDER_FILES = expander.c\
 					expand_utils.c\
