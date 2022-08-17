@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:34 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/17 11:59:19 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/17 16:27:03 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void cd(char **arg)
     }
 }
 
+/*
 int main(int argc, char **argv, char **envp)
 {
     char *line;
@@ -62,3 +63,4 @@ int main(int argc, char **argv, char **envp)
             print_env(envp);
 	}
 }
+*/
