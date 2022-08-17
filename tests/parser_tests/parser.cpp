@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/20 14:37:20 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/17 14:01:34 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,6 @@ extern "C" {
 }
 
 // ---- input templates ---- //
-/*
-t_token *create_list(void)
-{
-	t_token *t1;
-	t_token *t2;
-	t_token *t3;
-	t_token *t4;
-
-	t1 = lst_new(RDR_IN, ft_strdup("<"));
-	t2 = lst_new(WORD, ft_strdup("infile"));
-	t3 = lst_new(WORD, ft_strdup("echo"));
-	t4 = lst_new(WORD, ft_strdup("hello"));
-	lst_add_bk(&t1, t2);
-	lst_add_bk(&t1, t3);
-	lst_add_bk(&t1, t4);
-	return (t1);
-}
-*/
 
 t_token	*parser_input(void)
 {
@@ -75,8 +57,8 @@ TEST(exec_block, basic)
 
 	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
-	free_child_nodes(output);
-	free(output);
+	//ft_lstfree(input);
+
 }
 
 TEST(exec_block, only_rd)
@@ -89,8 +71,8 @@ TEST(exec_block, only_rd)
 	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
 	EXPECT_EQ(output->child_node->type, RDS);
-	free_child_nodes(output);
-	free(output);
+	free_ast(output);
+	//ft_lstfree(t1);
 }
 
 TEST(parse_pipe, basic)
@@ -101,7 +83,8 @@ TEST(parse_pipe, basic)
 	t_ast	*output = parse_pipe(&head);
 	EXPECT_EQ(output->type, TERMINAL);
 	EXPECT_STREQ(output->value, "|");
-	free(output);
+	free_ast(output);
+	//ft_lstfree(t1);
 }
 
 TEST(parse_token, basic)
@@ -111,18 +94,20 @@ TEST(parse_token, basic)
 	t_token *input = create_list(types, terms);
 
 	t_ast	*tree;
-	tree = parse_tokens(&input);
+	tree = parse_tokens(input);
 	ASSERT_TRUE(tree->child_node != nullptr);
 	EXPECT_EQ(tree->child_node->next_sib_node, nullptr);
 	EXPECT_STREQ(tree->child_node->child_node->child_node->child_node->value, "<");
-	free_child_nodes(tree);
-	free(tree);
+	free_ast(tree);
+	//ft_lstfree(input);
 }
 
 TEST(parse_token, 2_commands)
 {
 	t_token	*list = parser_input();
 
-	t_ast	*tree = parse_tokens(&list);
+	t_ast	*tree = parse_tokens(list);
 	ASSERT_TRUE(tree != nullptr);
+	//ft_lstfree(list);
+	free_ast(tree);
 }

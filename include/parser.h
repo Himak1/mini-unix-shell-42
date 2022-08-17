@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 12:41:17 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/04 12:46:38 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/17 11:44:03 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ typedef struct s_ast
 	struct s_ast	*prev_sib_node;
 }					t_ast;
 
-t_ast	*parse_tokens(t_token **list);
+t_ast	*parse_tokens(t_token *list);
 
 t_ast	*parse_pipe(t_token **list);
 
 t_ast	*exec_block(t_token **list);
-t_ast	*parse_cmd(t_token **list);
+int		parse_cmd(t_ast *parent, t_token **list);
+//t_ast	*parse_cmd(t_token **list);
 
 int		rds(t_ast *parent, t_token **list);
 t_ast	*rd_in(t_token **list);
@@ -53,7 +54,7 @@ t_ast	*rd_out(t_token **list);
 t_uint	peek_tkn(t_token *token);
 t_uint	next_2_tkn(t_token *token, t_uint type1, t_uint type2);
 
-void	free_child_nodes(t_ast *parent);
+void	free_ast(t_ast *parent);
 
 t_ast	*new_node(int type);
 t_ast	*new_term_node(t_token **list);

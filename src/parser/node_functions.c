@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/12 14:11:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/04 12:30:37 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/16 15:47:43 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,28 @@ t_ast	*new_term_node(t_token **list)
 	t_ast	*output;
 
 	output = new_node(TERMINAL);
-	output->value = (*list)->value;
+	output->value = ft_strdup((*list)->value);
 	*list = (*list)->next;
 	return (output);
 }
 
-void	free_child_nodes(t_ast *parent)
+void	free_ast(t_ast *parent)
 {
 	t_ast	*iter;
+	t_ast	*tmp;
 
-	if (!parent->child_node)
+	iter = parent;
+	if (!iter)
 		return ;
-	iter = parent->child_node;
 	while (iter->next_sib_node)
 		iter = iter->next_sib_node;
-	while (iter->prev_sib_node)
+	while (iter)
 	{
-		free_child_nodes(iter);
+		free_ast(iter->child_node);
+		tmp = iter;
 		iter = iter->prev_sib_node;
-		free(iter->next_sib_node);
+		if (tmp->type == TERMINAL)
+			free(tmp->value);
+		free(tmp);
 	}
-	free_child_nodes(iter);
-	free(iter);
 }

@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.1)
 
 project(minishell)
 
+set(CMAKE_BUILD_PARALLEL_LEVEL "4")
+
 ### Google Test ###
 configure_file(CMakeLists.txt.in
 		googletest-download/CMakeLists.txt)

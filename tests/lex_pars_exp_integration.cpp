@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/04 12:35:12 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/12 13:07:44 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/15 17:29:03 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,13 @@ TEST(lexer_parser_expander, basic_no_env)
 	char input[] = "echo hello world";
 
 	t_token *lst;
-	t_token *lst_head;
-
 	t_ast   *tree;
 
 	char **envp = create_envp();
 
 	lst = NULL;
 	ft_lexer(&lst, input);
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	expand_tree(tree, envp);
 	EXPECT_TRUE(tree != nullptr);
 	EXPECT_EQ(tree->child_node->type, EXEC_BLOCK);
@@ -50,7 +47,6 @@ TEST(lexer_parser_expander, basic_with_env)
 	char input[] = "echo hello $PWD";
 
 	t_token *lst;
-	t_token *lst_head;
 
 	t_ast   *tree;
 
@@ -58,8 +54,7 @@ TEST(lexer_parser_expander, basic_with_env)
 
 	lst = NULL;
 	ft_lexer(&lst, input);
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	expand_tree(tree, envp);
 	EXPECT_TRUE(tree != nullptr);
 	EXPECT_EQ(tree->child_node->type, EXEC_BLOCK);
@@ -71,19 +66,17 @@ TEST(lexer_parser_expander, basic_with_env)
 				next_sib_node->next_sib_node->value, "/pwd/desktop/minishell");
 }
 
-TEST(lexer_parser, 2_commands_with_pipe_no_env)
+TEST(lexer_parser_expander, 2_commands_with_pipe_no_env)
 {
 	char input[] = "< infile cat | wc -l";
 
 	t_token *lst;
-	t_token *lst_head;
 	t_ast   *tree;
 	char **envp = create_envp();
 
 	lst = NULL;
 	ft_lexer(&lst, input);
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	expand_tree(tree, envp);
 	EXPECT_TRUE(tree != nullptr);
 	ASSERT_EQ(tree->type, EXEC_CHAIN);
@@ -111,19 +104,17 @@ TEST(lexer_parser, 2_commands_with_pipe_no_env)
 	
 }
 
-TEST(lexer_parser, 2_commands_with_pipe_with_env1)
+TEST(lexer_parser_expander, 2_commands_with_pipe_with_env1)
 {
 	char input[] = "echo hello world | \"cat\" yeet";
 
 	t_token *lst;
-	t_token *lst_head;
 	t_ast   *tree;
 	char **envp = create_envp();
 
 	lst = NULL;
 	ft_lexer(&lst, input);
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	expand_tree(tree, envp);
 	EXPECT_TRUE(tree != nullptr);
 	ASSERT_EQ(tree->type, EXEC_CHAIN);
@@ -148,19 +139,17 @@ TEST(lexer_parser, 2_commands_with_pipe_with_env1)
 	ASSERT_STREQ(tree->child_node->next_sib_node->next_sib_node->child_node->child_node->next_sib_node->value, "yeet");
 }
 
-TEST(lexer_parser, 2_commands_with_pipe_with_env2)
+TEST(lexer_parser_expander, 2_commands_with_pipe_with_env2)
 {
 	char input[] = "echo hello world | \"cat\" $PWD";
 
 	t_token *lst;
-	t_token *lst_head;
 	t_ast   *tree;
 	char **envp = create_envp();
 
 	lst = NULL;
 	ft_lexer(&lst, input);
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	expand_tree(tree, envp);
 	EXPECT_TRUE(tree != nullptr);
 	ASSERT_EQ(tree->type, EXEC_CHAIN);
@@ -185,19 +174,17 @@ TEST(lexer_parser, 2_commands_with_pipe_with_env2)
 	ASSERT_STREQ(tree->child_node->next_sib_node->next_sib_node->child_node->child_node->next_sib_node->value, "/pwd/desktop/minishell");
 }
 
-TEST(lexer_parser, 2_commands_with_pipe_with_env3)
+TEST(lexer_parser_expander, 2_commands_with_pipe_with_env3)
 {
 	char input[] = "echo hello world | cat \"hello i am currently in $PWD\"";
 
 	t_token *lst;
-	t_token *lst_head;
 	t_ast   *tree;
 	char **envp = create_envp();
 
 	lst = NULL;
 	ft_lexer(&lst, input);
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	expand_tree(tree, envp);
 	EXPECT_TRUE(tree != nullptr);
 	ASSERT_EQ(tree->type, EXEC_CHAIN);
@@ -222,19 +209,17 @@ TEST(lexer_parser, 2_commands_with_pipe_with_env3)
 	ASSERT_STREQ(tree->child_node->next_sib_node->next_sib_node->child_node->child_node->next_sib_node->value, "hello i am currently in /pwd/desktop/minishell");
 }
 
-TEST(lexer_parser, 3_commands_with_pipe_with_env1)
+TEST(lexer_parser_expander, 3_commands_with_pipe_with_env1)
 {
 	char input[] = "echo hello world | cat \"hello i am currently in $PWD\" | echo \"bye now $ $USER $LANG\"";
 
 	t_token *lst;
-	t_token *lst_head;
 	t_ast   *tree;
 	char **envp = create_envp();
 
 	lst = NULL;
 	ft_lexer(&lst, input);
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	expand_tree(tree, envp);
 	EXPECT_TRUE(tree != nullptr);
 	ASSERT_EQ(tree->type, EXEC_CHAIN);
@@ -268,5 +253,3 @@ TEST(lexer_parser, 3_commands_with_pipe_with_env1)
 	ASSERT_EQ(tree->child_node->next_sib_node->next_sib_node->next_sib_node->next_sib_node->child_node->child_node->next_sib_node->type, TERMINAL);
 	ASSERT_STREQ(tree->child_node->next_sib_node->next_sib_node->next_sib_node->next_sib_node->child_node->child_node->next_sib_node->value, "bye now $  C.UTF-8");
 }
-
-

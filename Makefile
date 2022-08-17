@@ -50,7 +50,8 @@ EXPANDER_FILES = expander.c\
 					remove_quotes.c
 
 EXECUTOR_FILES = executor.c\
-					execute_block.c\
+					handle_redirects.c\
+					handle_pipes.c\
 					extract_ast_data.c\
 					getcmd.c\
 					add_cmd_path.c\

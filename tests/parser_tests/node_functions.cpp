@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/12 14:27:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/19 15:44:58 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/16 15:42:45 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ TEST(add_child, basic)
 	add_child(p, c2);
 	EXPECT_EQ(p->child_node->type, BASE);
 	EXPECT_EQ(p->child_node->next_sib_node->type, ADD_BASE);
-	free_child_nodes(p);
-	free(p);
-	
+	free_ast(p);
 }
 
 TEST(add_child, reverse_traversible_list)
@@ -80,6 +78,5 @@ TEST(add_child, reverse_traversible_list)
 	while (iter->prev_sib_node)
 		iter = iter->prev_sib_node;
 	EXPECT_EQ(iter->type, RD_IN);
-	free_child_nodes(t1);
-	free(t1);
+	free_ast(t1);
 }

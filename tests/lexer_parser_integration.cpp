@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/20 14:54:28 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/10 13:29:41 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/16 17:23:13 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,12 @@ TEST(lexer_parser, basic1)
 	char input[] = "echo hello world";
 
 	t_token *lst;
-	t_token *lst_head;
 
 	t_ast   *tree;
 
 	lst = NULL;
 	ft_lexer(&lst, input);
-	lst_head = lst;
-	tree = parse_tokens(&lst_head); 
+	tree = parse_tokens(lst); 
 	EXPECT_TRUE(tree != nullptr);
 	EXPECT_EQ(tree->child_node->type, EXEC_BLOCK);
 	EXPECT_EQ(tree->child_node->child_node->type, CMD);
@@ -44,6 +42,9 @@ TEST(lexer_parser, basic1)
 				child_node->next_sib_node->value, "hello");
 	EXPECT_STREQ(tree->child_node->child_node->child_node->\
 				next_sib_node->next_sib_node->value, "world");
+
+	ft_lstfree(lst);
+	free_ast(tree);
 }
 
 TEST(lexer_parser, 2_commands_with_pipe)
@@ -51,48 +52,49 @@ TEST(lexer_parser, 2_commands_with_pipe)
 	char input[] = "echo hello world | cat yeet";
 
 	t_token *lst;
-	t_token *lst_head;
 	t_ast   *tree;
 
 	lst = NULL;
 	ft_lexer(&lst, input);
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	EXPECT_TRUE(tree != nullptr);
 	EXPECT_EQ(tree->child_node->type, EXEC_BLOCK);
 	EXPECT_EQ(tree->child_node->next_sib_node->type, TERMINAL);
 	EXPECT_EQ(tree->child_node->next_sib_node->next_sib_node->type, EXEC_BLOCK);
+
+	ft_lstfree(lst);
+	free_ast(tree);
 }
 
 TEST(lexer_parser, invalid_pipe)
 {
 	char 	input[] = "|";
 	t_token *lst = nullptr;
-	t_token *lst_head;
 	t_ast   *tree;
 
 	ft_lexer(&lst, input);
 	EXPECT_EQ(lst->type, PIPE);
 
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	EXPECT_EQ(tree, nullptr);
+	ft_lstfree(lst);
 }
 
 TEST(lexer_parser, lots_of_rds)
 {
 	char	input[] = "< infile < infile > outfile";
 	t_token *lst = nullptr;
-	t_token *lst_head;
 	t_ast   *tree;
 
 	ft_lexer(&lst, input);
 	EXPECT_EQ(lst->type, RDR_IN);
 
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	ASSERT_TRUE(tree != nullptr);
 	EXPECT_EQ(tree->child_node->child_node->type, RDS);
+
+	ft_lstfree(lst);
+	free_ast(tree);
 }
 
 /*
@@ -116,13 +118,28 @@ TEST(lexer_parser, single_cmd)
 {
 	char	input[] = "hello";
 	t_token *lst = nullptr;
-	t_token *lst_head;
 	t_ast   *tree;
 
 	ft_lexer(&lst, input);
 	EXPECT_EQ(lst->type, WORD);
 
-	lst_head = lst;
-	tree = parse_tokens(&lst_head);
+	tree = parse_tokens(lst);
 	EXPECT_TRUE(tree != nullptr);
+
+	ft_lstfree(lst);
+	free_ast(tree);
+}
+
+TEST(lexer_parser, shuffled_cmd_and_redirects)
+{
+	char	input[] = "< infile cat > outfile Makefile";
+	t_token *lst = nullptr;
+	t_ast   *tree;
+
+	ft_lexer(&lst, input);
+	ASSERT_TRUE(lst != nullptr);
+
+	tree = parse_tokens(lst);
+	ASSERT_TRUE(tree != nullptr);
+	EXPECT_EQ(tree->child_node->child_node->type, RDS);
 }
