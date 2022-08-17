@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/08 15:18:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/07/22 16:00:45 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/17 14:24:14 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	rds(t_ast *parent, t_token **list)
 	else if (parent->child_node->type != RDS)
 	{
 		add_child(parent, new_node(RDS));
-		output = parent->child_node->child_node;
+		output = parent->child_node->next_sib_node;
 	}
 	else
 		output = parent->child_node;
