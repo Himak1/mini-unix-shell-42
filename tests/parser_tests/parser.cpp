@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 11:31:33 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/16 17:01:03 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/17 14:01:34 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ TEST(exec_block, basic)
 
 	t_ast	*output = exec_block(&head);
 	EXPECT_EQ(output->type, EXEC_BLOCK);
-	free_ast(output);
+	//ft_lstfree(input);
+
 }
 
 TEST(exec_block, only_rd)
@@ -71,6 +72,7 @@ TEST(exec_block, only_rd)
 	EXPECT_EQ(output->type, EXEC_BLOCK);
 	EXPECT_EQ(output->child_node->type, RDS);
 	free_ast(output);
+	//ft_lstfree(t1);
 }
 
 TEST(parse_pipe, basic)
@@ -81,7 +83,8 @@ TEST(parse_pipe, basic)
 	t_ast	*output = parse_pipe(&head);
 	EXPECT_EQ(output->type, TERMINAL);
 	EXPECT_STREQ(output->value, "|");
-	free(output);
+	free_ast(output);
+	//ft_lstfree(t1);
 }
 
 TEST(parse_token, basic)
@@ -96,6 +99,7 @@ TEST(parse_token, basic)
 	EXPECT_EQ(tree->child_node->next_sib_node, nullptr);
 	EXPECT_STREQ(tree->child_node->child_node->child_node->child_node->value, "<");
 	free_ast(tree);
+	//ft_lstfree(input);
 }
 
 TEST(parse_token, 2_commands)
@@ -104,4 +108,6 @@ TEST(parse_token, 2_commands)
 
 	t_ast	*tree = parse_tokens(list);
 	ASSERT_TRUE(tree != nullptr);
+	//ft_lstfree(list);
+	free_ast(tree);
 }
