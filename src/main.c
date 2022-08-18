@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/18 12:02:24 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/18 12:19:39 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <stdlib.h>
-#include "utils.h"
 #include "lexer.h"
-#include "parser.h"
 #include "expander.h"
 #include "executor.h"
+#include "minishell.h"
 
 static int	count_cmds(t_ast *tree)
 {
@@ -36,27 +35,46 @@ static int	count_cmds(t_ast *tree)
 	return (i);
 }
 
+static void	copy_envp(t_data *data, char *envp[])
+{
+	t_uint	envp_size;
+	t_uint	i;
+
+	i = 0;
+	envp_size = 0;
+	while (envp[envp_size])
+		envp_size++;
+	data->envv = xmalloc((envp_size + 1) * sizeof(char *));
+	while (envp[i])
+	{
+		data->envv[i] = ft_strdup(envp[i]);
+		if (!data->envv[i])
+			exit(EXIT_FAILURE);
+		i++;
+	}
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
+	t_data	data;
 	char	*line;
-	t_token	*lst;
-	t_ast	*tree;
 
 	line = NULL;
 	if (argc == 100 && argv[0][0])
 		return (0); // filler
+	copy_envp(&data, envp);
 	while (1)
 	{
-		lst = NULL;
+		data.lst = NULL;
 		line = readline("Minishell:");
-		ft_lexer(&lst, line);
-		tree = parse_tokens(lst);
-		ft_lstfree(lst);
-		if (tree)
+		ft_lexer(&data.lst, line);
+		data.tree = parse_tokens(data.lst);
+		ft_lstfree(data.lst);
+		if (data.tree)
 		{
-			expand_tree(tree, envp);
-			executor(tree->child_node, count_cmds(tree), envp);
-			free_ast(tree);
+			expand_tree(data.tree, data.envv);
+			executor(data.tree->child_node, count_cmds(data.tree), data.envv);
+			free_ast(data.tree);
 		}
 		free(line);
 	}
