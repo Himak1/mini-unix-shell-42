@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/17 14:23:30 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/17 16:25:46 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,35 +45,6 @@ t_ast	*exec_block(t_token **list)
 	}
 	return (output);
 }
-
-/*
-t_ast	*exec_block(t_token **list)
-{
-	t_ast	*output;
-	int		cmd_parsed;
-	int		status;
-
-	cmd_parsed = 0;
-	output = new_node(EXEC_BLOCK);
-	while (*list)
-	{
-		if (is_rdr(*list))
-			status = rds(output, list);
-		else if (!cmd_parsed && peek_tkn(*list) == WORD)
-		{
-			status = add_child(output, parse_cmd(list));
-			cmd_parsed = 1;
-		}
-		else if (peek_tkn(*list) == PIPE && !cmd_parsed && !output->child_node)
-			status = -1;
-		else if (peek_tkn(*list) == PIPE)
-			break ;
-		if (status == -1)
-			return (handle_syntax_error(output));
-	}
-	return (output);
-}
-*/
 
 t_ast	*parse_pipe(t_token **list)
 {
