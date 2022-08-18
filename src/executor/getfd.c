@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:31:04 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/17 17:11:39 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/18 11:08:21 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	getfd(t_ast *exec_block, t_uint rd_type)
 		else if (iter->type == rd_type && rd_type == RD_OUT)
 			ret_fd = fd_out(rd->child_node->next_sib_node->value);
 		else if (iter->type == rd_type && rd_type == RD_OUT)
-			iter = iter->next_sib_node;
+			
+		iter = iter->next_sib_node;
 	}
 	return (ret_fd);
 }
