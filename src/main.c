@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/18 12:19:39 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/18 17:18:58 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include "lexer.h"
 #include "expander.h"
+#include "heredoc.h"
 #include "executor.h"
 #include "minishell.h"
 
@@ -72,6 +73,7 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_lstfree(data.lst);
 		if (data.tree)
 		{
+			handle_all_heredocs(data.tree->child_node, data.envv);
 			expand_tree(data.tree, data.envv);
 			executor(data.tree->child_node, count_cmds(data.tree), data.envv);
 			free_ast(data.tree);

@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:31:04 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/18 11:08:21 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/18 17:24:41 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int	fd_in(char *filename)
 	return (open(filename, O_RDONLY));
 }
 
+
+
 int	getfd(t_ast *exec_block, t_uint rd_type)
 {
 	t_ast	*iter;
@@ -39,16 +41,18 @@ int	getfd(t_ast *exec_block, t_uint rd_type)
 	iter = iter->child_node;
 	while (iter)
 	{
-		if (iter->type == rd_type && rd_type == RD_IN)
-			ret_fd = fd_in(rd->child_node->next_sib_node->value);
-		else if (iter->type == rd_type && rd_type == RD_OUT)
-			ret_fd = fd_out(rd->child_node->next_sib_node->value);
-		else if (iter->type == rd_type && rd_type == RD_OUT)
-			
-		iter = iter->next_sib_node;
+		if (rd_type == RD_IN)
+			handle_rd_in()
 	}
 	return (ret_fd);
 }
+
+/*
+if (iter->type == rd_type && rd_type == RD_IN)
+	ret_fd = fd_in(rd->child_node->next_sib_node->value);
+else if (iter->type == rd_type && rd_type == RD_OUT)
+	ret_fd = fd_out(rd->child_node->next_sib_node->value);
+*/
 
 /*
 int	getfd(t_ast *exec_block, t_uint rd_type)
