@@ -6,19 +6,12 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/25 12:43:48 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/17 15:00:17 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/18 12:02:30 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
-
-typedef struct s_env_list
-{
-	char				*key;
-	char				*value;
-	struct t_env_list	*next;
-}						t_env_list;
 
 int		pwd(void);
 
