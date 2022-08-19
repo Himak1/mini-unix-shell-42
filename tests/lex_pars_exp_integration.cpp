@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/04 12:35:12 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/15 17:29:03 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/18 16:33:45 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,4 +252,27 @@ TEST(lexer_parser_expander, 3_commands_with_pipe_with_env1)
 	ASSERT_STREQ(tree->child_node->next_sib_node->next_sib_node->next_sib_node->next_sib_node->child_node->child_node->value, "echo");
 	ASSERT_EQ(tree->child_node->next_sib_node->next_sib_node->next_sib_node->next_sib_node->child_node->child_node->next_sib_node->type, TERMINAL);
 	ASSERT_STREQ(tree->child_node->next_sib_node->next_sib_node->next_sib_node->next_sib_node->child_node->child_node->next_sib_node->value, "bye now $  C.UTF-8");
+}
+
+TEST(lexer_parser_expander, underscore)
+{
+	char input[] = "echo $_";
+
+	t_token *lst;
+	t_ast   *tree;
+	char **envp = create_envp();
+
+	lst = NULL;
+	ft_lexer(&lst, input);
+	tree = parse_tokens(lst);
+	expand_tree(tree, envp);
+	EXPECT_TRUE(tree != nullptr);
+	ASSERT_EQ(tree->type, EXEC_CHAIN);
+
+	ASSERT_EQ(tree->child_node->type, EXEC_BLOCK);
+	ASSERT_EQ(tree->child_node->child_node->type, CMD);
+	ASSERT_EQ(tree->child_node->child_node->child_node->type, TERMINAL);
+	ASSERT_STREQ(tree->child_node->child_node->child_node->value, "echo");
+	ASSERT_EQ(tree->child_node->child_node->child_node->next_sib_node->type, TERMINAL);
+	ASSERT_STREQ(tree->child_node->child_node->child_node->next_sib_node->value, "/usr/bin/env");
 }

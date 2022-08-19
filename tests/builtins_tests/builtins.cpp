@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
+/*   builtins.cpp                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/08/15 10:09:10 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/19 15:56:48 by tvan-der      ########   odam.nl         */
+/*   Created: 2022/08/18 15:01:58 by tvan-der      #+#    #+#                 */
+/*   Updated: 2022/08/19 12:43:44 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
-#include "minishell.h"
-#include "builtins.h"
-#include <stdio.h>
+#include "gtest/gtest.h"
 
-int env(char *envp[])
-{
-    int i;
-    
-    i = 0;
-    while (envp[i])
-    {
-        ft_putendl_fd(envp[i], STDOUT_FILENO);
-        i++;
-    }
-    return (0);
+extern "C" {
+#include "utils.h"
+#include "builtins.h"
 }
 
-int exec_env(t_ast *cmd, char *envp[])
+TEST(is_builtin, basic_test1)
 {
-	update_underscore(cmd, envp);
-    env(envp);
-    return (0);
+    
 }

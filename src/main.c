@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/18 12:19:39 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/19 19:08:46 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	copy_envp(t_data *data, char *envp[])
 			exit(EXIT_FAILURE);
 		i++;
 	}
+	data->envv[i] = NULL;
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -63,10 +64,11 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc == 100 && argv[0][0])
 		return (0); // filler
 	copy_envp(&data, envp);
+	// print_envp(data.envv);
 	while (1)
 	{
 		data.lst = NULL;
-		line = readline("Minishell:");
+		line = readline("> ");
 		ft_lexer(&data.lst, line);
 		data.tree = parse_tokens(data.lst);
 		ft_lstfree(data.lst);

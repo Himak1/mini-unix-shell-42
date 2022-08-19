@@ -27,7 +27,9 @@ LEXER_FILES = lexer.c\
 BUILTINS_FILES = pwd.c\
 					echo.c\
 					cd.c\
-					env.c
+					env.c\
+					environment.c\
+					builtins.c
 
 UTILS_FILES = lst_new.c\
 					lst_add_ft.c\
@@ -37,6 +39,7 @@ UTILS_FILES = lst_new.c\
 					ft_free_2d_array.c\
 					lst_new.c\
 					xmalloc.c\
+					ft_get_index_2d.c
 
 PARSER_FILES = cmd.c\
 					node_functions.c\

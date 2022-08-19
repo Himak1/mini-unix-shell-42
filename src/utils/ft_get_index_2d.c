@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
+/*   ft_get_index_2d.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/08/15 10:09:10 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/19 15:56:48 by tvan-der      ########   odam.nl         */
+/*   Created: 2022/06/22 16:16:18 by tvan-der      #+#    #+#                 */
+/*   Updated: 2022/08/18 16:05:22 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
-#include "minishell.h"
-#include "builtins.h"
-#include <stdio.h>
 
-int env(char *envp[])
+int	ft_get_index_2d(char **str_arr, char *str)
 {
-    int i;
-    
-    i = 0;
-    while (envp[i])
-    {
-        ft_putendl_fd(envp[i], STDOUT_FILENO);
-        i++;
-    }
-    return (0);
-}
+	int	i;
 
-int exec_env(t_ast *cmd, char *envp[])
-{
-	update_underscore(cmd, envp);
-    env(envp);
-    return (0);
+	i = 0;
+	while (str_arr[i] != NULL)
+	{
+		if (ft_strnstr(str_arr[i], str, ft_strlen(str_arr[i])) != NULL)
+			return (i);
+		i++;
+	}
+	return (0);
 }

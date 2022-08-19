@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:34 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/17 16:27:03 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/19 19:20:24 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,36 @@ void cd(char **arg)
         if (chdir(arg[1]) != 0)
             perror("Error");
     }
+}
+
+int exec_cd(t_ast *cmd, char *envp[])
+{
+    int index;
+    char **args;
+
+    index = 0;
+    args = extract_args(cmd);
+    printf("args are:\n");
+    while(*args)
+    {
+        printf("%s\n", *args);
+        args++;
+    }
+    if (args)
+	{
+		cd(args);
+		update_underscore(cmd, envp);
+        index = ft_get_index_2d(envp, "PWD=");
+        update_old_pwd(envp);
+        update_pwd(getcwd(NULL, 0), envp);
+		//ft_free_2d_array(args);
+		return (1);
+	}
+	else
+	{
+		//ft_free_2d_array(args);
+		return (0); /// ??
+	}
 }
 
 /*

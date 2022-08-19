@@ -6,11 +6,14 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/26 14:29:19 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/16 12:15:47 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/19 15:30:23 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+#include "parser.h"
+#include "builtins.h"
+#include <stdio.h>
 
 // -n option is used to omit echoing trailing newline
 //		eg. input
@@ -62,13 +65,45 @@ int	get_index_arg(char **arg)
 	return (i);
 }
 
-void	echo(char **arg)
+char	**extract_args(t_ast *cmd)
+{
+	int i;
+	int len;
+	t_ast *iter;
+	char **args;
+
+	i = 0;
+	len = 0;
+	iter = cmd;
+	while (iter->next_sib_node != NULL)
+	{
+		iter = iter->next_sib_node;
+		len++;
+	}
+	args = (char **)malloc(sizeof(char *) * (len + 1));
+	iter = cmd;
+	while (i < len + 1)// && iter->next_sib_node != NULL)
+	{
+		args[i] = ft_strdup(iter->value);
+		i++;
+		iter = iter->next_sib_node;
+	}
+	args[i] = NULL;
+	return (args);
+}
+
+int	echo(char **arg)
 {
 	int i;
 	int index;
 
-	// if (!arg)
-	// 	exit(1); // add correct error code/message
+	if (!arg)
+		return (1); // add correct error code/message
+	if (!ft_strncmp(arg[0], "echo", ft_strlen(arg[0])) && arg[1] == NULL)
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		return (0);
+	}
 	index = get_index_arg(arg);
 	i = index;
 	while (arg[i] != NULL)
@@ -90,7 +125,26 @@ void	echo(char **arg)
 		}
 		i++;
 	}
-	//exit 0?
+	return (0);
+}
+
+int	exec_echo(t_ast *cmd, char *envp[])
+{
+	char **args;
+
+	args = extract_args(cmd);
+	if (args)
+	{
+		echo(args);
+		update_underscore(cmd, envp);
+		//ft_free_2d_array(args);
+		return (1);
+	}
+	else
+	{
+		//ft_free_2d_array(args);
+		return (0); /// ??
+	}
 }
 
 // int main()

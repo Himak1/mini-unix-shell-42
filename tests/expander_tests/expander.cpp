@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 15:18:48 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/12 12:42:33 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/18 16:24:17 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,4 +192,13 @@ TEST(expander, basic_test8)
     expander(&input, envp);
     
     ASSERT_STREQ("echo current dir is /pwd/desktop/minishell", input);
+}
+
+TEST(expander, basic_test9)
+{
+    char *input = ft_strdup("echo $_");
+    char **envp = create_envp();
+    expander(&input, envp);
+    
+    ASSERT_STREQ("echo /usr/bin/env", input);
 }

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 14:08:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/15 17:07:35 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/19 15:02:45 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 extern "C" {
 #include "utils.h"
 #include "builtins.h"
+#include "parser.h"
+#include "lexer.h"
+#include "expander.h"
 }
 
 TEST(check_n, basic_test1)
@@ -84,4 +87,27 @@ TEST(get_index_arg, basic_test3)
 
     int i = get_index_arg(arg);
     ASSERT_EQ(3, i);
+}
+
+TEST(extract_args, basic_test1)
+{
+    char input[] = "echo hello";
+
+    char **args = NULL;
+    t_token *lst;
+	t_ast   *tree;
+    char **envp = create_envp();
+    
+	lst = NULL;
+	ft_lexer(&lst, input);
+	tree = parse_tokens(lst);
+	expand_tree(tree, envp);
+    tree = tree->child_node->child_node;
+    while (tree->type != CMD)
+        tree->next_sib_node;
+    tree = tree->child_node;
+    args = extract_args(tree);
+    ASSERT_STREQ(args[0], "echo");
+    ASSERT_STREQ(args[1], "hello");
+    ASSERT_STREQ(args[2], nullptr);
 }

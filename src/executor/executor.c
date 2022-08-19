@@ -6,12 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/15 12:36:17 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/19 12:59:53 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
 #include "executor.h"
+#include "builtins.h"
 
 static inline t_ast	*prev_block(t_ast *exec_block)
 {
@@ -66,11 +67,34 @@ int	executor(t_ast *exec_block, t_uint cmd_count, char *envp[])
 	status = 0;
 	data.cmd_count = cmd_count;
 	last_cmd = exec_block;
-	while (last_cmd && last_cmd->next_sib_node)
-		last_cmd = last_cmd->next_sib_node;
-	data.pid = fork();
-	if (data.pid == 0)
-		executor_loop(last_cmd, &data, envp);
-	waitpid(data.pid, &status, 0);
+	if (!is_builtin(exec_block, cmd_count))
+	{
+		while (last_cmd && last_cmd->next_sib_node)
+			last_cmd = last_cmd->next_sib_node;
+		data.pid = fork();
+		if (data.pid == 0)
+			executor_loop(last_cmd, &data, envp);
+		waitpid(data.pid, &status, 0);
+	}
+	else
+		exec_builtin(exec_block, envp);
 	return (WEXITSTATUS(status));
 }
+
+// int	executor(t_ast *exec_block, t_uint cmd_count, char *envp[])
+// {
+// 	t_exec	data;
+// 	t_ast	*last_cmd;
+// 	int		status;
+
+// 	status = 0;
+// 	data.cmd_count = cmd_count;
+// 	last_cmd = exec_block;
+// 	while (last_cmd && last_cmd->next_sib_node)
+// 		last_cmd = last_cmd->next_sib_node;
+// 	data.pid = fork();
+// 	if (data.pid == 0)
+// 		executor_loop(last_cmd, &data, envp);
+// 	waitpid(data.pid, &status, 0);
+// 	return (WEXITSTATUS(status));
+// }
