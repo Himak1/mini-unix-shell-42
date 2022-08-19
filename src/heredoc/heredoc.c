@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/17 17:05:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/18 17:30:01 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/19 11:56:29 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,54 @@ static t_ast	*get_rd(t_ast *exec_block)
 		return (NULL);
 }
 
+int	single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i)
+{
+	t_ast	*node;
+	char	*tmp_file;
+	int		file_fd;
+
+	if (rd->value == RD_DE)
+	{
+		node = rd_iter->child_node->next_sib_node;
+		tmp_file = create_tmp_filename(tmp_filepath, i);
+		file_fd = open(tmp_file, O_CREAT | O_WRONLY, 0666);
+		read_write_to_tmp(node->value, \
+						file_fd, envv);
+		close(file_fd);
+		free(node->value);
+		node->value = tmp_file;
+		return (i + 1);
+	}
+	return (i);
+}
+
+void	handle_all_heredocs(t_ast *exec_block, char *envv[])
+{
+	char	*tmp_filepath;
+	t_ast	*rd_iter;
+	int		pid;
+	int		i;
+
+	i = 0;
+	pid = fork();
+	if (pid == 0)
+	{
+		tmp_filepath = find_tmp_filepath();
+		while (exec_block)
+		{
+			rd_iter = get_rd(exec_block);
+			while (rd_iter)
+			{
+				i = single_heredoc(tmp_filepath, rd_iter, envv, i);
+				rd_iter = rd_iter->next_sib_node;
+			}
+		}
+		exit(0);
+	}
+	wait(0);
+}
+
+/*
 void	single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i)
 {
 	t_ast	*node;
@@ -52,7 +100,9 @@ void	single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i)
 	free(node->value);
 	node->value = tmp_file;
 }
+*/
 
+/*
 void	handle_all_heredocs(t_ast *exec_block, char *envv[])
 {
 	t_ast	*rd_iter;
@@ -77,3 +127,4 @@ void	handle_all_heredocs(t_ast *exec_block, char *envv[])
 	}
 	free(tmp_filepath);
 }
+*/
