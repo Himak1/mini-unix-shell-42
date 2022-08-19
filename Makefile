@@ -4,6 +4,7 @@ NAME = minishell
 VPATH = src:\
 		src/lexer:\
 		src/parser:\
+		src/heredoc:\
 		src/expander:\
 		src/executor:\
 		src/builtins:\
@@ -16,6 +17,7 @@ SRC_FILES = main.c\
 			$(UTILS_FILES)\
 			$(LEXER_FILES)\
 			$(PARSER_FILES)\
+			$(HEREDOC_FILES)\
 			$(EXPANDER_FILES)\
 			$(BUILTINS_FILES)\
 			$(EXECUTOR_FILES)
@@ -43,6 +45,10 @@ PARSER_FILES = cmd.c\
 					parser.c\
 					redirect.c\
 					utility_functions.c
+
+HEREDOC_FILES = heredoc.c\
+				file_handling.c\
+				read_write_to_tmp.c
 
 EXPANDER_FILES = expander.c\
 					expand_utils.c\

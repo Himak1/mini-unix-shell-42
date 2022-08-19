@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:07:42 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/18 17:26:46 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/19 14:48:19 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*find_tmp_filepath(void)
 		tmpdir = ft_strdup(env);
 	if (!tmpdir)
 		exit(EXIT_FAILURE);
+	return (tmpdir);
 }
 
 char	*create_tmp_filename(char *tmp_filepath, int i)

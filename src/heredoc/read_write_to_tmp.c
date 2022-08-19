@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:55:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/18 16:11:03 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/19 14:48:45 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ int	read_write_to_tmp(char *delimiter, int fd, char *envv[])
 		free(line);
 	}
 	free(line);
+	return (0);
 }

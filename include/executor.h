@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:30:21 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/15 12:30:45 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/19 14:42:32 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void	close_pipe(t_exec *data, t_uint i);
 void	choose_pipe(t_exec *data, t_uint i);
 
 void	extract_ast_data(t_ast *exec_block, t_exec *data);
-int		getfd(t_ast *exec_block, t_uint rd_type);
+//int		getfd(t_ast *exec_block, t_uint rd_type);
+int		getfd_in(t_ast *exec_block);
+int		getfd_out(t_ast *exec_block);
 char	**getcmd(t_ast *exec_block);
 void	add_cmd_path(char **cmd);
 

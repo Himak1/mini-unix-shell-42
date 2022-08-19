@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 12:41:17 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/17 11:44:03 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/19 14:28:59 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_ast	*parse_pipe(t_token **list);
 
 t_ast	*exec_block(t_token **list);
 int		parse_cmd(t_ast *parent, t_token **list);
-//t_ast	*parse_cmd(t_token **list);
 
 int		rds(t_ast *parent, t_token **list);
 t_ast	*rd_in(t_token **list);
@@ -53,6 +52,7 @@ t_ast	*rd_out(t_token **list);
 
 t_uint	peek_tkn(t_token *token);
 t_uint	next_2_tkn(t_token *token, t_uint type1, t_uint type2);
+t_ast	*get_rd(t_ast *exec_block);
 
 void	free_ast(t_ast *parent);
 
