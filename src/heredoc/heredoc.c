@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/17 17:05:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/19 14:47:54 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/21 17:40:02 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "parser.h"
 #include "heredoc.h"
 
+#include <stdio.h>
 static t_ast	*next_exec_block(t_ast *exec_block)
 {
 	exec_block = exec_block->next_sib_node;
@@ -29,7 +30,7 @@ int	single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i)
 	char	*tmp_file;
 	int		file_fd;
 
-	if (rd->type== RD_DE)
+	if (rd->type == RD_DE)
 	{
 		node = rd->child_node->next_sib_node;
 		tmp_file = create_tmp_filename(tmp_filepath, i);
@@ -39,6 +40,8 @@ int	single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i)
 		close(file_fd);
 		free(node->value);
 		node->value = tmp_file;
+		fprintf(stderr, "single_heredoc: %d\n", node->type);
+		fprintf(stderr, "single_heredoc: %s\n", node->value);
 		return (i + 1);
 	}
 	return (i);
