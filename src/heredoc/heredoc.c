@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/17 17:05:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/21 17:40:02 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/21 18:13:06 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,19 @@ static t_ast	*next_exec_block(t_ast *exec_block)
 
 int	single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i)
 {
-	t_ast	*node;
 	char	*tmp_file;
 	int		file_fd;
 
 	if (rd->type == RD_DE)
 	{
-		node = rd->child_node->next_sib_node;
 		tmp_file = create_tmp_filename(tmp_filepath, i);
 		file_fd = open(tmp_file, O_CREAT | O_WRONLY, 0666);
-		read_write_to_tmp(node->value, \
+		read_write_to_tmp(rd->child_node->next_sib_node->value, \
 						file_fd, envv);
 		close(file_fd);
-		free(node->value);
-		node->value = tmp_file;
-		fprintf(stderr, "single_heredoc: %d\n", node->type);
-		fprintf(stderr, "single_heredoc: %s\n", node->value);
+		free(rd->child_node->next_sib_node->value);
+		rd->child_node->next_sib_node->value = tmp_file;
+		fprintf(stderr, "single_heredoc: %s\n", rd->child_node->next_sib_node->value);
 		return (i + 1);
 	}
 	return (i);
