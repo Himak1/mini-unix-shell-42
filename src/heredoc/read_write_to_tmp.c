@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:55:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/19 14:48:45 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/22 14:27:03 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,13 @@
 int	read_write_to_tmp(char *delimiter, int fd, char *envv[])
 {
 	char	*line;
-	size_t	delimiter_len;
 
-	delimiter_len = ft_strlen(delimiter);
 	while (1)
 	{
 		line = readline(">");
 		if (!line)
 			exit(EXIT_FAILURE);
-		if (ft_strncmp(delimiter, line, delimiter_len) == 0)
+		if (ft_strncmp(delimiter, line, ft_strlen(line)) == 0)
 			break ;
 		expander(&line, envv);
 		write(fd, line, ft_strlen(line));

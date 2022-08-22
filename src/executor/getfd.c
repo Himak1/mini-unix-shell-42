@@ -6,14 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:31:04 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/21 18:15:29 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/22 12:02:35 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "executor.h"
 
-#include <stdio.h>
 int	getfd_in(t_ast *exec_block)
 {
 	t_ast	*iter;
@@ -28,7 +27,6 @@ int	getfd_in(t_ast *exec_block)
 			if (ret_fd != 0)
 				close(ret_fd);
 			ret_fd = open(iter->child_node->next_sib_node->value, O_RDONLY);
-			fprintf(stderr, "getfd_in: %s\n", iter->child_node->next_sib_node->value);
 			if (iter->type == RD_DE)
 				unlink(iter->child_node->next_sib_node->value);
 		}

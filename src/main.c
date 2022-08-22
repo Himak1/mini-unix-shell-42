@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/18 17:18:58 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/22 14:24:17 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "executor.h"
 #include "minishell.h"
 
+#include <stdio.h>
 static int	count_cmds(t_ast *tree)
 {
 	t_ast	*iter;
@@ -53,6 +54,7 @@ static void	copy_envp(t_data *data, char *envp[])
 			exit(EXIT_FAILURE);
 		i++;
 	}
+	data->envv[i] = NULL;
 }
 
 int	main(int argc, char *argv[], char *envp[])
