@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   signal_handling.h                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/08/18 11:53:21 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/22 14:50:01 by jhille        ########   odam.nl         */
+/*   Created: 2022/08/22 16:16:05 by jhille        #+#    #+#                 */
+/*   Updated: 2022/08/22 16:16:33 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-# include "parser.h"
+#ifndef SIGNAL_HANDLING_H
+# define SIGNAL_HANDLING_H
 
-typedef struct s_data
-{
-	t_token	*lst;
-	t_ast	*tree;
-	char	**envv;
-}			t_data;
+
 
 #endif

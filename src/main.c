@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/22 14:24:17 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/22 17:16:50 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include "executor.h"
 #include "minishell.h"
 
-#include <stdio.h>
 static int	count_cmds(t_ast *tree)
 {
 	t_ast	*iter;
@@ -62,10 +61,10 @@ int	main(int argc, char *argv[], char *envp[])
 	t_data	data;
 	char	*line;
 
-	line = NULL;
 	if (argc == 100 && argv[0][0])
 		return (0); // filler
 	copy_envp(&data, envp);
+	signal(SIGINT, SIG_IGN);
 	while (1)
 	{
 		data.lst = NULL;
