@@ -8,6 +8,7 @@ VPATH = src:\
 		src/expander:\
 		src/executor:\
 		src/builtins:\
+		src/signal_handling:\
 		src/utils
 
 OBJ = $(addprefix obj/, $(SRC_FILES:.c=.o))
@@ -20,11 +21,12 @@ SRC_FILES = main.c\
 			$(HEREDOC_FILES)\
 			$(EXPANDER_FILES)\
 			$(BUILTINS_FILES)\
-			$(EXECUTOR_FILES)
+			$(EXECUTOR_FILES)\
+			$(SIGNAL_HANDLING_FILES)
 			
 
 LEXER_FILES = lexer.c\
-					split_command_line.c
+				split_command_line.c
 
 BUILTINS_FILES = pwd.c\
 					echo.c\
@@ -32,19 +34,19 @@ BUILTINS_FILES = pwd.c\
 					env.c
 
 UTILS_FILES = lst_new.c\
-					lst_add_ft.c\
-					lst_add_bk.c\
-					lst_clear.c\
-					ft_lstfree.c\
-					ft_free_2d_array.c\
-					lst_new.c\
-					xmalloc.c\
+				lst_add_ft.c\
+				lst_add_bk.c\
+				lst_clear.c\
+				ft_lstfree.c\
+				ft_free_2d_array.c\
+				lst_new.c\
+				xmalloc.c\
 
 PARSER_FILES = cmd.c\
-					node_functions.c\
-					parser.c\
-					redirect.c\
-					utility_functions.c
+				node_functions.c\
+				parser.c\
+				redirect.c\
+				utility_functions.c
 
 HEREDOC_FILES = heredoc.c\
 				file_handling.c\
@@ -62,6 +64,8 @@ EXECUTOR_FILES = executor.c\
 					getcmd.c\
 					add_cmd_path.c\
 					getfd.c
+
+SIGNAL_HANDLING_FILES = signal_handling.c
 
 INC = -Ilibft -Iinclude
 
