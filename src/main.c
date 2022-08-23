@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/23 14:02:26 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/23 14:06:05 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		else
 			prompt_fresh();
-		free(line);
+		if (line)
+			free(line);
 	}
 	return (0);
 }
