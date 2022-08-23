@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/23 13:49:15 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/23 14:02:26 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc == 100 && argv[0][0])
 		return (0); // filler
 	copy_envp(&data, envp);
-	data.sa.sa_handler = prompt_reset;
+	data.sa.sa_handler = prompt_interrupt;
 	sigaction(SIGINT, &data.sa, NULL);
 	while (1)
 	{
@@ -87,7 +87,7 @@ int	main(int argc, char *argv[], char *envp[])
 			}
 		}
 		else
-			write(1, "\n", 1);
+			prompt_fresh();
 		free(line);
 	}
 	return (0);
