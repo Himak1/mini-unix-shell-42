@@ -6,14 +6,14 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/23 14:06:05 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/23 16:40:48 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <readline/readline.h>
-#include <stdlib.h>
+#include <readline/history.h>
 #include "lexer.h"
 #include "expander.h"
 #include "heredoc.h"
@@ -21,7 +21,7 @@
 #include "signal_handling.h"
 #include "minishell.h"
 
-int	g_signal;
+int	g_signal = 0;
 
 static int	count_cmds(t_ast *tree)
 {
@@ -68,28 +68,23 @@ int	main(int argc, char *argv[], char *envp[])
 		return (0); // filler
 	copy_envp(&data, envp);
 	data.sa.sa_handler = prompt_interrupt;
+	data.sa.sa_flags = 0;
 	sigaction(SIGINT, &data.sa, NULL);
 	while (1)
 	{
 		data.lst = NULL;
 		line = readline("Minishell:");
-		if (g_signal == 0)
+		ft_lexer(&data.lst, line);
+		data.tree = parse_tokens(data.lst);
+		ft_lstfree(data.lst);
+		if (data.tree && g_signal != 1)
 		{
-			ft_lexer(&data.lst, line);
-			data.tree = parse_tokens(data.lst);
-			ft_lstfree(data.lst);
-			if (data.tree && g_signal != 1)
-			{
-				handle_all_heredocs(data.tree->child_node, data.envv);
-				expand_tree(data.tree, data.envv);
-				executor(data.tree->child_node, count_cmds(data.tree), data.envv);
-				free_ast(data.tree);
-			}
+			handle_all_heredocs(data.tree->child_node, data.envv);
+			expand_tree(data.tree, data.envv);
+			executor(data.tree->child_node, count_cmds(data.tree), data.envv);
+			free_ast(data.tree);
 		}
-		else
-			prompt_fresh();
-		if (line)
-			free(line);
+		free(line);
 	}
 	return (0);
 }

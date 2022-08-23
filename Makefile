@@ -23,7 +23,6 @@ SRC_FILES = main.c\
 			$(BUILTINS_FILES)\
 			$(EXECUTOR_FILES)\
 			$(SIGNAL_HANDLING_FILES)
-			
 
 LEXER_FILES = lexer.c\
 				split_command_line.c
@@ -67,7 +66,9 @@ EXECUTOR_FILES = executor.c\
 
 SIGNAL_HANDLING_FILES = signal_handling.c
 
-INC = -Ilibft -Iinclude
+READLINE_PATH = vendor/readline
+
+INC = -Ilibft -Iinclude -I$(READLINE_PATH)/include
 
 ifdef DEBUG
  CFLAGS = -Wextra -Wall -Werror -fsanitize=address -g
@@ -79,8 +80,8 @@ endif
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
-		$(CC) $(CFLAGS) $(INC) -lreadline -o $@ $^
+$(NAME): readline $(LIBFT) $(OBJ)
+		$(CC) $(CFLAGS) $(INC) -L$(READLINE_PATH)/lib -lreadline -o $@ $^
 
 debug:
 	$(MAKE) DEBUG=1 all
@@ -88,6 +89,9 @@ debug:
 obj/%.o: %.c
 		@mkdir -p obj
 		$(CC) $(CFLAGS) $(INC) -c -o $@ $^
+
+readline:
+		sh ./install_readline.sh
 
 $(LIBFT): 
 		$(LIBFT_MAKE)
