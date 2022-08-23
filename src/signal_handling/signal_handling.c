@@ -6,19 +6,20 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 11:33:51 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/23 17:54:02 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/23 18:14:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "signal_handling.h"
 
 void	prompt_interrupt(int num)
 {
-	if (num || !num)
+	if (num == SIGINT)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
