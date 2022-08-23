@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/23 16:40:48 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/23 17:37:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 #include "executor.h"
 #include "signal_handling.h"
 #include "minishell.h"
-
-int	g_signal = 0;
 
 static int	count_cmds(t_ast *tree)
 {
@@ -77,7 +75,7 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_lexer(&data.lst, line);
 		data.tree = parse_tokens(data.lst);
 		ft_lstfree(data.lst);
-		if (data.tree && g_signal != 1)
+		if (data.tree)
 		{
 			handle_all_heredocs(data.tree->child_node, data.envv);
 			expand_tree(data.tree, data.envv);
