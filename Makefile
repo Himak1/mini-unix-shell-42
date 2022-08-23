@@ -78,9 +78,9 @@ else
  LIBFT_MAKE = make -sC libft
 endif
 
-all: $(NAME)
+all: readline $(NAME)
 
-$(NAME): readline $(LIBFT) $(OBJ)
+$(NAME): $(LIBFT) $(OBJ)
 		$(CC) $(CFLAGS) $(INC) -L$(READLINE_PATH)/lib -lreadline -o $@ $^
 
 debug:
@@ -90,7 +90,10 @@ obj/%.o: %.c
 		@mkdir -p obj
 		$(CC) $(CFLAGS) $(INC) -c -o $@ $^
 
-readline:
+readline: $(READLINE_PATH)
+
+$(READLINE_PATH):
+		@mkdir -p vendor
 		sh ./install_readline.sh
 
 $(LIBFT): 

@@ -6,11 +6,10 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/17 17:05:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/22 12:04:27 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/23 17:13:40 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
 #include <fcntl.h>
 #include "parser.h"
 #include "heredoc.h"

@@ -6,10 +6,11 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:55:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/22 14:27:03 by jhille        ########   odam.nl         */
+/*   Updated: 2022/08/23 17:12:46 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <readline/readline.h>
 #include "expander.h"
 
