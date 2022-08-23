@@ -100,6 +100,7 @@ $(LIBFT):
 clean:
 		rm -rf obj
 		make fclean -C libft
+		rm -rf vendor
 
 fclean: clean
 		rm -rf $(NAME)
