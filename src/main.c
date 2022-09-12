@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/23 18:13:49 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/12 14:12:18 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (data.tree)
 		{
 			handle_all_heredocs(data.tree->child_node, data.envv);
+			sigaction(SIGINT, &data.sa, NULL);
 			expand_tree(data.tree, data.envv);
 			executor(data.tree->child_node, count_cmds(data.tree), data.envv);
 			free_ast(data.tree);

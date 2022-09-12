@@ -6,18 +6,23 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:55:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/23 17:12:46 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/12 14:11:05 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <readline/readline.h>
 #include "expander.h"
+#include "signal_handling.h"
 
 int	read_write_to_tmp(char *delimiter, int fd, char *envv[])
 {
-	char	*line;
+	char				*line;
+	struct sigaction	sa;
 
+	sa.sa_handler = heredoc_interrupt;
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
 	while (1)
 	{
 		line = readline(">");
@@ -31,5 +36,6 @@ int	read_write_to_tmp(char *delimiter, int fd, char *envv[])
 		free(line);
 	}
 	free(line);
+	exit(EXIT_SUCCESS);
 	return (0);
 }

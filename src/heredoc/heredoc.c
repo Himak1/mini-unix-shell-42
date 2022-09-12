@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/17 17:05:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/23 17:13:40 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/12 14:11:47 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,36 @@ int	single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i)
 {
 	char	*tmp_file;
 	int		file_fd;
+	int		input_pipe[2];
+	int		pid;
+
+	if (rd->type == RD_DE)
+	{
+		tmp_file = create_tmp_filename(tmp_filepath, i);
+		file_fd = open(tmp_file, O_CREAT | O_WRONLY, 0666);
+		signal(SIGINT, SIG_IGN);
+		pipe(input_pipe);
+		pid = fork();
+		if (pid == 0)
+			read_write_to_tmp(rd->child_node->next_sib_node->value, \
+							file_fd, envv);
+		dup2(input_pipe[0], file_fd);
+		close(input_pipe[0]);
+		close(input_pipe[1]);
+		wait(0);
+		close(file_fd);
+		free(rd->child_node->next_sib_node->value);
+		rd->child_node->next_sib_node->value = tmp_file;
+		return (i + 1);
+	}
+	return (i);
+}
+
+/*
+int	single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i)
+{
+	char	*tmp_file;
+	int		file_fd;
 
 	if (rd->type == RD_DE)
 	{
@@ -40,6 +70,7 @@ int	single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i)
 	}
 	return (i);
 }
+*/
 
 void	handle_all_heredocs(t_ast *exec_block, char *envv[])
 {
