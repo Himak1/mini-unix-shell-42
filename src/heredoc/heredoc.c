@@ -6,11 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/17 17:05:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/12 14:11:47 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/12 15:08:23 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include <sys/wait.h>
+#include <signal.h>
 #include "parser.h"
 #include "heredoc.h"
 
