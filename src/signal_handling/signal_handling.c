@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 11:33:51 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/12 14:01:08 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/12 16:50:22 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	heredoc_interrupt(int num)
 	if (num == SIGINT)
 	{
 		write(1, "\n", 1);
+		rl_clear_history();
 		exit(EXIT_FAILURE);
 	}
 }

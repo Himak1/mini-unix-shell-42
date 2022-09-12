@@ -67,6 +67,7 @@ EXECUTOR_FILES = executor.c\
 SIGNAL_HANDLING_FILES = signal_handling.c
 
 READLINE_PATH = vendor/readline
+READLINE_LINK = -L vendor/readline/lib -l readline -l ncurses
 
 INC = -Ilibft -Iinclude -I$(READLINE_PATH)/include
 
@@ -80,8 +81,8 @@ endif
 
 all: readline $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
-		$(CC) $(CFLAGS) $(INC) -L$(READLINE_PATH)/lib -lreadline -o $@ $^
+$(NAME): $(OBJ) $(LIBFT)
+		$(CC) $(CFLAGS) $(INC) -o $@ $^ $(READLINE_LINK)
 
 debug:
 	$(MAKE) DEBUG=1 all
