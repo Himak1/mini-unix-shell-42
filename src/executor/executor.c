@@ -6,14 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/22 14:08:14 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/12 17:17:40 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
 #include "executor.h"
 
-#include <stdio.h>
 static inline t_ast	*prev_block(t_ast *exec_block)
 {
 	exec_block = exec_block->prev_sib_node;
@@ -31,7 +30,6 @@ static inline void	execute(t_exec *data, char *envp[])
 		if (access(data->cmd[0], X_OK) != 0)
 			exit(EXIT_FAILURE);
 		execve(data->cmd[0], data->cmd, envp);
-		fprintf(stderr, "%s\n", data->cmd[0]);
 	}
 	exit(0);
 }
@@ -70,6 +68,7 @@ int	executor(t_ast *exec_block, t_uint cmd_count, char *envp[])
 	int		status;
 
 	status = 0;
+	init_pipes(data.pip1, data.pip2);
 	data.cmd_count = cmd_count;
 	last_cmd = exec_block;
 	while (last_cmd && last_cmd->next_sib_node)

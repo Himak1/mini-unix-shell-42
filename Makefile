@@ -75,7 +75,7 @@ ifdef DEBUG
  CFLAGS = -Wextra -Wall -Werror -fsanitize=address -g
  LIBFT_MAKE = make debug -sC libft
 else
- CFLAGS = -Wextra -Wall -Werror
+ CFLAGS = -Wextra -Wall -Werror -g
  LIBFT_MAKE = make -sC libft
 endif
 
@@ -104,9 +104,9 @@ $(LIBFT):
 clean:
 		rm -rf obj
 		make fclean -C libft
-		rm -rf vendor
 
 fclean: clean
+		rm -rf vendor
 		rm -rf $(NAME)
 
 re: fclean all
