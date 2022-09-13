@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/13 13:53:13 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 14:23:39 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,6 @@
 #include "executor.h"
 #include "signal_handling.h"
 #include "minishell.h"
-
-static int	count_cmds(t_ast *tree)
-{
-	t_ast	*iter;
-	int		i;
-
-	i = 0;
-	iter = tree->child_node;
-	while (iter)
-	{
-		if (iter->type == EXEC_BLOCK)
-			i++;
-		iter = iter->next_sib_node;
-	}
-	return (i);
-}
 
 static void	copy_envp(t_data *data, char *envp[])
 {
@@ -79,7 +63,7 @@ int	main(int argc, char *argv[], char *envp[])
 			if (handle_all_heredocs(&data) != -1)
 			{
 				expand_tree(data.tree, data.envv);
-				executor(data.tree->child_node, count_cmds(data.tree), data.envv);
+				executor(data.tree, data.envv);
 			}
 			free_ast(data.tree);
 		}

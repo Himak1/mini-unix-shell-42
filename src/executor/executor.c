@@ -6,12 +6,28 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 11:13:51 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 14:23:59 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
 #include "executor.h"
+
+static int	count_cmds(t_ast *tree)
+{
+	t_ast	*iter;
+	int		i;
+
+	i = 0;
+	iter = tree->child_node;
+	while (iter)
+	{
+		if (iter->type == EXEC_BLOCK)
+			i++;
+		iter = iter->next_sib_node;
+	}
+	return (i);
+}
 
 static inline t_ast	*prev_block(t_ast *exec_block)
 {
@@ -61,7 +77,7 @@ void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[])
 	execute(data, envp);
 }
 
-int	executor(t_ast *exec_block, t_uint cmd_count, char *envp[])
+int	executor(t_ast *tree, char *envp[])
 {
 	t_exec	data;
 	t_ast	*last_cmd;
@@ -69,8 +85,8 @@ int	executor(t_ast *exec_block, t_uint cmd_count, char *envp[])
 
 	status = 0;
 	//init_pipes(data.pip1, data.pip2);
-	data.cmd_count = cmd_count;
-	last_cmd = exec_block;
+	data.cmd_count = count_cmds(tree);
+	last_cmd = tree->child_node;
 	while (last_cmd && last_cmd->next_sib_node)
 		last_cmd = last_cmd->next_sib_node;
 	data.pid = fork();
