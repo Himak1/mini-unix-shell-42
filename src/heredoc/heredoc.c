@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/17 17:05:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 17:12:07 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 17:56:57 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include "parser.h"
 #include "heredoc.h"
 
-#include <stdio.h>
 static t_ast	*next_exec_block(t_ast *exec_block)
 {
 	exec_block = exec_block->next_sib_node;
@@ -25,42 +24,25 @@ static t_ast	*next_exec_block(t_ast *exec_block)
 	return (exec_block);
 }
 
-static int	fork_for_input(t_ast *rd_de_term, char *envv[], int file_fd)
-{
-	int	pid;
-	int	in_pipe[2];
-	int	status;
-
-	pipe(in_pipe);
-	pid = fork();
-	if (pid == 0)
-	{
-		close(file_fd);
-		read_write_to_tmp(rd_de_term->value, in_pipe, file_fd, envv);
-	}
-	fprintf(stderr, "%d\n", file_fd);
-	dup2(in_pipe[0], file_fd);
-	close(in_pipe[0]);
-	close(in_pipe[1]);
-	waitpid(pid, &status, 0);
-	return (WEXITSTATUS(status));
-}
-
 int	single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i)
 {
 	char	*tmp_file;
 	int		file_fd;
 	int		status;
+	int		pid;
 
 	if (rd->type != RD_DE)
 		return (i);
 	tmp_file = create_tmp_filename(tmp_filepath, i);
 	file_fd = open(tmp_file, O_CREAT | O_WRONLY, 0666);
-	status = fork_for_input(rd->child_node->next_sib_node, envv, file_fd);
+	pid = fork();
+	if (pid == 0)
+		read_write_to_tmp(rd->child_node->next_sib_node->value, file_fd, envv);
 	close(file_fd);
+	waitpid(pid, &status, 0);
 	free(rd->child_node->next_sib_node->value);
 	rd->child_node->next_sib_node->value = tmp_file;
-	if (status == EXIT_FAILURE)
+	if (WEXITSTATUS(status) == EXIT_FAILURE)
 		return (-1);
 	return (i + 1);
 }
