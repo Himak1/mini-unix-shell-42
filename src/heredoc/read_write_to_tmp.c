@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:55:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 11:06:18 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 13:47:18 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "expander.h"
 #include "signal_handling.h"
 
-int	read_write_to_tmp(char *delimiter, int fd, char *envv[])
+void	read_write_to_tmp(char *delimiter, int fd, char *envv[])
 {
 	char				*line;
 	struct sigaction	child_sigint_h;
@@ -37,5 +37,4 @@ int	read_write_to_tmp(char *delimiter, int fd, char *envv[])
 	free(line);
 	rl_clear_history();
 	exit(EXIT_SUCCESS);
-	return (0);
 }

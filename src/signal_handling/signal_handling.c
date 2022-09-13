@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 11:33:51 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 11:08:46 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 11:41:17 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	heredoc_interrupt(int num)
 	{
 		write(1, "\n", 1);
 		rl_clear_history();
+		rl_on_new_line();
 		exit(EXIT_FAILURE);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/15 16:57:58 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 11:27:24 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*concatenate_path(const char *path_dir, const char *cmd)
 	char	*cmd_with_path;
 
 	total_len = ft_strlen(path_dir) + ft_strlen(cmd) + 2;
-	cmd_with_path = xmalloc(total_len * sizeof(char));
+	cmd_with_path = ft_xmalloc(total_len * sizeof(char));
 	ft_strlcpy(cmd_with_path, path_dir, total_len);
 	ft_strlcat(cmd_with_path, "/", total_len);
 	ft_strlcat(cmd_with_path, cmd, total_len);

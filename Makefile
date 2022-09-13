@@ -39,7 +39,7 @@ UTILS_FILES = lst_new.c\
 				ft_lstfree.c\
 				ft_free_2d_array.c\
 				lst_new.c\
-				xmalloc.c\
+				ft_xmalloc.c\
 
 PARSER_FILES = cmd.c\
 				node_functions.c\

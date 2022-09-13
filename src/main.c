@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/13 11:04:53 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 13:53:13 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	copy_envp(t_data *data, char *envp[])
 	envp_size = 0;
 	while (envp[envp_size])
 		envp_size++;
-	data->envv = xmalloc((envp_size + 1) * sizeof(char *));
+	data->envv = ft_xmalloc((envp_size + 1) * sizeof(char *));
 	while (envp[i])
 	{
 		data->envv[i] = ft_strdup(envp[i]);
@@ -76,10 +76,11 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_lstfree(data.lst);
 		if (data.tree)
 		{
-			handle_all_heredocs(data.tree->child_node, data.envv);
-			sigaction(SIGINT, &data.sigint_h, NULL);
-			expand_tree(data.tree, data.envv);
-			executor(data.tree->child_node, count_cmds(data.tree), data.envv);
+			if (handle_all_heredocs(&data) != -1)
+			{
+				expand_tree(data.tree, data.envv);
+				executor(data.tree->child_node, count_cmds(data.tree), data.envv);
+			}
 			free_ast(data.tree);
 		}
 		free(line);
