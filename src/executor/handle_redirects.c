@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/12 15:27:38 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/15 16:47:33 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 16:01:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 	first command to be executed
 */
 #include <stdio.h>
-
 static inline void	first_cmd(t_exec *data)
 {
 	if (data->fd_in != 0)

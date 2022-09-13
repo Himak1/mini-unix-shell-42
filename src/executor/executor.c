@@ -6,13 +6,14 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 14:23:59 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 15:55:06 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
 #include "executor.h"
 
+#include <stdio.h>
 static int	count_cmds(t_ast *tree)
 {
 	t_ast	*iter;
@@ -55,9 +56,12 @@ void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[])
 	t_uint	i;
 
 	i = data->cmd_count;
+	init_pipes(data->pip1, data->pip2);
 	while (i != 0 && exec_block)
 	{
 		choose_pipe(data, i);
+		fprintf(stderr, "[%d][%d] || [%d][%d]\n", data->pip1[0], data->pip1[1],\
+				data->pip2[0], data->pip2[1]);
 		extract_ast_data(exec_block, data);
 		handle_redirects(data, i);
 		if (i != 1)
@@ -84,7 +88,6 @@ int	executor(t_ast *tree, char *envp[])
 	int		status;
 
 	status = 0;
-	//init_pipes(data.pip1, data.pip2);
 	data.cmd_count = count_cmds(tree);
 	last_cmd = tree->child_node;
 	while (last_cmd && last_cmd->next_sib_node)
