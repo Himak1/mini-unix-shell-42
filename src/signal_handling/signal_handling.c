@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 11:33:51 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/12 16:50:22 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 11:08:46 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "signal_handling.h"
+
+void	init_sigaction(struct sigaction *sa, void (*handler)(int))
+{
+	sa->sa_handler = handler;
+	sa->sa_flags = 0;
+	sigemptyset(&sa->sa_mask);
+}
 
 void	prompt_interrupt(int num)
 {

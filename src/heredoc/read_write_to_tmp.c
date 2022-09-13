@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:55:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/12 16:51:02 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 11:06:18 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@
 int	read_write_to_tmp(char *delimiter, int fd, char *envv[])
 {
 	char				*line;
-	struct sigaction	sa;
+	struct sigaction	child_sigint_h;
 
-	sa.sa_handler = heredoc_interrupt;
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
+	init_sigaction(&child_sigint_h, heredoc_interrupt);
+	sigaction(SIGINT, &child_sigint_h, NULL);
 	while (1)
 	{
 		line = readline(">");

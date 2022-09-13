@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:30:21 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/12 17:05:35 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 11:13:38 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		executor(t_ast *ast, t_uint cmd_count, char *envp[]);
 void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[]);
 void	handle_redirects(t_exec *data, t_uint i);
 
-void	init_pipes(int *pip1, int *pip2);
+//void	init_pipes(int *pip1, int *pip2);
 void	close_pipe(t_exec *data, t_uint i);
 void	choose_pipe(t_exec *data, t_uint i);
 

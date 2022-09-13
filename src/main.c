@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/12 16:58:29 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 11:04:53 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,8 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc == 100 && argv[0][0])
 		return (0); // filler
 	copy_envp(&data, envp);
-	data.sa.sa_handler = prompt_interrupt;
-	data.sa.sa_flags = 0;
-	sigaction(SIGINT, &data.sa, NULL);
+	init_sigaction(&data.sigint_h, prompt_interrupt);
+	sigaction(SIGINT, &data.sigint_h, NULL);
 	while (1)
 	{
 		data.lst = NULL;
@@ -78,7 +77,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (data.tree)
 		{
 			handle_all_heredocs(data.tree->child_node, data.envv);
-			sigaction(SIGINT, &data.sa, NULL);
+			sigaction(SIGINT, &data.sigint_h, NULL);
 			expand_tree(data.tree, data.envv);
 			executor(data.tree->child_node, count_cmds(data.tree), data.envv);
 			free_ast(data.tree);

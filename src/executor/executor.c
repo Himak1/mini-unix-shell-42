@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/12 17:17:40 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 11:13:51 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	executor(t_ast *exec_block, t_uint cmd_count, char *envp[])
 	int		status;
 
 	status = 0;
-	init_pipes(data.pip1, data.pip2);
+	//init_pipes(data.pip1, data.pip2);
 	data.cmd_count = cmd_count;
 	last_cmd = exec_block;
 	while (last_cmd && last_cmd->next_sib_node)

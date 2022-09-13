@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 16:16:05 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/12 14:01:55 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 11:08:30 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define SIGNAL_HANDLING_H
 # include <signal.h>
 
-void	prompt_interrupt(int num);
-void	prompt_fresh(void);
+void	init_sigaction(struct sigaction *sa, void (*handler)(int));
 
+void	prompt_interrupt(int num);
 void	heredoc_interrupt(int num);
 
 #endif
