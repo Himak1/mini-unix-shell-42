@@ -12,6 +12,8 @@ file(GLOB sources
 			"${PROJECT_SOURCE_DIR}/src/executor/*.c"
 			"${PROJECT_SOURCE_DIR}/src/utils/*.c"
 			"${PROJECT_SOURCE_DIR}/src/builtins/*.c"
+			"${PROJECT_SOURCE_DIR}/src/heredoc/*.c"
+			"${PROJECT_SOURCE_DIR}/src/signal_handling/*.c"
 		)
 list(REMOVE_ITEM sources "${PROJECT_SOURCE_DIR}/src/main.c")
 

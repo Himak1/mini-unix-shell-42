@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/17 17:05:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 17:56:57 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/14 16:53:27 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,12 @@ int	handle_all_heredocs(t_data *data)
 		{
 			i = single_heredoc(tmp_filepath, rd_iter, data->envv, i);
 			if (i == -1)
-			{
-				free(tmp_filepath);
-				return (-1);
-			}
+				break ;
 			rd_iter = rd_iter->next_sib_node;
 		}
 		exec_block = next_exec_block(exec_block);
 	}
 	free(tmp_filepath);
 	sigaction(SIGINT, &data->sigint_h, NULL);
-	return (0);
+	return (i);
 }
