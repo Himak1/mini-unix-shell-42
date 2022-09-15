@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/15 16:54:11 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/15 17:14:53 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,53 @@ void	executor_loop(t_ast *exec_block, t_exec *data, char *envv[])
 int	executor(t_ast *tree, char **envv[])
 {
 	t_exec	data;
+	t_ast	*first_cmd;
+	int		status;
+
+	status = 0;
+	first_cmd = tree->child_node;
+	init_pipes(data.pip1, data.pip2);
+	data.cmd_count = count_cmds(tree);
+	if (!is_builtin(first_cmd, data.cmd_count))
+	{
+		executor_loop(first_cmd, &data, *envv);
+	}
+	else
+		exec_builtin(first_cmd, *envv);
+	return (WEXITSTATUS(status));
+}
+
+/*
+void	executor_loop(t_ast *exec_block, t_exec *data, char *envv[])
+{
+	t_uint	i;
+
+	i = data->cmd_count;
+	while (i != 0 && exec_block)
+	{
+		choose_pipe(data, i);
+		extract_ast_data(exec_block, data);
+		handle_redirects(data, i);
+		if (i != 1)
+		{
+			data->pid = fork();
+			if (data->pid == -1)
+				exit(EXIT_FAILURE);
+			else if (data->pid != 0)
+				break ;
+		}
+		else if (i == 1)
+			break ;
+		exec_block = prev_block(exec_block);
+		i--;
+	}
+	close_pipe(data, i);
+	execute(data, envv);
+}
+
+int	executor(t_ast *tree, char **envv[])
+{
+	t_exec	data;
 	t_ast	*last_cmd;
 	int		status;
 
@@ -101,3 +148,4 @@ int	executor(t_ast *tree, char **envv[])
 		exec_builtin(last_cmd, *envv);
 	return (WEXITSTATUS(status));
 }
+*/
