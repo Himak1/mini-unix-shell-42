@@ -6,13 +6,14 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 17:42:46 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/15 15:18:42 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
 #include "executor.h"
 
+#include <stdio.h>
 static int	count_cmds(t_ast *tree)
 {
 	t_ast	*iter;

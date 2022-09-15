@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/15 14:53:22 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/15 15:00:15 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	data;
 	char	*line;
-	int		exit_code;
 
 	if (argc == 100 && argv[0][0])
 		return (0); // filler
