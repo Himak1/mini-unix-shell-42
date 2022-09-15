@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/14 14:34:21 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/15 12:21:20 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		data.lst = NULL;
 		line = readline("Minishell:");
+		add_history(line);
 		ft_lexer(&data.lst, line);
 		data.tree = parse_tokens(data.lst);
 		ft_lstfree(data.lst);
@@ -69,5 +70,6 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		free(line);
 	}
+	rl_clear_history();
 	return (0);
 }
