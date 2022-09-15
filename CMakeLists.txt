@@ -19,10 +19,6 @@ enable_testing()
 add_subdirectory(tests)
 
 ### Source definitions ###
-include_directories(
-	"${PROJECT_SOURCE_DIR}/include"
-	"${PROJECT_SOURCE_DIR}/libft"
-	)
 
 file(GLOB sources
 	"${PROJECT_SOURCE_DIR}/include/*.h"
@@ -37,30 +33,37 @@ file(GLOB sources
 	"${PROJECT_SOURCE_DIR}/src/*.c"
 )
 
-set(READLINE_LIB "${PROJECT_SOURCE_DIR}/vendor/readline/lib/libreadline.8.1.dylib")
-set(LIBFT "${PROJECT_SOURCE_DIR}/libft/libft.a")
-
 include(ExternalProject)
-ExternalProject_Add(libft
-	SOURCE_DIR		"${PROJECT_SOURCE_DIR}/libft"
-	BINARY_DIR		"${PROJECT_SOURCE_DIR}/libft"
-	BUILD_COMMAND	"make"
+ExternalProject_Add(libft_lib
+	SOURCE_DIR			"${PROJECT_SOURCE_DIR}/libft"
+	BINARY_DIR			"${PROJECT_SOURCE_DIR}/libft"
+	CONFIGURE_COMMAND	""
+	BUILD_COMMAND		"make"
+	INSTALL_COMMAND		""
+	TEST_COMMAND		""
 )
 
-include(ExternalProject)
-ExternalProject_Add(readline
-	COMMAND		"mkdir" "-p" "vendor"
-	COMMAND		"bash" "install_readline.sh"
-	BINARY_DIR	"${READLINE_LIB}"
+include_directories(
+	"${PROJECT_SOURCE_DIR}/include"
+	"${PROJECT_SOURCE_DIR}/libft"
+	"${PROJECT_SOURCE_DIR}/vendor/readline/include"
 )
 
-# add_custom_command(
-# 	OUTPUT "${READLINE_LIB}"
-# 	COMMAND "mkdir" "-p" "vendor"
-# 	COMMAND "bash" "install_readline.sh"
-# 	WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
-# )
+link_directories(
+	"${PROJECT_SOURCE_DIR}/libft"
+	"${PROJECT_SOURCE_DIR}/vendor/readline/lib"
+)
+
+add_custom_target(READLINE_LIB ALL
+	DEPENDS	"${PROJECT_SOURCE_DIR}/vendor/readline"
+)
+add_custom_command(
+	OUTPUT	"${PROJECT_SOURCE_DIR}/vendor/readline"
+	COMMAND "mkdir" "-p" "vendor"
+	COMMAND "bash" "install_readline.sh"
+	WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
+)
 
 add_executable(minishell ${sources})
 target_compile_options(minishell PRIVATE -Wextra -Wall -Werror -g)
-target_link_libraries(minishell ${LIBFT} $(READLINE_LIB))
+target_link_libraries(minishell libft.a readline)
