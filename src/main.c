@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/15 13:47:52 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/15 14:53:22 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	main(int argc, char *argv[], char *envp[])
 		data.tree = parse_tokens(data.lst);
 		ft_lstfree(data.lst);
 		if (data.tree)
-			exit_code = valid_syntax(&data);
+			data.exit_code = valid_syntax(&data);
 		free(line);
 	}
 	rl_clear_history();
