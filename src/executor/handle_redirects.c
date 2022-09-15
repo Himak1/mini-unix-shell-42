@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/12 15:27:38 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/15 16:47:33 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 17:43:43 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 /*
 	first command to be executed
 */
-#include <stdio.h>
-
 static inline void	first_cmd(t_exec *data)
 {
 	if (data->fd_in != 0)
@@ -34,13 +32,9 @@ static inline void	first_cmd(t_exec *data)
 static inline void	last_cmd(t_exec *data)
 {
 	if (data->cmd_count % 2 == 0)
-	{
 		dup2(data->pip1[0], STDIN_FILENO);
-	}
 	else
-	{
 		dup2(data->pip2[0], STDIN_FILENO);
-	}
 	if (data->fd_in != 0)
 		dup2(data->fd_in, STDIN_FILENO);
 	if (data->fd_out != 0)

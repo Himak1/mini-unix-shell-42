@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:32:53 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/08 15:23:26 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 11:27:24 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**getcmd(t_ast *exec_block)
 		return (NULL);
 	iter = iter->child_node;
 	arg_count = child_count(iter);
-	cmd = xmalloc((arg_count + 1) * sizeof(char *));
+	cmd = ft_xmalloc((arg_count + 1) * sizeof(char *));
 	cmd[arg_count] = NULL;
 	while (iter)
 	{

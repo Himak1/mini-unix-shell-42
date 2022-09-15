@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   heredoc.h                                          :+:    :+:            */
+/*   signal_handling.h                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/08/18 11:48:27 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 17:49:54 by jhille        ########   odam.nl         */
+/*   Created: 2022/08/22 16:16:05 by jhille        #+#    #+#                 */
+/*   Updated: 2022/09/13 11:08:30 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEREDOC_H
-# define HEREDOC_H
-# include "parser.h"
-# include "minishell.h"
+#ifndef SIGNAL_HANDLING_H
+# define SIGNAL_HANDLING_H
+# include <signal.h>
 
-int		handle_all_heredocs(t_data *data);
-int		single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i);
+void	init_sigaction(struct sigaction *sa, void (*handler)(int));
 
-char	*find_tmp_filepath(void);
-char	*create_tmp_filename(char *tmp_filepath, int i);
-void	read_write_to_tmp(char *delimiter, int fd, char *envv[]);
+void	prompt_interrupt(int num);
+void	heredoc_interrupt(int num);
 
 #endif

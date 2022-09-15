@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/12 10:27:56 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/15 15:33:42 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,15 @@ static inline void	execute(t_exec *data, char *envp[])
 {
 	if (data->pid != 0)
 		wait(0);
-	if (access(data->cmd[0], X_OK) != 0)
-		exit(EXIT_FAILURE);
-	execve(data->cmd[0], data->cmd, envp);
+	if (data->cmd)
+	{
+		if (access(data->cmd[0], X_OK) != 0)
+			exit(EXIT_FAILURE);
+		execve(data->cmd[0], data->cmd, envp);
+	}
+	exit(0);
+}
+	exit(0);
 }
 
 void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[])
@@ -58,15 +64,16 @@ void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[])
 	execute(data, envp);
 }
 
-int	executor(t_ast *exec_block, t_uint cmd_count, char *envp[])
+int	executor(t_ast *tree, char *envp[])
 {
 	t_exec	data;
 	t_ast	*last_cmd;
 	int		status;
 
 	status = 0;
-	data.cmd_count = cmd_count;
 	last_cmd = exec_block;
+	init_pipes(data.pip1, data.pip2);
+	data.cmd_count = count_cmds(tree);
 	if (!is_builtin(exec_block, cmd_count))
 	{
 		while (last_cmd && last_cmd->next_sib_node)

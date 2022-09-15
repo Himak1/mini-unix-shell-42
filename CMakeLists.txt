@@ -19,10 +19,6 @@ enable_testing()
 add_subdirectory(tests)
 
 ### Source definitions ###
-include_directories(
-	"${PROJECT_SOURCE_DIR}/include"
-	"${PROJECT_SOURCE_DIR}/libft"
-	)
 
 file(GLOB sources
 	"${PROJECT_SOURCE_DIR}/include/*.h"
@@ -32,21 +28,42 @@ file(GLOB sources
 	"${PROJECT_SOURCE_DIR}/src/expander/*.c"
 	"${PROJECT_SOURCE_DIR}/src/executor/*.c"
 	"${PROJECT_SOURCE_DIR}/src/builtins/*.c"
+	"${PROJECT_SOURCE_DIR}/src/heredoc/*.c"
+	"${PROJECT_SOURCE_DIR}/src/signal_handling/*.c"
 	"${PROJECT_SOURCE_DIR}/src/*.c"
 )
 
 include(ExternalProject)
-ExternalProject_Add(libft
-  GIT_REPOSITORY    ""
-  GIT_TAG           ""
-  SOURCE_DIR        "${PROJECT_SOURCE_DIR}/libft"
-  BINARY_DIR        "${PROJECT_SOURCE_DIR}/libft"
-  CONFIGURE_COMMAND ""
-  BUILD_COMMAND     "make"
-  INSTALL_COMMAND   ""
-  TEST_COMMAND      ""
+ExternalProject_Add(libft_lib
+	SOURCE_DIR			"${PROJECT_SOURCE_DIR}/libft"
+	BINARY_DIR			"${PROJECT_SOURCE_DIR}/libft"
+	CONFIGURE_COMMAND	""
+	BUILD_COMMAND		"make"
+	INSTALL_COMMAND		""
+	TEST_COMMAND		""
+)
+
+include_directories(
+	"${PROJECT_SOURCE_DIR}/include"
+	"${PROJECT_SOURCE_DIR}/libft"
+	"${PROJECT_SOURCE_DIR}/vendor/readline/include"
+)
+
+link_directories(
+	"${PROJECT_SOURCE_DIR}/libft"
+	"${PROJECT_SOURCE_DIR}/vendor/readline/lib"
+)
+
+add_custom_target(READLINE_LIB ALL
+	DEPENDS	"${PROJECT_SOURCE_DIR}/vendor/readline"
+)
+add_custom_command(
+	OUTPUT	"${PROJECT_SOURCE_DIR}/vendor/readline"
+	COMMAND "mkdir" "-p" "vendor"
+	COMMAND "bash" "install_readline.sh"
+	WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
 )
 
 add_executable(minishell ${sources})
 target_compile_options(minishell PRIVATE -Wextra -Wall -Werror -g)
-target_link_libraries(minishell "readline" ${PROJECT_SOURCE_DIR}/libft/libft.a)
+target_link_libraries(minishell libft.a readline)

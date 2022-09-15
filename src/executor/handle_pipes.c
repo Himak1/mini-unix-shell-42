@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 12:29:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/15 12:31:39 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 17:42:27 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,29 @@
 #include <unistd.h>
 #include "executor.h"
 
+
+void	init_pipes(int *pip1, int *pip2)
+{
+	pip1[0] = 0;
+	pip1[1] = 0;
+	pip2[0] = 0;
+	pip2[1] = 0;
+}
+
 void	close_pipe(t_exec *data, t_uint i)
 {
-	if (i % 2 == 0 || i == 1)
+	if (data->cmd_count > 1)
 	{
-		close(data->pip1[0]);
-		close(data->pip1[1]);
-	}
-	else
-	{
-		close(data->pip2[0]);
-		close(data->pip2[1]);
+		if (i % 2 == 0 || i == 1)
+		{
+			close(data->pip1[0]);
+			close(data->pip1[1]);
+		}
+		else
+		{
+			close(data->pip2[0]);
+			close(data->pip2[1]);
+		}
 	}
 }
 

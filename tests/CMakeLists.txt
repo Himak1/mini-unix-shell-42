@@ -1,6 +1,12 @@
 include_directories(
 	"${PROJECT_SOURCE_DIR}/include"
 	"${PROJECT_SOURCE_DIR}/libft"
+	"${PROJECT_SOURCE_DIR}/vendor/readline/include"
+)
+
+link_directories(
+	"${PROJECT_SOURCE_DIR}/libft"
+	"${PROJECT_SOURCE_DIR}/vendor/readline/lib"
 )
 
 ### C Source Files ###
@@ -12,6 +18,8 @@ file(GLOB sources
 			"${PROJECT_SOURCE_DIR}/src/executor/*.c"
 			"${PROJECT_SOURCE_DIR}/src/utils/*.c"
 			"${PROJECT_SOURCE_DIR}/src/builtins/*.c"
+			"${PROJECT_SOURCE_DIR}/src/heredoc/*.c"
+			"${PROJECT_SOURCE_DIR}/src/signal_handling/*.c"
 		)
 list(REMOVE_ITEM sources "${PROJECT_SOURCE_DIR}/src/main.c")
 
@@ -34,7 +42,7 @@ foreach(file ${tests})
 		${sources}
 		${file}
 		"${PROJECT_SOURCE_DIR}/tests/main.cpp")
-	target_link_libraries("${name}_tests" gtest_main ${PROJECT_SOURCE_DIR}/libft/libft.a "readline")
+	target_link_libraries("${name}_tests" gtest_main libft.a readline)
 	target_compile_options("${name}_tests" PRIVATE -Wextra -Wall -g)
 	add_test(NAME ${name} COMMAND "${name}_tests")
 endforeach()

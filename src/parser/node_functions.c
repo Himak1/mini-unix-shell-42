@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/12 14:11:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/16 15:47:43 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/13 11:27:24 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_ast	*new_node(int type)
 {
 	t_ast	*output;
 
-	output = xmalloc(sizeof(t_ast));
+	output = ft_xmalloc(sizeof(t_ast));
 	output->type = type;
 	output->num_children = 0;
 	output->value = NULL;

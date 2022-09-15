@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   xmalloc.c                                          :+:    :+:            */
+/*   ft_xmalloc.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-void	*xmalloc(size_t bytes)
+void	*ft_xmalloc(size_t bytes)
 {
 	void	*output;
 

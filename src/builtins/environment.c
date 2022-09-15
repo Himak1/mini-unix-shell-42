@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:18:49 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/15 15:12:04 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/15 15:30:58 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,6 @@
 // 	int i;
 // 	char **new_arr;
 
-// 	i = 0;
-// 	while (envp[i] != NULL)
-// 		i++;
-// 	new_arr = (char **)malloc(sizeof(char *) * (i + 2));
-// 	i = 0;
-// 	while (envp[i] != NULL)
-// 	{
-// 		new_arr[i] = ft_strdup(envp[i]);
-// 		i++;
-// 	}
-// 	new_arr[i] = ft_strdup(var_name);
-// 	i++;
-// 	new_arr[i] = NULL;
-// 	ft_free_2d_array(envp);
-// 	return (new_arr);
-// }
 
 int ft_len_2d_arr(char **arr)
 {
