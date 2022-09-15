@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/15 12:21:20 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/15 13:47:52 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,26 @@ static void	copy_envp(t_data *data, char *envp[])
 	data->envv[i] = NULL;
 }
 
+static int	valid_syntax(t_data *data)
+{
+	int	exit_code;
+
+	if (handle_all_heredocs(data) != -1)
+	{
+		expand_tree(data->tree, data->envv);
+		exit_code = executor(data->tree, data->envv);
+	}
+	else
+		exit_code = -1;
+	free_ast(data->tree);
+	return (exit_code);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	data;
 	char	*line;
+	int		exit_code;
 
 	if (argc == 100 && argv[0][0])
 		return (0); // filler
@@ -54,20 +70,13 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		data.lst = NULL;
-		line = readline("Minishell:");
+		line = readline("Minishell-$ ");
 		add_history(line);
 		ft_lexer(&data.lst, line);
 		data.tree = parse_tokens(data.lst);
 		ft_lstfree(data.lst);
 		if (data.tree)
-		{
-			if (handle_all_heredocs(&data) != -1)
-			{
-				expand_tree(data.tree, data.envv);
-				executor(data.tree, data.envv);
-			}
-			free_ast(data.tree);
-		}
+			exit_code = valid_syntax(&data);
 		free(line);
 	}
 	rl_clear_history();
