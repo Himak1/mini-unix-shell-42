@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/15 15:44:31 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/15 15:47:24 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[])
 	execute(data, envp);
 }
 
-int	executor(t_ast *tree, char *envp[])
+int	executor(t_ast *tree, char **envv[])
 {
 	t_exec	data;
 	t_ast	*last_cmd;
@@ -94,10 +94,10 @@ int	executor(t_ast *tree, char *envp[])
 			last_cmd = last_cmd->next_sib_node;
 		data.pid = fork();
 		if (data.pid == 0)
-			executor_loop(last_cmd, &data, envp);
+			executor_loop(last_cmd, &data, *envv);
 		waitpid(data.pid, &status, 0);
 	}
 	else
-		exec_builtin(last_cmd, envp);
+		exec_builtin(last_cmd, envv);
 	return (WEXITSTATUS(status));
 }
