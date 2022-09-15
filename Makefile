@@ -29,7 +29,9 @@ BUILTINS_FILES = pwd.c\
 					cd.c\
 					env.c\
 					environment.c\
-					builtins.c
+					export.c\
+					builtins.c\
+					builtins_utils.c
 
 UTILS_FILES = lst_new.c\
 					lst_add_ft.c\
@@ -72,8 +74,8 @@ endif
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
-		$(CC) $(CFLAGS) $(INC) -lreadline -o $@ $^
+$(NAME):$(OBJ) $(LIBFT)
+		$(CC) $(CFLAGS) $(INC) -o $@ $^ -lreadline
 
 debug:
 	$(MAKE) DEBUG=1 all

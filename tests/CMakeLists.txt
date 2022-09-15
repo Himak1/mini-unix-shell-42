@@ -34,7 +34,7 @@ foreach(file ${tests})
 		${sources}
 		${file}
 		"${PROJECT_SOURCE_DIR}/tests/main.cpp")
-	target_link_libraries("${name}_tests" gtest_main "readline" ${PROJECT_SOURCE_DIR}/libft/libft.a)
+	target_link_libraries("${name}_tests" gtest_main ${PROJECT_SOURCE_DIR}/libft/libft.a "readline")
 	target_compile_options("${name}_tests" PRIVATE -Wextra -Wall -g)
 	add_test(NAME ${name} COMMAND "${name}_tests")
 endforeach()

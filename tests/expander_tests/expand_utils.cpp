@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/04 14:08:38 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/04 14:11:27 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/14 14:30:16 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ TEST(get_exp_len, basic_test1)
     check_env_var(&env_var_list, envp);
     exp_len = get_exp_len(env_var_list, len_input);
     
-    int expected = len_input + (ft_strlen("UTF-8") - ft_strlen("$CHARSET"));
+    int expected = len_input + (ft_strlen("UTF-8") - ft_strlen("$CHARSET")) + 1;
     ASSERT_EQ(expected, exp_len);
 }
 
@@ -171,7 +171,7 @@ TEST(get_exp_len, basic_test2)
     exp_len = get_exp_len(env_var_list, len_input);
     
     int expansion = ft_strlen("C.UTF-8") - ft_strlen("$NAME");
-    int expected = len_input + expansion;
+    int expected = len_input + expansion + 1;
     ASSERT_EQ(expected, exp_len);
 }
 
@@ -188,7 +188,7 @@ TEST(get_exp_len, basic_test3)
     exp_len = get_exp_len(env_var_list, len_input);
     
     int expansion = (ft_strlen("C.UTF-8") + ft_strlen("$")) - (ft_strlen("$LANG") + ft_strlen("$"));
-    int expected = len_input + expansion;
+    int expected = len_input + expansion + 1;
     ASSERT_EQ(expected, exp_len);
 }
 
@@ -205,7 +205,7 @@ TEST(get_exp_len, basic_test4)
     exp_len = get_exp_len(env_var_list, len_input);
     
     int expansion = 0 - ft_strlen("$hello");
-    int expected = len_input + expansion;
+    int expected = len_input + expansion + 1;
     printf("%d\n", expected);
     ASSERT_EQ(expected, exp_len);
 }
@@ -222,7 +222,7 @@ TEST(get_exp_len, basic_test5)
     check_env_var(&env_var_list, envp);
     exp_len = get_exp_len(env_var_list, len_input);
     int expansion = (0 + ft_strlen("$")) - (ft_strlen("$hello") + ft_strlen("$"));
-    int expected = len_input + expansion;
+    int expected = len_input + expansion + 1;
     ASSERT_EQ(expected, exp_len);
 }
 

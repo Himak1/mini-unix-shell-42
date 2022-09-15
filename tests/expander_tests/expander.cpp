@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 15:18:48 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/18 16:24:17 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/08/23 16:47:05 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ TEST(create_envp, basic_test)
     ASSERT_STREQ(envp[8], "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin");
     ASSERT_STREQ(envp[9], "OLDPWD=/pwd/desktop/minishell/build");
     ASSERT_STREQ(envp[10], "_=/usr/bin/env");
+    ft_free_2d_array(envp);
 }
 
 TEST(count_dollar_sign, basic_test1)
@@ -75,6 +76,9 @@ TEST(expand_dollar_sign, basic_test1)
     char *expanded = expand_dollar_sign(input, envp);
 
     ASSERT_STREQ("\"I am currently in /pwd/desktop/minishell\"", expanded);
+    ft_free_2d_array(envp);
+    free(input);
+    free(expanded);
 }
 
 TEST(expand_dollar_sign, basic_test2)
@@ -84,6 +88,9 @@ TEST(expand_dollar_sign, basic_test2)
     char *expanded = expand_dollar_sign(input, envp);
 
     ASSERT_STREQ("This is not a var  but this is C.UTF-8", expanded);
+    ft_free_2d_array(envp);
+    free(input);
+    free(expanded);
 }
 
 TEST(expand_dollar_sign, basic_test3)
@@ -93,6 +100,9 @@ TEST(expand_dollar_sign, basic_test3)
     char *expanded = expand_dollar_sign(input, envp);
 
     ASSERT_STREQ("I am $ currently $ in  this ", expanded);
+    ft_free_2d_array(envp);
+    free(input);
+    free(expanded);
 }
 
 TEST(expand_dollar_sign, basic_test4)
@@ -102,6 +112,9 @@ TEST(expand_dollar_sign, basic_test4)
     char *expanded = expand_dollar_sign(input, envp);
 
     ASSERT_STREQ("", expanded);
+    ft_free_2d_array(envp);
+    free(input);
+    free(expanded);
 }
 
 TEST(expander, only_env1)
@@ -111,6 +124,8 @@ TEST(expander, only_env1)
     expander(&input, envp);
     
     ASSERT_STREQ("/pwd/desktop/minishell", input);
+    ft_free_2d_array(envp);
+    free(input);
 }
 
 TEST(expander, only_env2)
@@ -120,6 +135,8 @@ TEST(expander, only_env2)
     expander(&input, envp);
     
     ASSERT_STREQ("", input);
+    ft_free_2d_array(envp);
+    free(input);
 }
 
 TEST(expander, basic_test1)
@@ -129,6 +146,8 @@ TEST(expander, basic_test1)
     expander(&input, envp);
     
     ASSERT_STREQ("hello i am currently in /pwd/desktop/minishell", input);
+    ft_free_2d_array(envp);
+    free(input);
 }
 
 TEST(expander, basic_test2)
@@ -138,6 +157,8 @@ TEST(expander, basic_test2)
     expander(&input, envp);
     
     ASSERT_STREQ("hello i am currently in $PWD", input);
+    ft_free_2d_array(envp);
+    free(input);
 }
 
 TEST(expander, basic_test3)
@@ -147,6 +168,8 @@ TEST(expander, basic_test3)
     expander(&input, envp);
     
     ASSERT_STREQ("hello i am currently in /pwd/desktop/minishell        $      not an var  bye", input);
+    ft_free_2d_array(envp);
+    free(input);
 }
 
 TEST(expander, basic_test4)
@@ -156,6 +179,8 @@ TEST(expander, basic_test4)
     expander(&input, envp);
     
     ASSERT_STREQ("hello \'/pwd/desktop/minishell\' bye now", input);
+    ft_free_2d_array(envp);
+    free(input);
 }
 
 TEST(expander, basic_test5)
@@ -165,6 +190,8 @@ TEST(expander, basic_test5)
     expander(&input, envp);
     
     ASSERT_STREQ("echo hello", input);
+    ft_free_2d_array(envp);
+    free(input);
 }
 
 TEST(expander, basic_test6)
@@ -174,6 +201,8 @@ TEST(expander, basic_test6)
     expander(&input, envp);
     
     ASSERT_STREQ("echo he\"ll\"o", input);
+    ft_free_2d_array(envp);
+    free(input);
 }
 
 TEST(expander, basic_test7)
@@ -183,6 +212,8 @@ TEST(expander, basic_test7)
     expander(&input, envp);
     
     ASSERT_STREQ("echo hel\'l\'o", input);
+    ft_free_2d_array(envp);
+    free(input);
 }
 
 TEST(expander, basic_test8)
@@ -192,6 +223,8 @@ TEST(expander, basic_test8)
     expander(&input, envp);
     
     ASSERT_STREQ("echo current dir is /pwd/desktop/minishell", input);
+    ft_free_2d_array(envp);
+    free(input);
 }
 
 TEST(expander, basic_test9)
@@ -201,4 +234,6 @@ TEST(expander, basic_test9)
     expander(&input, envp);
     
     ASSERT_STREQ("echo /usr/bin/env", input);
+    ft_free_2d_array(envp);
+    free(input);
 }

@@ -6,13 +6,14 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:50:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/03 14:53:19 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/14 14:25:53 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "utils.h"
 #include "expander.h"
+#include <stdio.h>
 
 char	*save_exp_val(char *full_env_val, char *alias)
 {
@@ -35,18 +36,22 @@ char	*find_exp_var(char *env_var, char **envp)
 	char *exp_var;
 
 	i = 0;
+	exp_var = NULL;
 	if (!ft_strncmp(env_var, "$", ft_strlen(env_var)))
 		return (ft_strdup(env_var));
 	while (envp[i] != NULL)
 	{
-		if (ft_strnstr(envp[i], &env_var[1], ft_strlen(env_var)) != NULL)
+		if (ft_strnstr(envp[i], &env_var[1], ft_strlen(&env_var[1])) != NULL)
 		{
-			exp_var = save_exp_val(envp[i], &env_var[1]);
-			return (exp_var);
+			// if (envp[i][ft_strlen(&env_var[1] + 1)] == '=')
+			// {
+				exp_var = save_exp_val(envp[i], &env_var[1]);
+				return (exp_var);
+			//}
 		}
 		i++;
 	}
-	return (NULL);
+	return (exp_var);
 }
 
 void	check_env_var(t_env_var **env_var_list, char **envp)
@@ -73,8 +78,9 @@ int	get_exp_len(t_env_var *env_var_list, int len_input)
 		exp_len += env_var_list->len_exp_env - env_var_list->len_env;
 		env_var_list = env_var_list->next;
 	}
-	return (len_input + exp_len);
+	return (len_input + exp_len + 1);
 }
+
 
 char	*expand_input(char *input, t_env_var *env_var_list, int len)
 {

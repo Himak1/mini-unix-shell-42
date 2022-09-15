@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:18:49 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/19 19:11:18 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/15 15:12:04 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,84 @@
 #include "parser.h"
 #include "expander.h"
 #include "builtins.h"
+#include <limits.h>
+#include <stdio.h>
 
 // if env is called _=/usr/bin/env
 // anything else, expand to last arg of last used command (last terminal in ast)
 
+// char **add_var_to_env_list(char *var_name, char *envp[])
+// {
+// 	int i;
+// 	char **new_arr;
+
+// 	i = 0;
+// 	while (envp[i] != NULL)
+// 		i++;
+// 	new_arr = (char **)malloc(sizeof(char *) * (i + 2));
+// 	i = 0;
+// 	while (envp[i] != NULL)
+// 	{
+// 		new_arr[i] = ft_strdup(envp[i]);
+// 		i++;
+// 	}
+// 	new_arr[i] = ft_strdup(var_name);
+// 	i++;
+// 	new_arr[i] = NULL;
+// 	ft_free_2d_array(envp);
+// 	return (new_arr);
+// }
+
+int ft_len_2d_arr(char **arr)
+{
+	int i;
+	
+	i = 0;
+	while (arr[i] != NULL)
+		i++;
+	return (i);
+}
+
+// void update_underscore(t_ast *cmd, char *envp[])
+// {
+
+// }
+
+// int main()
+// {
+// 	char input[] = "echo -nnn -nn hello";
+
+//     char **args = NULL;
+//     t_token *lst;
+// 	t_ast   *tree;
+//     char **envp = create_envp();
+    
+// 	lst = NULL;
+// 	ft_lexer(&lst, input);
+// 	tree = parse_tokens(lst);
+// 	expand_tree(tree, envp);
+//     tree = tree->child_node->child_node;
+//     while (tree->type != CMD)
+//         tree->next_sib_node;
+//     tree = tree->child_node;
+	
+// }
+
 void update_underscore(t_ast *cmd, char *envp[])
 {
 	int		index;
+	int		len_envp;
     t_ast	*iter;
 	char	*last_arg;
 
     iter = cmd;
-	index = ft_get_index_2d(envp, "_=");
 	last_arg = NULL;
+	len_envp = ft_len_2d_arr(envp);
+	printf("len of envp %d\n", len_envp);
+	index = ft_get_index_2d(envp, "_=");
+	printf("index underscore %d\n", index);
+	if (ft_strncmp(envp[index], "_=", ft_strlen(envp[index])))
+		envp = add_var_to_env("_=", envp);
 	free(envp[index]);
 	if (!ft_strncmp(iter->value, "env", ft_strlen(iter->value)))
 		envp[index] = ft_strdup("_=/usr/bin/env");
@@ -40,78 +105,38 @@ void update_underscore(t_ast *cmd, char *envp[])
 	}
 }
 
-void update_pwd(char *path, char *envp[])
-{
-	int		index;
-	char	*new_path;
-
-	index = ft_get_index_2d(envp, "PWD=");
-	new_path = ft_strdup(path);
-	free(envp[index]);
-	envp[index]= ft_strjoin("PWD=", new_path);
-	free(new_path);
-}
-
-char	**set_var(char *name, char *envp[])
-{
-	int i;
-	int index;
-	int old_pwd;
-	char **updated_envp;
+// void update_pwd(char *envp[])
+// {
+// 	int		index;
+// 	char	*new_path;
+// 	char cwd[PATH_MAX];
 	
-	i = 0;
-	index = 0;
-	old_pwd = 1;
-	while (envp[i] != NULL)
-		i++;
-	updated_envp = (char **)malloc(sizeof(char *) * i + 2);
-	if (!ft_strncmp(name, "OLDPWD=", ft_strlen(name)))
-	{
-		i = ft_get_index_2d(envp, "ZDOTDIR=") + 1;
-		old_pwd = 0;
-	}
-	while (envp[index] != NULL)
-	{
-		if (index == i && !old_pwd)
-		{
-			updated_envp[index] = ft_strdup("OLDPWD=");
-			index++;
-		}
-		updated_envp[index] = ft_strdup(envp[index]);
-		index++;
-	}
-	updated_envp[index] = NULL;
-	ft_free_2d_array(envp);
-	return (updated_envp);
-}
+// 	new_path = NULL;
+// 	index = ft_get_index_2d(envp, "PWD=");
+// 	if (getcwd(cwd, sizeof(cwd)) != NULL)
+// 		new_path = ft_strdup(cwd);
+// 	else
+// 		perror("cd:");
+// 	// if (envp[index])
+// 	// 	free(envp[index]); // error with this?
+// 	envp[index]= ft_strjoin("PWD=", new_path);
+// 	free(new_path);
+// }
 
-void	print_envp(char **envp)
-{
-	int i;
+// char	**update_old_pwd(char *envp[])
+// {
+// 	int index_old_pwd;
+// 	int index_pwd;
+// 	char *old_path;
 
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		ft_putstr_fd(envp[i], STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		i++;
-	}
-}
-
-void update_old_pwd(char *envp[])
-{
-	int index_old_pwd;
-	int index_pwd;
-	char *old_path;
-
-	index_old_pwd = ft_get_index_2d(envp, "OLDPWD=");
-	if (!index_old_pwd && !ft_strnstr(envp[index_old_pwd], "OLDPWD=", ft_strlen(envp[index_old_pwd])))
-		envp = set_var("OLDPWD=", envp);
-	print_envp(envp);
-	index_pwd = ft_get_index_2d(envp, "PWD=");
-	old_path = ft_strdup(envp[index_pwd]);
-	if (index_old_pwd)
-		free(envp[index_old_pwd]);
-	envp[index_old_pwd] = ft_strjoin("OLDPWD=", old_path);
-	free(old_path);
-}
+// 	index_old_pwd = ft_get_index_2d(envp, "OLDPWD=");
+// 	if (!index_old_pwd && !ft_strnstr(envp[index_old_pwd], "OLDPWD=", ft_strlen(envp[index_old_pwd])))
+// 		envp = add_oldpwd(envp);
+// 	index_pwd = ft_get_index_2d(envp, "PWD=");
+// 	old_path = extract_var_value(envp[index_pwd]);
+// 	index_old_pwd = ft_get_index_2d(envp, "OLDPWD=");
+// 	free(envp[index_old_pwd]);
+// 	envp[index_old_pwd] = ft_strjoin("OLDPWD=", old_path);
+// 	free(old_path);
+// 	return(envp);
+// }

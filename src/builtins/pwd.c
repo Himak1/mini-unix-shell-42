@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/25 12:43:21 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/19 16:51:59 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/15 15:10:37 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,3 @@ int exec_pwd(t_ast *cmd, char *envp[])
 	return (0);
 }
 
-// int	pwd(void)
-// {
-// 	char	*env_var;
-
-// 	env_var = getenv("PWD");
-// 	if (env_var)
-// 	{
-// 		if (printf("%s", env_var) == -1)
-// 			exit(EXIT_FAILURE);
-// 	}
-// 	else
-// 		return (-1);
-// 	return (0);
-// }
