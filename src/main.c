@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/15 15:30:29 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/15 15:51:38 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	valid_syntax(t_data *data)
 	if (handle_all_heredocs(data) != -1)
 	{
 		expand_tree(data->tree, data->envv);
-		exit_code = executor(data->tree, data->envv);
+		exit_code = executor(data->tree, &data->envv);
 	}
 	else
 		exit_code = -1;
