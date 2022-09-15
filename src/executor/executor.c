@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/15 15:47:24 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/15 16:54:11 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static inline t_ast	*prev_block(t_ast *exec_block)
 	return (exec_block);
 }
 
-static inline void	execute(t_exec *data, char *envp[])
+static inline void	execute(t_exec *data, char *envv[])
 {
 	if (data->pid != 0)
 		wait(0);
@@ -46,12 +46,12 @@ static inline void	execute(t_exec *data, char *envp[])
 	{
 		if (access(data->cmd[0], X_OK) != 0)
 			exit(EXIT_FAILURE);
-		execve(data->cmd[0], data->cmd, envp);
+		execve(data->cmd[0], data->cmd, envv);
 	}
 	exit(0);
 }
 
-void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[])
+void	executor_loop(t_ast *exec_block, t_exec *data, char *envv[])
 {
 	t_uint	i;
 
@@ -75,7 +75,7 @@ void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[])
 		i--;
 	}
 	close_pipe(data, i);
-	execute(data, envp);
+	execute(data, envv);
 }
 
 int	executor(t_ast *tree, char **envv[])
@@ -98,6 +98,6 @@ int	executor(t_ast *tree, char **envv[])
 		waitpid(data.pid, &status, 0);
 	}
 	else
-		exec_builtin(last_cmd, envv);
+		exec_builtin(last_cmd, *envv);
 	return (WEXITSTATUS(status));
 }

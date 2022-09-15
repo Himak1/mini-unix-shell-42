@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:30:21 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 14:28:58 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/15 16:54:17 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ typedef struct s_exec {
 	char	**cmd;
 }			t_exec;
 
-int		executor(t_ast *tree, char *envp[]);
-void	executor_loop(t_ast *exec_block, t_exec *data, char *envp[]);
+int		executor(t_ast *tree, char **envv[]);
+void	executor_loop(t_ast *exec_block, t_exec *data, char *envv[]);
 void	handle_redirects(t_exec *data, t_uint i);
 
 void	init_pipes(int *pip1, int *pip2);
