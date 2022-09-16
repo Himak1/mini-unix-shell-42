@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/16 14:28:30 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/16 17:07:13 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "executor.h"
 #include "builtins.h"
 
+#include <stdio.h>
 static int	count_cmds(t_ast *tree)
 {
 	t_ast	*iter;
@@ -101,9 +102,7 @@ int	executor(t_ast *tree, char **envv[])
 	t_exec	data;
 	t_ast	*first_cmd;
 	int		status;
-	t_uint	i;
 
-	i = 0;
 	status = 0;
 	first_cmd = tree->child_node;
 	data.pid = ft_xmalloc(data.cmd_count * sizeof(int));
@@ -112,11 +111,8 @@ int	executor(t_ast *tree, char **envv[])
 	if (!is_builtin(first_cmd, data.cmd_count))
 	{
 		executor_loop(first_cmd, &data, *envv);
-		while (i < data.cmd_count)
-		{
-			waitpid(data.pid[i], &status, 0);
-			i++;
-		}
+		while (wait(NULL) != -1)
+			;
 	}
 	else
 		exec_builtin(first_cmd, *envv);
