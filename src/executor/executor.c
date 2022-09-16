@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/15 17:14:53 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/16 14:28:30 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	count_cmds(t_ast *tree)
 	return (i);
 }
 
+/*
 static inline t_ast	*prev_block(t_ast *exec_block)
 {
 	exec_block = exec_block->prev_sib_node;
@@ -37,6 +38,7 @@ static inline t_ast	*prev_block(t_ast *exec_block)
 		exec_block = exec_block->prev_sib_node;
 	return (exec_block);
 }
+
 
 static inline void	execute(t_exec *data, char *envv[])
 {
@@ -50,32 +52,48 @@ static inline void	execute(t_exec *data, char *envv[])
 	}
 	exit(0);
 }
+*/
+
+static inline t_ast	*next_block(t_ast *exec_block)
+{
+	exec_block = exec_block->next_sib_node;
+	if (exec_block)
+		exec_block = exec_block->next_sib_node;
+	return (exec_block);
+}
+
+static inline void	execute(t_exec *data, char *envv[])
+{
+	if (data->cmd)
+	{
+		if (access(data->cmd[0], X_OK) != 0)
+			exit(EXIT_FAILURE);
+		execve(data->cmd[0], data->cmd, envv);
+		write(STDERR_FILENO, "Minishell: command not found\n", 29);
+		exit(EXIT_FAILURE);
+	}
+	exit(0);
+}
 
 void	executor_loop(t_ast *exec_block, t_exec *data, char *envv[])
 {
 	t_uint	i;
 
-	i = data->cmd_count;
-	while (i != 0 && exec_block)
+	i = 0;
+	while (i < data->cmd_count && exec_block)
 	{
 		choose_pipe(data, i);
-		extract_ast_data(exec_block, data);
-		handle_redirects(data, i);
-		if (i != 1)
+		data->pid[i] = fork();
+		if (data->pid[i] == 0)
 		{
-			data->pid = fork();
-			if (data->pid == -1)
-				exit(EXIT_FAILURE);
-			else if (data->pid != 0)
-				break ;
+			extract_ast_data(exec_block, data);
+			handle_redirects(data, i);
+			execute(data, envv);
 		}
-		else if (i == 1)
-			break ;
-		exec_block = prev_block(exec_block);
-		i--;
+		close_pipe(data, i);
+		exec_block = next_block(exec_block);
+		i++;
 	}
-	close_pipe(data, i);
-	execute(data, envv);
 }
 
 int	executor(t_ast *tree, char **envv[])
@@ -83,14 +101,22 @@ int	executor(t_ast *tree, char **envv[])
 	t_exec	data;
 	t_ast	*first_cmd;
 	int		status;
+	t_uint	i;
 
+	i = 0;
 	status = 0;
 	first_cmd = tree->child_node;
-	init_pipes(data.pip1, data.pip2);
+	data.pid = ft_xmalloc(data.cmd_count * sizeof(int));
 	data.cmd_count = count_cmds(tree);
+	init_pipes(data.pip1, data.pip2);
 	if (!is_builtin(first_cmd, data.cmd_count))
 	{
 		executor_loop(first_cmd, &data, *envv);
+		while (i < data.cmd_count)
+		{
+			waitpid(data.pid[i], &status, 0);
+			i++;
+		}
 	}
 	else
 		exec_builtin(first_cmd, *envv);
