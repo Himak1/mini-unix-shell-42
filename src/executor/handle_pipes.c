@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 12:29:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/16 14:21:56 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/17 15:22:15 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include "executor.h"
 
+#include <stdio.h>
 void	init_pipes(int *pip1, int *pip2)
 {
 	pip1[0] = 0;
