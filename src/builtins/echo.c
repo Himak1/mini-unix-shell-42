@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/26 14:29:19 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/14 16:17:41 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/17 14:39:28 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ void echo(t_ast *cmd)
 	}
 }
 
-int	exec_echo(t_ast *cmd, char *envp[])
+int	exec_echo(t_ast *cmd, char **envv[])
 {
 	echo(cmd);
-	update_underscore(cmd, envp);
+	update_underscore(cmd, envv);
 	return (0);
 }

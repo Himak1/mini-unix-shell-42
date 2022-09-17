@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/15 15:10:10 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/17 15:57:14 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,29 @@
 #include "builtins.h"
 #include <stdio.h>
 
-char **add_var_to_env(char *str, char **arr)
+void push_var_to_env(char *str, char **arr[])
 {
 	int i;
+    char **temp;
 	char **new_arr;
 
 	i = 0;
-	while (arr[i] != NULL)
+    temp = *arr;
+	while (temp[i] != NULL)
 		i++;
 	new_arr = (char **)malloc(sizeof(char *) * (i + 2));
 	i = 0;
-	while (arr[i] != NULL)
+	while (temp[i] != NULL)
 	{
-		new_arr[i] = ft_strdup(arr[i]);
+		new_arr[i] = ft_strdup(temp[i]);
 		i++;
 	}
 	new_arr[i] = ft_strdup(str);
 	i++;
 	new_arr[i] = NULL;
-	// if (arr)
-	// 	ft_free_2d_array(arr);
-	return (new_arr);
+    ft_free_2d_array(*arr);
+    *arr = new_arr;
+	//return (new_arr);
 }
 
 static void sort_alpha(char *arr[], int size)
@@ -76,6 +78,11 @@ void print_with_quotes(char *str)
         ft_putchar_fd(str[i], STDOUT_FILENO);
         i++;
     }
+    if (!str[i])
+    {
+        ft_putchar_fd('\n', STDOUT_FILENO);
+        return ;
+    }
     ft_putchar_fd(str[i], STDOUT_FILENO);
     i++;
     ft_putchar_fd('"', STDOUT_FILENO);
@@ -88,36 +95,40 @@ void print_with_quotes(char *str)
     ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
-void print_export_list(char *envp[])
+void print_export_list(char *envv[])
 {
-    int envp_size;
-    //char **alpha_envp;
+    int envv_size;
 
-    envp_size = 0;
-    while (envp[envp_size])
-        envp_size++;
-    sort_alpha(envp, envp_size);
-    //add_quotes(envp);
-    envp_size = 0;
-    while(envp[envp_size])
+    envv_size = 0;
+    while (envv[envv_size])
+        envv_size++;
+    sort_alpha(envv, envv_size);
+    //add_quotes(envv);
+    envv_size = 0;
+    while(envv[envv_size])
     {
         ft_putstr_fd("declare -x ", STDOUT_FILENO);
-        print_with_quotes(envp[envp_size]);
-        envp_size++;
+        print_with_quotes(envv[envv_size]);
+        envv_size++;
     }
 }
 
-void export(t_ast *cmd, char *envp[])
+int exec_export(t_ast *cmd, char **envv[])
 {
-    if (!cmd->next_sib_node)
-        print_export_list(envp);
-    else
-        envp = add_var_to_env(cmd->next_sib_node->value, envp);
-}
+	t_ast *tmp;
 
-int exec_export(t_ast *cmd, char *envp[])
-{
-	export(cmd, envp);
-	//update_underscore(cmd, envp);
+    if (!cmd->next_sib_node)
+        print_export_list(*envv);
+    else
+    {
+        tmp = cmd->next_sib_node;
+        while (tmp->next_sib_node)
+        {
+            push_var_to_env(tmp->value, envv);
+            tmp = tmp->next_sib_node;
+        }
+        push_var_to_env(tmp->value, envv);
+    }
+    //update_envv(cmd, envv);
 	return (0);
 }
