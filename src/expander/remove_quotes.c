@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
@@ -6,7 +7,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/10 14:29:27 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/16 14:36:18 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/19 11:58:48 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +89,8 @@ char	*remove_quotes(char *value)
 		free(value);
 		return (new_value);
 	}
-	new_value = (char *)malloc(sizeof(char) * (count + 1));
-	if (!new_value)
-		return (NULL);
+	new_value = ft_xmalloc(sizeof(char) * (count + 1));
 	copy_filtered_quotes(new_value, value, (count + 1));
+  free(value);
 	return (new_value);
 }

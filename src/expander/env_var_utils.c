@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/26 11:41:44 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/16 13:30:23 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/19 16:52:07 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		get_env_var_len(char *env_var)
 	return (i);
 }
 
-char	**get_env_var(char *input)
+char	**get_env_var(char *input, int *exit_code)
 {
 	int i;
 	int len;
@@ -35,20 +35,15 @@ char	**get_env_var(char *input)
 	char **env_var;
 
 	i = 0;
-	count = count_dollar_sign(input);
-	if (!count)
+	count = count_dollar_sign(input, exit_code);
+	if (!count || *exit_code == -1)
 		return (NULL);
-	env_var = (char **)malloc(sizeof(char *) * (count + 1));
-	if (!env_var)
-		return (NULL);
-	while (*input && i < count)
-	{
+	env_var = ft_xmalloc(sizeof(char *) * (count + 1));
+	while (*input && i < count)	{
 		if (*input == '$')
 		{
 			len = get_env_var_len(input);
-			env_var[i] = (char *)malloc(sizeof(char) * (len + 1));
-			if (!env_var[i])
-				return (ft_free_2d_array(env_var));
+			env_var[i] = ft_xmalloc(sizeof(char *) * (len + 1));
 			ft_strlcpy(env_var[i], input, (len + 1));
 			i++;
 		}
@@ -62,9 +57,7 @@ t_env_var	*create_env_var(char *value)
 {
 	t_env_var	*new;
 
-	new = (t_env_var *)malloc(sizeof(t_env_var));
-	if (!new)
-		return (NULL);
+	new = ft_xmalloc(sizeof(t_env_var));
 	new->env_value = ft_strdup(value);
 	new->len_env = ft_strlen(new->env_value);
 	new->len_exp_env = 0;

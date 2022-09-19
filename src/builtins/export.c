@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/17 15:57:14 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/19 17:09:24 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,35 +37,37 @@ void push_var_to_env(char *str, char **arr[])
 	new_arr[i] = NULL;
     ft_free_2d_array(*arr);
     *arr = new_arr;
-	//return (new_arr);
 }
 
-static void sort_alpha(char *arr[], int size)
+static char **sort_alpha(char *arr[], int size)
 {
     int i;
     int j;
     char *temp;
+    char **sorted;
     
     temp = NULL;
+    sorted = cpy_2d(arr);
     i = 1;
     while (i < size)
     {
         j = 1;
         while (j < size)
         {
-            if(ft_strncmp(arr[j-1], arr[j], ft_strlen(arr[j-1]))>0)
+            if(ft_strncmp(sorted[j-1], sorted[j], ft_strlen(sorted[j-1]))>0)
             {
-                temp = ft_strdup(arr[j-1]);
-                free(arr[j-1]);
-                arr[j-1] = ft_strdup(arr[j]);
-                free(arr[j]);
-                arr[j] = ft_strdup(temp);
+                temp = ft_strdup(sorted[j-1]);
+                free(sorted[j-1]);
+                sorted[j-1] = ft_strdup(sorted[j]);
+                free(sorted[j]);
+                sorted[j] = ft_strdup(temp);
                 free(temp);
             }
             j++;
         }
         i++;
     }
+    return (sorted);
 }
 
 void print_with_quotes(char *str)
@@ -98,19 +100,42 @@ void print_with_quotes(char *str)
 void print_export_list(char *envv[])
 {
     int envv_size;
+    char **sorted_envv;
 
     envv_size = 0;
     while (envv[envv_size])
         envv_size++;
-    sort_alpha(envv, envv_size);
-    //add_quotes(envv);
+    sorted_envv = sort_alpha(envv, envv_size);
     envv_size = 0;
-    while(envv[envv_size])
+    while(sorted_envv[envv_size])
     {
-        ft_putstr_fd("declare -x ", STDOUT_FILENO);
-        print_with_quotes(envv[envv_size]);
+        if (ft_strncmp(sorted_envv[envv_size], "_=", ft_strlen("_=")))
+        {
+            ft_putstr_fd("declare -x ", STDOUT_FILENO);
+            print_with_quotes(sorted_envv[envv_size]);
+        }
         envv_size++;
     }
+    ft_free_2d_array(sorted_envv);
+}
+
+static void export(char *str, char **arr[])
+{
+    int index;
+    int size;
+    char **temp;
+
+    index = 0;
+    temp = *arr;
+    while (temp[size])
+        size++;
+    while (temp[index])
+    {
+        if (ft_strnstr(temp[index], str, ft_strlen(str)))
+            break;
+        index++;
+    }
+    if (index == size && ft_strncmp(temp[index], str, ft_strlen(str)))
 }
 
 int exec_export(t_ast *cmd, char **envv[])
@@ -129,6 +154,6 @@ int exec_export(t_ast *cmd, char **envv[])
         }
         push_var_to_env(tmp->value, envv);
     }
-    //update_envv(cmd, envv);
+    update_underscore(cmd, envv);
 	return (0);
 }

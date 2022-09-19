@@ -6,13 +6,14 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:50:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/14 14:25:53 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/19 16:59:02 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "utils.h"
 #include "expander.h"
+#include "builtins.h"
 #include <stdio.h>
 
 char	*save_exp_val(char *full_env_val, char *alias)
@@ -39,15 +40,14 @@ char	*find_exp_var(char *env_var, char **envp)
 	exp_var = NULL;
 	if (!ft_strncmp(env_var, "$", ft_strlen(env_var)))
 		return (ft_strdup(env_var));
+	// if (!ft_strncmp(env_var, "?", ft_strlen(env_var))) EXPAND EXITCODE
+	// 	return ();
 	while (envp[i] != NULL)
 	{
-		if (ft_strnstr(envp[i], &env_var[1], ft_strlen(&env_var[1])) != NULL)
+		if (compare_key(envp[i], &env_var[1]))
 		{
-			// if (envp[i][ft_strlen(&env_var[1] + 1)] == '=')
-			// {
-				exp_var = save_exp_val(envp[i], &env_var[1]);
-				return (exp_var);
-			//}
+			exp_var = save_exp_val(envp[i], &env_var[1]);
+			return (exp_var);
 		}
 		i++;
 	}
