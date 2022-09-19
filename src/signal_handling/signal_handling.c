@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 11:33:51 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 11:41:17 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/19 16:56:53 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,11 @@ void	heredoc_interrupt(int num)
 		rl_on_new_line();
 		exit(EXIT_FAILURE);
 	}
+}
+
+void	signals_on_init(t_data *data)
+{
+	init_sigaction(&data->sigint_h, prompt_interrupt);
+	signal(SIGQUIT, SIG_IGN);
+	sigaction(SIGINT, &data->sigint_h, NULL);
 }

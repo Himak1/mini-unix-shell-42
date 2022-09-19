@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:55:15 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/17 16:14:57 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/19 15:39:54 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	read_write_to_tmp(char *delimiter, int file_fd, char *envv[])
 {
 	char				*line;
 	struct sigaction	child_sigint_h;
+	t_uint				linelen;
 
 	init_sigaction(&child_sigint_h, heredoc_interrupt);
 	sigaction(SIGINT, &child_sigint_h, NULL);
@@ -27,9 +28,11 @@ void	read_write_to_tmp(char *delimiter, int file_fd, char *envv[])
 		line = readline(">");
 		if (!line)
 			exit(EXIT_FAILURE);
-		if (ft_strncmp(delimiter, line, ft_strlen(line)) == 0)
+		linelen = ft_strlen(line);
+		if (linelen != 0 && ft_strncmp(delimiter, line, linelen) == 0)
 			break ;
-		expander(&line, envv);
+		if (linelen != 0)
+			expander(&line, envv);
 		write(file_fd, line, ft_strlen(line));
 		write(file_fd, "\n", 1);
 		free(line);
