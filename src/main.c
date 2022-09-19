@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/19 17:08:27 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/19 17:41:46 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		data.lst = NULL;
-		line = readline("Minishell-$ ");
+		line = readline("minishell-$ ");
 		if (!line)
 		{
 			write(1, "exit\n", 6);

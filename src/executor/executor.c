@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/19 15:00:17 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/19 17:42:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ static inline void	execute(t_exec *data, char *envv[])
 	if (data->cmd)
 	{
 		if (access(data->cmd[0], X_OK) != 0)
-			exit(EXIT_FAILURE);
-		execve(data->cmd[0], data->cmd, envv);
-		write(STDERR_FILENO, "Minishell: command not found\n", 29);
+			execve(data->cmd[0], data->cmd, envv);
+		write(STDERR_FILENO, "minishell: command not found\n", 29);
 		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
