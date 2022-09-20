@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 16:49:48 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/20 17:40:50 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int	executor(t_ast *tree, char **envv[])
 	i = 0;
 	status = 0;
 	first_cmd = tree->child_node;
-	data.pid = ft_xmalloc(data.cmd_count * sizeof(int));
 	data.cmd_count = count_cmds(tree);
+	data.pid = ft_xmalloc(data.cmd_count * sizeof(int));
 	init_pipes(data.pip1, data.pip2);
 	if (!is_builtin(first_cmd, data.cmd_count))
 	{
@@ -100,5 +100,6 @@ int	executor(t_ast *tree, char **envv[])
 	}
 	else
 		exec_builtin(first_cmd, envv);
+	free(data.pid);
 	return (WEXITSTATUS(status));
 }
