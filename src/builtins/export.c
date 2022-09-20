@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/19 17:09:24 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/20 15:33:02 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void push_var_to_env(char *str, char **arr[])
     temp = *arr;
 	while (temp[i] != NULL)
 		i++;
-	new_arr = (char **)malloc(sizeof(char *) * (i + 2));
+	new_arr = ft_xmalloc(sizeof(char *) * (i + 2));
 	i = 0;
 	while (temp[i] != NULL)
 	{
@@ -119,23 +119,41 @@ void print_export_list(char *envv[])
     ft_free_2d_array(sorted_envv);
 }
 
+int search_for_key(char *key, char **arr)
+{
+    int i;
+    char **key_and_val;
+
+    i = 0;
+    if (ft_strchr(key, '='))
+    {
+        key_and_val = ft_split(key, '=');
+        i = ft_get_index_2d(arr, key_and_val[0]);
+        if (!ft_strncmp(arr[i], key_and_val[0], ft_strlen(key_and_val[0])))
+        {
+            ft_free_2d_array(key_and_val);
+            return (i);
+        }
+    }
+    i = ft_get_index_2d(arr, key);
+    if (!ft_strncmp(arr[i], key, ft_strlen(key)))
+            return (i);
+    return (-1);
+}
+
 static void export(char *str, char **arr[])
 {
     int index;
-    int size;
-    char **temp;
 
-    index = 0;
-    temp = *arr;
-    while (temp[size])
-        size++;
-    while (temp[index])
+    index = search_for_key(str, *arr);
+    if (index != -1)
     {
-        if (ft_strnstr(temp[index], str, ft_strlen(str)))
-            break;
-        index++;
+        if (!ft_strchr(str, '='))
+            return ;
+        update_var(index, str, NULL, *arr);
     }
-    if (index == size && ft_strncmp(temp[index], str, ft_strlen(str)))
+    else
+        push_var_to_env(str, arr);
 }
 
 int exec_export(t_ast *cmd, char **envv[])
@@ -149,10 +167,10 @@ int exec_export(t_ast *cmd, char **envv[])
         tmp = cmd->next_sib_node;
         while (tmp->next_sib_node)
         {
-            push_var_to_env(tmp->value, envv);
+            export(tmp->value, envv);
             tmp = tmp->next_sib_node;
         }
-        push_var_to_env(tmp->value, envv);
+        export(tmp->value, envv);
     }
     update_underscore(cmd, envv);
 	return (0);

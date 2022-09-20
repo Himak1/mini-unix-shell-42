@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:58 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/17 16:08:43 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/20 15:33:18 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,15 @@ void	print_envp(char **envp) //delete
 	ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
+static void unset(char *str, char **arr[])
+{
+    int index;
+
+    index = search_for_key(str, *arr);
+    printf("index = %i\n", index);
+    if (index != -1)
+        pop_var_from_env(str, arr);
+}
 
 int exec_unset(t_ast *cmd, char **envv[])
 {
@@ -83,10 +92,10 @@ int exec_unset(t_ast *cmd, char **envv[])
         while (tmp->next_sib_node)
         {
             //printf("hello");
-            pop_var_from_env(tmp->value, envv);
+            unset(tmp->value, envv);
             tmp = tmp->next_sib_node;
         }
-        pop_var_from_env(tmp->value, envv);
+        unset(tmp->value, envv);
     }
 	//update_envv(cmd, envv);
 	return (0);

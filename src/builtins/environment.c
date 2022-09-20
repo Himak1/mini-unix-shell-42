@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:18:49 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/17 19:08:18 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/20 14:57:19 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,19 @@ int ft_len_2d_arr(char **arr)
 	return (i);
 }
 
+// if the key is equal to the key of the full var -> return 1
+
 int    compare_key(char *full_var, char *key)
 {
     size_t i;
 
     i = 0;
-    while (full_var[i] && full_var[i] != '=')
+    if (!full_var)
+		return (0);
+	while (full_var[i] && full_var[i] != '=')
         i++;
-    if (i == ft_strlen(key))
-      return (1);
+    if (i == ft_strlen(key) && ft_strncmp(full_var, key, i))
+      	return (1);
     return (0);
 }
 
@@ -52,8 +56,12 @@ char	*create_full_var(char *key, char *value)
 
 void update_var(int index, char *key, char *val, char *envv[])
 {
-	free(envv[index]);
-	envv[index] = create_full_var(key, val);
+	if (envv[index])
+		free(envv[index]);
+	if (!val)
+		envv[index] = ft_strdup(key);
+	else
+		envv[index] = create_full_var(key, val);
 }
 
 void update_underscore(t_ast *cmd, char **envv[])
