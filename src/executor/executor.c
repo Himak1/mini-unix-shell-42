@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 17:40:50 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/20 18:36:18 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,5 @@ int	executor(t_ast *tree, char **envv[])
 	else
 		exec_builtin(first_cmd, envv);
 	free(data.pid);
-	return (WEXITSTATUS(status));
+	return (get_exitcode(status));
 }

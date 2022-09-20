@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   shell_init.h                                       :+:    :+:            */
+/*   get_exitcode.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/09/20 17:16:16 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 17:42:03 by jhille        ########   odam.nl         */
+/*   Created: 2022/09/20 18:35:23 by jhille        #+#    #+#                 */
+/*   Updated: 2022/09/20 18:41:22 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_INIT_H
-# define SHELL_INIT_H
-# include "minishell.h"
+#include <sys/wait.h>
 
-void	shell_init(t_data *data, char *envp[]);
-void	increase_shlvl(char *envv[]);
-void	set_termios(t_data *data);
-void	copy_envp(t_data *data, char *envp[]);
+int	get_exitcode(int status)
+{
+	int	exitcode;
 
-#endif
+	if (WIFEXITED(status))
+		exitcode = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		exitcode = WTERMSIG(status);
+	else if (WIFSTOPPED(status))
+		exitcode = WSTOPSIG(status);
+	else
+		exitcode = 131;
+	return (exitcode);
+}
