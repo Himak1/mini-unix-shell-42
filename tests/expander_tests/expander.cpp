@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 15:18:48 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/23 16:47:05 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/20 12:20:03 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ TEST(create_envp, basic_test)
 TEST(count_dollar_sign, basic_test1)
 {
     char *str = "hello $HOME";
-    int count = count_dollar_sign(str);
+    int exit_code = 0;
+    int count = count_dollar_sign(str, &exit_code);
     
     ASSERT_EQ(count, 1);
 }
@@ -48,7 +49,8 @@ TEST(count_dollar_sign, basic_test1)
 TEST(count_dollar_sign, basic_test2)
 {
     char *str = "hello$HOME";
-    int count = count_dollar_sign(str);
+    int exit_code = 0;
+    int count = count_dollar_sign(str, &exit_code);
     
     ASSERT_EQ(count, 1);
 }
@@ -56,7 +58,8 @@ TEST(count_dollar_sign, basic_test2)
 TEST(count_dollar_sign, basic_test3)
 {
     char *str = "hello $HOME$hi";
-    int count = count_dollar_sign(str);
+    int exit_code = 0;
+    int count = count_dollar_sign(str, &exit_code);
     
     ASSERT_EQ(count, 2);
 }
@@ -64,7 +67,8 @@ TEST(count_dollar_sign, basic_test3)
 TEST(count_dollar_sign, zero)
 {
     char *str = "hello HOMEhi";
-    int count = count_dollar_sign(str);
+    int exit_code = 0;
+    int count = count_dollar_sign(str, &exit_code);
     
     ASSERT_EQ(count, 0);
 }
@@ -73,7 +77,8 @@ TEST(expand_dollar_sign, basic_test1)
 {
     char **envp = create_envp();
     char *input = ft_strdup("\"I am currently in $PWD\"");
-    char *expanded = expand_dollar_sign(input, envp);
+    int exit_code = 0;
+    char *expanded = expand_dollar_sign(input, envp, &exit_code);
 
     ASSERT_STREQ("\"I am currently in /pwd/desktop/minishell\"", expanded);
     ft_free_2d_array(envp);
@@ -85,7 +90,8 @@ TEST(expand_dollar_sign, basic_test2)
 {
     char **envp = create_envp();
     char *input = ft_strdup("This is not a var $HELLO but this is $LANG");
-    char *expanded = expand_dollar_sign(input, envp);
+    int exit_code = 0;
+    char *expanded = expand_dollar_sign(input, envp, &exit_code);
 
     ASSERT_STREQ("This is not a var  but this is C.UTF-8", expanded);
     ft_free_2d_array(envp);
@@ -97,7 +103,8 @@ TEST(expand_dollar_sign, basic_test3)
 {
     char **envp = create_envp();
     char *input = ft_strdup("I am $ currently $ in $PWDnot this $hi");
-    char *expanded = expand_dollar_sign(input, envp);
+    int exit_code = 0;
+    char *expanded = expand_dollar_sign(input, envp, &exit_code);
 
     ASSERT_STREQ("I am $ currently $ in  this ", expanded);
     ft_free_2d_array(envp);
@@ -109,7 +116,8 @@ TEST(expand_dollar_sign, basic_test4)
 {
     char **envp = create_envp();
     char *input = ft_strdup("$hello");
-    char *expanded = expand_dollar_sign(input, envp);
+    int exit_code = 0;
+    char *expanded = expand_dollar_sign(input, envp, &exit_code);
 
     ASSERT_STREQ("", expanded);
     ft_free_2d_array(envp);

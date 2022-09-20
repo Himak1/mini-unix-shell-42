@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/14 13:00:56 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/19 16:52:10 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "lexer.h"
 #include <stdio.h>
 
-int	count_dollar_sign(char *value)
+int	count_dollar_sign(char *value, int *exit_code)
 {
 	int	dquote;
 	int	squote;
@@ -37,6 +37,11 @@ int	count_dollar_sign(char *value)
 			dquote = 0;
 		value++;
 	}
+	if (dquote == 1 || squote == 1)
+	{
+		ft_putendl_fd("Syntax error: unclosed quote", STDERR_FILENO);
+		*exit_code = -1;
+	}
 	return (count);
 }
 
@@ -54,7 +59,7 @@ void	free_env_var_list(t_env_var *list)
 	}
 }
 
-char	*expand_dollar_sign(char *input, char **envp)
+char	*expand_dollar_sign(char *input, char **envp, int *exit_code)
 {
 	int			len_input;
 	int			len_exp;
@@ -64,7 +69,7 @@ char	*expand_dollar_sign(char *input, char **envp)
 
 	env_var_list = NULL;
 	len_input = ft_strlen(input);
-	env_var = get_env_var(input);
+	env_var = get_env_var(input, exit_code);
 	if (!env_var)
 		return (input);
 	create_env_var_list(&env_var_list, env_var);
@@ -75,36 +80,41 @@ char	*expand_dollar_sign(char *input, char **envp)
 	return (exp_input);
 }
 
-void	expander(char **input, char **envp)
+int	expander(char **input, char **envp)
 {
+	int 	error;
 	char	*expanded;
 
-	expanded = expand_dollar_sign(*input, envp);
-	// if (!expanded)
-	// 	expanded = remove_quotes(*input);
-	// else
+	error = 0;
+	expanded = expand_dollar_sign(*input, envp, &error);
+	if (error == -1)
+		return (error);
 	expanded = remove_quotes(expanded);
 	*input = ft_strdup(expanded);
 	free(expanded);
+	return (0);
 }
 
-void	expand_tree(t_ast *parent, char **envp)
+int	expand_tree(t_ast *parent, char **envp)
 {
+	int		error;
 	t_ast	*iter;
 
+	error = 0;
 	if (!parent->child_node)
-		return ;
+		return (0);
 	iter = parent->child_node;
 	while (iter->next_sib_node)
 		iter = iter->next_sib_node;
 	while (iter->prev_sib_node)
 	{
-		expand_tree(iter, envp);
+		error += expand_tree(iter, envp);
 		if (iter->type == TERMINAL)
-			expander(&(iter->value), envp);
+			error += expander(&(iter->value), envp);
 		iter = iter->prev_sib_node;
 	}
 	if (iter->type == TERMINAL)
-		expander(&(iter->value), envp);
-	expand_tree(iter, envp);
+		error += expander(&(iter->value), envp);
+	error += expand_tree(iter, envp);
+	return (error);
 }

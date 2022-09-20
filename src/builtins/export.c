@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/15 15:10:10 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/20 15:33:02 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,55 +15,59 @@
 #include "builtins.h"
 #include <stdio.h>
 
-char **add_var_to_env(char *str, char **arr)
+void push_var_to_env(char *str, char **arr[])
 {
 	int i;
+    char **temp;
 	char **new_arr;
 
 	i = 0;
-	while (arr[i] != NULL)
+    temp = *arr;
+	while (temp[i] != NULL)
 		i++;
-	new_arr = (char **)malloc(sizeof(char *) * (i + 2));
+	new_arr = ft_xmalloc(sizeof(char *) * (i + 2));
 	i = 0;
-	while (arr[i] != NULL)
+	while (temp[i] != NULL)
 	{
-		new_arr[i] = ft_strdup(arr[i]);
+		new_arr[i] = ft_strdup(temp[i]);
 		i++;
 	}
 	new_arr[i] = ft_strdup(str);
 	i++;
 	new_arr[i] = NULL;
-	// if (arr)
-	// 	ft_free_2d_array(arr);
-	return (new_arr);
+    ft_free_2d_array(*arr);
+    *arr = new_arr;
 }
 
-static void sort_alpha(char *arr[], int size)
+static char **sort_alpha(char *arr[], int size)
 {
     int i;
     int j;
     char *temp;
+    char **sorted;
     
     temp = NULL;
+    sorted = cpy_2d(arr);
     i = 1;
     while (i < size)
     {
         j = 1;
         while (j < size)
         {
-            if(ft_strncmp(arr[j-1], arr[j], ft_strlen(arr[j-1]))>0)
+            if(ft_strncmp(sorted[j-1], sorted[j], ft_strlen(sorted[j-1]))>0)
             {
-                temp = ft_strdup(arr[j-1]);
-                free(arr[j-1]);
-                arr[j-1] = ft_strdup(arr[j]);
-                free(arr[j]);
-                arr[j] = ft_strdup(temp);
+                temp = ft_strdup(sorted[j-1]);
+                free(sorted[j-1]);
+                sorted[j-1] = ft_strdup(sorted[j]);
+                free(sorted[j]);
+                sorted[j] = ft_strdup(temp);
                 free(temp);
             }
             j++;
         }
         i++;
     }
+    return (sorted);
 }
 
 void print_with_quotes(char *str)
@@ -75,6 +79,11 @@ void print_with_quotes(char *str)
     {
         ft_putchar_fd(str[i], STDOUT_FILENO);
         i++;
+    }
+    if (!str[i])
+    {
+        ft_putchar_fd('\n', STDOUT_FILENO);
+        return ;
     }
     ft_putchar_fd(str[i], STDOUT_FILENO);
     i++;
@@ -88,36 +97,81 @@ void print_with_quotes(char *str)
     ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
-void print_export_list(char *envp[])
+void print_export_list(char *envv[])
 {
-    int envp_size;
-    //char **alpha_envp;
+    int envv_size;
+    char **sorted_envv;
 
-    envp_size = 0;
-    while (envp[envp_size])
-        envp_size++;
-    sort_alpha(envp, envp_size);
-    //add_quotes(envp);
-    envp_size = 0;
-    while(envp[envp_size])
+    envv_size = 0;
+    while (envv[envv_size])
+        envv_size++;
+    sorted_envv = sort_alpha(envv, envv_size);
+    envv_size = 0;
+    while(sorted_envv[envv_size])
     {
-        ft_putstr_fd("declare -x ", STDOUT_FILENO);
-        print_with_quotes(envp[envp_size]);
-        envp_size++;
+        if (ft_strncmp(sorted_envv[envv_size], "_=", ft_strlen("_=")))
+        {
+            ft_putstr_fd("declare -x ", STDOUT_FILENO);
+            print_with_quotes(sorted_envv[envv_size]);
+        }
+        envv_size++;
     }
+    ft_free_2d_array(sorted_envv);
 }
 
-void export(t_ast *cmd, char *envp[])
+int search_for_key(char *key, char **arr)
 {
-    if (!cmd->next_sib_node)
-        print_export_list(envp);
+    int i;
+    char **key_and_val;
+
+    i = 0;
+    if (ft_strchr(key, '='))
+    {
+        key_and_val = ft_split(key, '=');
+        i = ft_get_index_2d(arr, key_and_val[0]);
+        if (!ft_strncmp(arr[i], key_and_val[0], ft_strlen(key_and_val[0])))
+        {
+            ft_free_2d_array(key_and_val);
+            return (i);
+        }
+    }
+    i = ft_get_index_2d(arr, key);
+    if (!ft_strncmp(arr[i], key, ft_strlen(key)))
+            return (i);
+    return (-1);
+}
+
+static void export(char *str, char **arr[])
+{
+    int index;
+
+    index = search_for_key(str, *arr);
+    if (index != -1)
+    {
+        if (!ft_strchr(str, '='))
+            return ;
+        update_var(index, str, NULL, *arr);
+    }
     else
-        envp = add_var_to_env(cmd->next_sib_node->value, envp);
+        push_var_to_env(str, arr);
 }
 
-int exec_export(t_ast *cmd, char *envp[])
+int exec_export(t_ast *cmd, char **envv[])
 {
-	export(cmd, envp);
-	//update_underscore(cmd, envp);
+	t_ast *tmp;
+
+    if (!cmd->next_sib_node)
+        print_export_list(*envv);
+    else
+    {
+        tmp = cmd->next_sib_node;
+        while (tmp->next_sib_node)
+        {
+            export(tmp->value, envv);
+            tmp = tmp->next_sib_node;
+        }
+        export(tmp->value, envv);
+    }
+    update_underscore(cmd, envv);
 	return (0);
 }

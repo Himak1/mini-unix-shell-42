@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/04 14:08:38 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/14 14:30:16 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/20 11:43:11 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ TEST(find_exp_var, test_not_found)
 TEST(check_env_var, test_found1)
 {
     char **envp = create_envp();
-    char **env_var = get_env_var("hello $HOME and $PWD");
+    int exit_code = 0;
+    char **env_var = get_env_var("hello $HOME and $PWD", &exit_code);
     t_env_var *env_var_list = NULL;
     
     create_env_var_list(&env_var_list, env_var);
@@ -84,7 +85,8 @@ TEST(check_env_var, test_found1)
 TEST(check_env_var, test_found2)
 {
     char **envp = create_envp();
-    char **env_var = get_env_var("hello $HOME and $");
+    int exit_code = 0;
+    char **env_var = get_env_var("hello $HOME and $", &exit_code);
     t_env_var *env_var_list = NULL;
     
     create_env_var_list(&env_var_list, env_var);
@@ -101,7 +103,8 @@ TEST(check_env_var, test_found2)
 TEST(check_env_var, test_not_found3)
 {
     char **envp = create_envp();
-    char **env_var = get_env_var("hello $HI");
+    int exit_code = 0;
+    char **env_var = get_env_var("hello $HI", &exit_code);
     t_env_var *env_var_list = NULL;
     
     create_env_var_list(&env_var_list, env_var);
@@ -115,7 +118,8 @@ TEST(check_env_var, test_not_found3)
 TEST(check_env_var, test_found_and_not_found1)
 {
     char **envp = create_envp();
-    char **env_var = get_env_var("hello $HOME and $HI");
+    int exit_code = 0;
+    char **env_var = get_env_var("hello $HOME and $HI", &exit_code);
     t_env_var *env_var_list = NULL;
     
     create_env_var_list(&env_var_list, env_var);
@@ -130,7 +134,8 @@ TEST(check_env_var, test_found_and_not_found1)
 TEST(check_env_var, test_found_and_not_found2)
 {
     char **envp = create_envp();
-    char **env_var = get_env_var("hello $HI and $HOME");
+    int exit_code = 0;
+    char **env_var = get_env_var("hello $HI and $HOME", &exit_code);
     t_env_var *env_var_list = NULL;
     
     create_env_var_list(&env_var_list, env_var);
@@ -145,7 +150,8 @@ TEST(check_env_var, test_found_and_not_found2)
 TEST(get_exp_len, basic_test1)
 {
     char **envp = create_envp();
-    char **env_var = get_env_var("hello $CHARSET");
+    int exit_code = 0;
+    char **env_var = get_env_var("hello $CHARSET", &exit_code);
     int len_input = ft_strlen("hello $CHARSET");
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -161,7 +167,8 @@ TEST(get_exp_len, basic_test1)
 TEST(get_exp_len, basic_test2)
 {
     char **envp = create_envp();
-    char **env_var = get_env_var("hello $LANG");
+    int exit_code = 0;
+    char **env_var = get_env_var("hello $LANG", &exit_code);
     int len_input = ft_strlen("hello $LANG");
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -178,7 +185,8 @@ TEST(get_exp_len, basic_test2)
 TEST(get_exp_len, basic_test3)
 {
     char **envp = create_envp();
-    char **env_var = get_env_var("hello $LANG and $");
+    int exit_code = 0;
+    char **env_var = get_env_var("hello $LANG and $", &exit_code);
     int len_input = ft_strlen("hello $LANG and $");
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -195,7 +203,8 @@ TEST(get_exp_len, basic_test3)
 TEST(get_exp_len, basic_test4)
 {
     char **envp = create_envp();
-    char **env_var = get_env_var("hello $hello");
+    int exit_code = 0;
+    char **env_var = get_env_var("hello $hello", &exit_code);
     int len_input = ft_strlen("hello $hello");
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -213,7 +222,8 @@ TEST(get_exp_len, basic_test4)
 TEST(get_exp_len, basic_test5)
 {
     char **envp = create_envp();
-    char **env_var = get_env_var("hello $hello and $");
+    int exit_code = 0;
+    char **env_var = get_env_var("hello $hello and $", &exit_code);
     int len_input = ft_strlen("hello $hello and $");
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -230,7 +240,8 @@ TEST(expand_input, basic_test1)
 {
     char **envp = create_envp();
     char *input = "hello $HOME";
-    char **env_var = get_env_var(input);
+    int exit_code = 0;
+    char **env_var = get_env_var(input, &exit_code);
     int len_input = ft_strlen(input);
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -247,7 +258,8 @@ TEST(expand_input, basic_test2)
 {
     char **envp = create_envp();
     char *input = "hello $HI";
-    char **env_var = get_env_var(input);
+    int exit_code = 0;
+    char **env_var = get_env_var(input, &exit_code);
     int len_input = ft_strlen(input);
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -264,7 +276,8 @@ TEST(expand_input, basic_test3)
 {
     char **envp = create_envp();
     char *input = "hello $HOME and $PWD";
-    char **env_var = get_env_var(input);
+    int exit_code = 0;
+    char **env_var = get_env_var(input, &exit_code);
     int len_input = ft_strlen(input);
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -281,7 +294,8 @@ TEST(expand_input, basic_test4)
 {
     char **envp = create_envp();
     char *input = "hello $HI and $PWD";
-    char **env_var = get_env_var(input);
+    int exit_code = 0;
+    char **env_var = get_env_var(input, &exit_code);
     int len_input = ft_strlen(input);
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -298,7 +312,8 @@ TEST(expand_input, basic_test5)
 {
     char **envp = create_envp();
     char *input = "hello $PWD and $HI";
-    char **env_var = get_env_var(input);
+    int exit_code = 0;
+    char **env_var = get_env_var(input, &exit_code);
     int len_input = ft_strlen(input);
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -315,7 +330,8 @@ TEST(expand_input, basic_test6)
 {
     char **envp = create_envp();
     char *input = "hello $PWD and hi to $HI $";
-    char **env_var = get_env_var(input);
+    int exit_code = 0;
+    char **env_var = get_env_var(input, &exit_code);
     int len_input = ft_strlen(input);
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -332,7 +348,8 @@ TEST(expand_input, basic_test7)
 {
     char **envp = create_envp();
     char *input = "hello PWD";
-    char **env_var = get_env_var(input);
+    int exit_code = 0;
+    char **env_var = get_env_var(input, &exit_code);
     int len_input = ft_strlen(input);
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -354,7 +371,8 @@ TEST(expand_input, basic_test8)
 {
     char **envp = create_envp();
     char *input = "I am currently in $PWD";
-    char **env_var = get_env_var(input);
+    int exit_code = 0;
+    char **env_var = get_env_var(input, &exit_code);
     int len_input = ft_strlen(input);
     t_env_var *env_var_list = NULL;
     int exp_len;
@@ -371,7 +389,8 @@ TEST(expand_input, basic_test9)
 {
     char **envp = create_envp();
     char *input = "I am currently in /current/dir/is$PWD";
-    char **env_var = get_env_var(input);
+    int exit_code = 0;
+    char **env_var = get_env_var(input, &exit_code);
     int len_input = ft_strlen(input);
     t_env_var *env_var_list = NULL;
     int exp_len;

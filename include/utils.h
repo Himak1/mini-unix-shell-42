@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:36:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/15 15:29:25 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/19 11:54:53 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ char	**ft_free_2d_array(char **arr);
 void	ft_lstfree(t_token *tokenlist);
 void	free_array(void **ptr_array, const int array_len);
 int		ft_get_index_2d(char **str_arr, char *str);
+char	**cpy_2d(char **arr);
 
 #endif

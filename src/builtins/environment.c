@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:18:49 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/15 15:30:58 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/20 14:57:19 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@
 #include "builtins.h"
 #include <limits.h>
 #include <stdio.h>
-
-// if env is called _=/usr/bin/env
-// anything else, expand to last arg of last used command (last terminal in ast)
-
-// char **add_var_to_env_list(char *var_name, char *envp[])
-// {
-// 	int i;
-// 	char **new_arr;
-
 
 int ft_len_2d_arr(char **arr)
 {
@@ -36,91 +27,115 @@ int ft_len_2d_arr(char **arr)
 	return (i);
 }
 
-// void update_underscore(t_ast *cmd, char *envp[])
-// {
+// if the key is equal to the key of the full var -> return 1
 
-// }
-
-// int main()
-// {
-// 	char input[] = "echo -nnn -nn hello";
-
-//     char **args = NULL;
-//     t_token *lst;
-// 	t_ast   *tree;
-//     char **envp = create_envp();
-    
-// 	lst = NULL;
-// 	ft_lexer(&lst, input);
-// 	tree = parse_tokens(lst);
-// 	expand_tree(tree, envp);
-//     tree = tree->child_node->child_node;
-//     while (tree->type != CMD)
-//         tree->next_sib_node;
-//     tree = tree->child_node;
-	
-// }
-
-void update_underscore(t_ast *cmd, char *envp[])
+int    compare_key(char *full_var, char *key)
 {
-	int		index;
-	int		len_envp;
-    t_ast	*iter;
-	char	*last_arg;
+    size_t i;
 
-    iter = cmd;
-	last_arg = NULL;
-	len_envp = ft_len_2d_arr(envp);
-	printf("len of envp %d\n", len_envp);
-	index = ft_get_index_2d(envp, "_=");
-	printf("index underscore %d\n", index);
-	if (ft_strncmp(envp[index], "_=", ft_strlen(envp[index])))
-		envp = add_var_to_env("_=", envp);
-	free(envp[index]);
-	if (!ft_strncmp(iter->value, "env", ft_strlen(iter->value)))
-		envp[index] = ft_strdup("_=/usr/bin/env");
-	else
-	{
-		while (iter->next_sib_node != NULL)
-			iter = iter->next_sib_node;
-		last_arg = ft_strdup(iter->value);
-		envp[index]= ft_strjoin("_=", last_arg);
-		free(last_arg);
-	}
+    i = 0;
+    if (!full_var)
+		return (0);
+	while (full_var[i] && full_var[i] != '=')
+        i++;
+    if (i == ft_strlen(key) && ft_strncmp(full_var, key, i))
+      	return (1);
+    return (0);
 }
 
-// void update_pwd(char *envp[])
-// {
-// 	int		index;
-// 	char	*new_path;
-// 	char cwd[PATH_MAX];
+char	*create_full_var(char *key, char *value)
+{
+	char	*key_is_equal;
+	char	*full_var;
+
+	key_is_equal = ft_strjoin(key, "=");
+	full_var = ft_strjoin(key_is_equal, value);
+	free(key_is_equal);
+	return (full_var);
+}
+
+void update_var(int index, char *key, char *val, char *envv[])
+{
+	if (envv[index])
+		free(envv[index]);
+	if (!val)
+		envv[index] = ft_strdup(key);
+	else
+		envv[index] = create_full_var(key, val);
+}
+
+void update_underscore(t_ast *cmd, char **envv[])
+{
+    int index;
+    int size;
+    char **temp;
+    t_ast *iter;
+
+    index = 0;
+    temp = *envv;
+    size = 0;
+    while (temp[size])
+        size++;
+    while (temp[index])
+    {
+        if (ft_strnstr(temp[index], "_", ft_strlen("_")) && compare_key(temp[index], "_"))
+		   break;
+        index++;
+    }
+    if (index == size) //has not been found
+    {
+	    push_var_to_env("_=", envv);
+		index = size;
+	}
+	iter = cmd;
+	while (iter->next_sib_node)
+		iter = iter->next_sib_node;
+	update_var(index, "_", iter->value, *envv);
+}
+
+void update_pwd(char *envv[])
+{
+	int		index;
+	char	*new_path;
+	char cwd[PATH_MAX];
 	
-// 	new_path = NULL;
-// 	index = ft_get_index_2d(envp, "PWD=");
-// 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-// 		new_path = ft_strdup(cwd);
-// 	else
-// 		perror("cd:");
-// 	// if (envp[index])
-// 	// 	free(envp[index]); // error with this?
-// 	envp[index]= ft_strjoin("PWD=", new_path);
-// 	free(new_path);
-// }
+	new_path = NULL;
+	index = ft_get_index_2d(envv, "PWD=");
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		new_path = ft_strdup(cwd);
+	else
+		perror("cd:");
+	if (envv[index])
+		free(envv[index]); // error with this?
+	envv[index]= create_full_var("PWD", new_path);
+	free(new_path);
+}
 
-// char	**update_old_pwd(char *envp[])
-// {
-// 	int index_old_pwd;
-// 	int index_pwd;
-// 	char *old_path;
+void update_old_pwd(char **envv[]) //clean up
+{
+	int index;
+    int size;
+    char **temp;
 
-// 	index_old_pwd = ft_get_index_2d(envp, "OLDPWD=");
-// 	if (!index_old_pwd && !ft_strnstr(envp[index_old_pwd], "OLDPWD=", ft_strlen(envp[index_old_pwd])))
-// 		envp = add_oldpwd(envp);
-// 	index_pwd = ft_get_index_2d(envp, "PWD=");
-// 	old_path = extract_var_value(envp[index_pwd]);
-// 	index_old_pwd = ft_get_index_2d(envp, "OLDPWD=");
-// 	free(envp[index_old_pwd]);
-// 	envp[index_old_pwd] = ft_strjoin("OLDPWD=", old_path);
-// 	free(old_path);
-// 	return(envp);
-// }
+    index = 0;
+    temp = *envv;
+    size = 0;
+    while (temp[size])
+        size++;
+    while (temp[index])
+    {
+        if (ft_strnstr(temp[index], "OLDPWD", ft_strlen("OLDPWD")) && compare_key(temp[index], "OLDPWD"))
+		   break;
+        index++;
+    }
+    if (index == size) //has not been found
+    {
+	    push_var_to_env("OLDPWD=", envv);
+		index = size;
+	}
+	temp = *envv;
+	int pwd_index = ft_get_index_2d(*envv, "PWD");
+	char **current_pwd = ft_split(temp[pwd_index], '=');
+	update_var(index, "OLDPWD", current_pwd[1], *envv);
+	ft_free_2d_array(current_pwd);
+}

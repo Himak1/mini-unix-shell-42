@@ -6,11 +6,12 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 11:33:51 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/19 16:56:53 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/20 16:47:57 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "libft.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdlib.h>

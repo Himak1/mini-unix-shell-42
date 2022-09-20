@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:34 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/15 10:31:41 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/17 19:01:42 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@
 void cd(t_ast *cmd)
 {
     char *dir;
+    //char cwd[256];
 
     dir = NULL;
     if (cmd->next_sib_node)
@@ -76,31 +77,23 @@ void cd(t_ast *cmd)
         else
         {
             if (chdir(dir) != 0)
+            {
+                //printf("hi\n");
                 perror("Error"); // fix error message
+            }
         }
     }
     else
         chdir(getenv("HOME"));
+    //printf("dir is %s\n", getcwd(cwd, sizeof(cwd)));
 }
 
-int exec_cd(t_ast *cmd, char *envp[])
+int exec_cd(t_ast *cmd, char **envv[])
 {
     cd(cmd);
-    update_underscore(cmd, envp);
+    update_underscore(cmd, envv);
+    update_old_pwd(envv);
+    update_pwd(*envv);
     return (0);
-}
-
-void	print_envp(char **envp) //delete
-{
-	int i;
-
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		ft_putstr_fd(envp[i], STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		i++;
-	}
-	ft_putchar_fd('\n', STDOUT_FILENO);
 }
 

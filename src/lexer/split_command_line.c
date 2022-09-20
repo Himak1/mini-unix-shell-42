@@ -6,12 +6,13 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 15:03:07 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/15 10:11:44 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/19 14:12:51 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "utils.h"
+#include <stdio.h>
 
 /* parse quotes
 
@@ -48,8 +49,6 @@ int	find_quotes(const char *s, int i)
 		if (s[i] == ' ' && (dquote == 1 || squote == 1))
 			i++;
 	}
-	// if (dquote != 2 || squote != 2) ----> error message
-	// 	return (error);
 	new_i = i;
 	return (new_i);
 }
@@ -102,15 +101,13 @@ static	char	**fill_array(char **arr, char const *s, int len)
 
 char	**split_command_line(char const *s)
 {
-	char	**split_arr;
 	int		count;
+	char	**split_arr;
 
 	if (!s)
 		return (NULL);
 	count = count_tokens(s);
-	split_arr = (char **)malloc((count + 1) * sizeof(char *));
-	if (!split_arr)
-		return (NULL);
+	split_arr = ft_xmalloc((count + 1) * sizeof(char *));
 	split_arr = fill_array(split_arr, s, count);
 	return (split_arr);
 }

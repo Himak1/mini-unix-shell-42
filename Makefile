@@ -28,12 +28,13 @@ SRC_FILES = main.c\
 LEXER_FILES = lexer.c\
 				split_command_line.c
 
-BUILTINS_FILES = pwd.c\
+BUILTINS_FILES = env.c\
 					echo.c\
+					pwd.c\
 					cd.c\
-					env.c\
-					environment.c\
 					export.c\
+					unset.c\
+					environment.c\
 					builtins.c\
 					builtins_utils.c
 
@@ -45,7 +46,8 @@ UTILS_FILES = lst_new.c\
 				ft_free_2d_array.c\
 				lst_new.c\
 				ft_xmalloc.c\
-					ft_get_index_2d.c
+				cpy_2d.c\
+				ft_get_index_2d.c
 
 PARSER_FILES = cmd.c\
 				node_functions.c\
