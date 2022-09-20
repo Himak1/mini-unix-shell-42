@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/20 16:47:42 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/20 17:22:38 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,53 +20,10 @@
 #include "heredoc.h"
 #include "executor.h"
 #include "signal_handling.h"
+#include "shell_init.h"
 #include "minishell.h"
 
-static void increase_shlvl(char *envv[])
-{
-	int shlvl;
-	int index;
-	char *new_shlvl;
-	char **key_and_val;
-
-	index = ft_get_index_2d(envv, "SHLVL=");
-	key_and_val = ft_split(envv[index], '=');
-	shlvl = ft_atoi(key_and_val[1]);
-	new_shlvl = ft_itoa(shlvl + 1);
-	free(envv[index]);
-	envv[index] = create_full_var("SHLVL", new_shlvl);
-	ft_free_2d_array(key_and_val);
-}
-
-static void	set_termios(t_data *data)
-{
-	tcgetattr(STDIN_FILENO, &data->config);
-	data->config.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &data->config);
-}
-
-static void	copy_envp(t_data *data, char *envp[])
-{
-	t_uint	envp_size;
-	t_uint	i;
-
-	i = 0;
-	envp_size = 0;
-	while (envp[envp_size])
-		envp_size++;
-	data->envv = ft_xmalloc((envp_size + 1) * sizeof(char *));
-	while (envp[i])
-	{
-		data->envv[i] = ft_strdup(envp[i]);
-		if (!data->envv[i])
-			exit(EXIT_FAILURE);
-		i++;
-	}
-	data->envv[i] = NULL;
-	increase_shlvl(data->envv);
-}
-
-static int	valid_syntax(t_data *data)
+int	valid_syntax(t_data *data)
 {
 	int	exit_code;
 
@@ -92,9 +49,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (argc == 100 && argv[0][0])
 		return (0); // filler
-	copy_envp(&data, envp);
-	signals_on_init(&data);
-	set_termios(&data);
+	shell_init(&data, envp);
 	while (1)
 	{
 		data.lst = NULL;

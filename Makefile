@@ -16,6 +16,7 @@ LIBFT = libft/libft.a
 
 SRC_FILES = main.c\
 			error_handling.c\
+			shell_init.c\
 			$(UTILS_FILES)\
 			$(LEXER_FILES)\
 			$(PARSER_FILES)\

@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   shell_init.h                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/08/18 11:53:21 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 17:16:59 by jhille        ########   odam.nl         */
+/*   Created: 2022/09/20 17:16:16 by jhille        #+#    #+#                 */
+/*   Updated: 2022/09/20 17:23:04 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-# include <signal.h>
-# include <termios.h>
-# include "parser.h"
+#ifndef SHELL_INIT_H
+# define SHELL_INIT_H
+# include "minishell.h"
 
-typedef struct s_data
-{
-	struct termios		config;
-	t_token				*lst;
-	t_ast				*tree;
-	char				**envv;
-	int					exit_code;
-	struct sigaction	sigint_h;
-}						t_data;
+void    shell_init(t_data *data, char *envp[]);
+void	increase_shlvl(char *envv[]);
+void	set_termios(t_data *data);
+void	copy_envp(t_data *data, char *envp[]);
 
 #endif
