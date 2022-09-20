@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 16:40:21 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/20 16:49:48 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,6 @@ int	executor(t_ast *tree, char **envv[])
 		}
 	}
 	else
-		exec_builtin(first_cmd, *envv);
+		exec_builtin(first_cmd, envv);
 	return (WEXITSTATUS(status));
 }
