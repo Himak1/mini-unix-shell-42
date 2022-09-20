@@ -15,6 +15,7 @@ OBJ = $(addprefix obj/, $(SRC_FILES:.c=.o))
 LIBFT = libft/libft.a
 
 SRC_FILES = main.c\
+			error_handling.c\
 			$(UTILS_FILES)\
 			$(LEXER_FILES)\
 			$(PARSER_FILES)\

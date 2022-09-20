@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/19 17:42:00 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/20 13:13:22 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <signal.h>
 #include "executor.h"
 #include "builtins.h"
+#include "error_handling.h"
 
 static int	count_cmds(t_ast *tree)
 {
@@ -43,9 +44,9 @@ static inline void	execute(t_exec *data, char *envv[])
 {
 	if (data->cmd)
 	{
-		if (access(data->cmd[0], X_OK) != 0)
+		if (access(data->cmd[0], X_OK) == 0)
 			execve(data->cmd[0], data->cmd, envv);
-		write(STDERR_FILENO, "minishell: command not found\n", 29);
+		cmd_error(data->cmd[0]);
 		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
