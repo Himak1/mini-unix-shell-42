@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 12:20:45 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 13:22:53 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/21 14:40:41 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 # define ERROR_HANDLING_H
 
 void	sh_error(void);
-void	cmd_error(char *cmd);
+void	cmd_error_exit(char *cmd);
 
 #endif

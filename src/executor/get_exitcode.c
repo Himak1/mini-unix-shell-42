@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 18:35:23 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 18:41:22 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/21 14:42:29 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ int	get_exitcode(int status)
 {
 	int	exitcode;
 
+	exitcode = 0;
 	if (WIFEXITED(status))
 		exitcode = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		exitcode = WTERMSIG(status);
+		exitcode = WTERMSIG(status) + 128;
 	else if (WIFSTOPPED(status))
-		exitcode = WSTOPSIG(status);
-	else
-		exitcode = 131;
+		exitcode = WSTOPSIG(status) + 128;
 	return (exitcode);
 }
