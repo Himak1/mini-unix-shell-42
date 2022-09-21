@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 17:02:16 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 17:23:33 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/21 16:35:01 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	increase_shlvl(char *envv[])
 	free(envv[index]);
 	envv[index] = create_full_var("SHLVL", new_shlvl);
 	ft_free_2d_array(key_and_val);
+	free(new_shlvl);
 }
 
 void	set_termios(t_data *data)

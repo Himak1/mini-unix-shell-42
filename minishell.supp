@@ -1,0 +1,30 @@
+{
+	main_readline_suppression
+	Memcheck:Leak
+	fun:*alloc
+	...
+	fun:readline
+	fun:main
+}
+{
+	readline_suppression
+	Memcheck:Leak
+	fun:*alloc
+	...
+	fun:readline
+}
+{
+	rl_initialize_suppression
+	Memcheck:Leak
+	fun:*alloc
+	...
+	fun:rl_initialize
+}
+{
+	add_history
+	Memcheck:Leak
+	fun:*alloc
+	...
+	fun:add_history
+	fun:main
+}

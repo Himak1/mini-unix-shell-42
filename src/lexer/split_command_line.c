@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 15:03:07 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/19 14:12:51 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/21 15:00:26 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static	char	**fill_array(char **arr, char const *s, int len)
 		arr[j] = (char *)malloc(sizeof(char) * (i + 1));
 		if (!arr[j])
 			return (ft_free_2d_array(arr));
+		//arr[j] = (char *)malloc(sizeof(char))
 		ft_strlcpy(arr[j], s, (i + 1));
 		while (s[i] == ' ' && s[i])
 			i++;
