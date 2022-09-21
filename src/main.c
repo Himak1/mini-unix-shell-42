@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/20 18:22:10 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/21 16:37:13 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	valid_syntax(t_data *data)
 		exit_code = expand_tree(data->tree, data->envv);
 		if (exit_code >= 0)
 			exit_code = executor(data->tree, &data->envv);
-		fprintf(stderr, "%d\n", exit_code);
 		if (exit_code == 131)
 			write(1, "Quit: 3\n", 8);
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &data->config);

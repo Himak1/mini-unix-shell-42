@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 15:37:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/19 14:17:06 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/21 16:55:35 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_uint	get_type(char *value)
 	return (type);
 }
 
+/*
 t_token	*create_token(char *value)
 {
 	t_token	*new;
@@ -40,6 +41,21 @@ t_token	*create_token(char *value)
 	if (!new)
 		return (NULL);
 	new->value = ft_strdup(value);
+	new->type = get_type(value);
+	new->next = NULL;
+	return (new);
+}
+*/
+
+t_token	*create_token(char *value)
+{
+	// possible fix
+	t_token	*new;
+
+	new = ft_xmalloc(sizeof(t_token));
+	new->value = ft_strdup(value);
+	if (!new->value)
+		exit(EXIT_FAILURE);
 	new->type = get_type(value);
 	new->next = NULL;
 	return (new);

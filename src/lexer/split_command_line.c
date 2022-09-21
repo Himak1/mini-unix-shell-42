@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 15:03:07 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/21 15:00:26 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/21 16:50:50 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ static	char	**fill_array(char **arr, char const *s, int len)
 	{
 		i = 0;
 		i = find_quotes(s, i);
-		arr[j] = (char *)malloc(sizeof(char) * (i + 1));
-		if (!arr[j])
-			return (ft_free_2d_array(arr));
-		//arr[j] = (char *)malloc(sizeof(char))
+			// arr[j] = (char *)malloc(sizeof(char) * (i + 1));
+			// if (!arr[j])
+			// 	return (ft_free_2d_array(arr));
+		arr[j] = ft_xmalloc(sizeof(char) * (i + 1));
 		ft_strlcpy(arr[j], s, (i + 1));
 		while (s[i] == ' ' && s[i])
 			i++;
