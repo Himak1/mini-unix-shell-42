@@ -6,12 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 18:53:37 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/22 13:31:53 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
 #include <signal.h>
+#include <errno.h>
 #include "executor.h"
 #include "builtins.h"
 #include "error_handling.h"
@@ -44,10 +45,11 @@ static inline void	execute(t_exec *data, char *envv[])
 {
 	if (data->cmd)
 	{
-		if (access(data->cmd[0], X_OK) == 0)
-			execve(data->cmd[0], data->cmd, envv);
-		cmd_error(data->cmd[0]);
-		exit(EXIT_FAILURE);
+		if (access(data->cmd[0], F_OK | X_OK) != 0)
+		{
+			cmd_error_exit(data->cmd[0]);
+		}
+		execve(data->cmd[0], data->cmd, envv);
 	}
 	exit(EXIT_SUCCESS);
 }
@@ -100,5 +102,6 @@ int	executor(t_ast *tree, char **envv[])
 	}
 	else
 		exec_builtin(first_cmd, envv);
-	return (WEXITSTATUS(status));
+	free(data.pid);
+	return (get_exitcode(status));
 }

@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/17 17:05:29 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/14 16:53:27 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/21 17:00:21 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ int	single_heredoc(char *tmp_filepath, t_ast *rd, char *envv[], int i)
 		return (i);
 	tmp_file = create_tmp_filename(tmp_filepath, i);
 	file_fd = open(tmp_file, O_CREAT | O_WRONLY, 0666);
+	if (file_fd == -1)
+		exit(EXIT_FAILURE);
 	pid = fork();
-	if (pid == 0)
+	if (pid == -1)
+		exit(EXIT_FAILURE);
+	else if (pid == 0)
 		read_write_to_tmp(rd->child_node->next_sib_node->value, file_fd, envv);
 	close(file_fd);
 	waitpid(pid, &status, 0);

@@ -67,6 +67,7 @@ EXPANDER_FILES = expander.c\
 					remove_quotes.c
 
 EXECUTOR_FILES = executor.c\
+					get_exitcode.c\
 					handle_redirects.c\
 					handle_pipes.c\
 					extract_ast_data.c\
