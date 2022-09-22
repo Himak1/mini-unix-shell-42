@@ -3,11 +3,11 @@ to do:
     ☐ make sure _= is only updated not added new
     ✔ make sure $PWD$PWD expands correctly ->segfault now... @done(22-09-22 12:06)
     ☐ handle non numeric exit instances
-    ☐ update exit codes -> add global variables
-    ☐ make sure $? expands correctly
+    ✔ update exit codes -> add global variables @done(22-09-22 13:51)
+    ✔ make sure $? expands correctly @done(22-09-22 14:37)
     ☐ norminette
     ☐ correct error message when only entering $PWD -> "is a directory"
-    ☐ if ctrl-c -> exit code should be changed to 1 and after that set back to 0
+    ✔ if ctrl-c -> exit code should be changed to 1 and after that set back to 0 @done(22-09-22 14:37)
 
 problems:
     ☐ < infile cat > outfile | cat

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/20 19:18:01 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/22 14:52:32 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int search_for_key(char *key, char **arr)
         }
     }
     i = ft_get_index_key(arr, key);
+    printf("i = %d\n", i);
     if (!ft_strncmp(arr[i], key, ft_strlen(key)))
             return (i);
     return (-1);
@@ -146,10 +147,12 @@ static void export(char *str, char **arr[])
     int index;
 
     index = search_for_key(str, *arr);
+    printf("found at index %d\n", index);
     if (index != -1)
     {
         if (!ft_strchr(str, '='))
             return ;
+        printf("hi\n");
         update_var(index, str, NULL, *arr);
     }
     else
