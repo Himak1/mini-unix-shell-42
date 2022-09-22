@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:18:49 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/20 14:57:19 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/22 12:21:25 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int    compare_key(char *full_var, char *key)
 		return (0);
 	while (full_var[i] && full_var[i] != '=')
         i++;
-    if (i == ft_strlen(key) && ft_strncmp(full_var, key, i))
+    if (i == ft_strlen(key) && ft_strncmp(full_var, key, ft_strlen(key)))
       	return (1);
     return (0);
 }
@@ -78,18 +78,22 @@ void update_underscore(t_ast *cmd, char **envv[])
         size++;
     while (temp[index])
     {
-        if (ft_strnstr(temp[index], "_", ft_strlen("_")) && compare_key(temp[index], "_"))
+        if (ft_strnstr(temp[index], "_=", ft_strlen("_="))
+				&& ft_strncmp(temp[index], "_=", ft_strlen("_=")))//compare_key(temp[index], "_"))
 		   break;
         index++;
     }
     if (index == size) //has not been found
     {
-	    push_var_to_env("_=", envv);
+	    printf("HI\n\n");
+		push_var_to_env("_=", envv);
 		index = size;
 	}
 	iter = cmd;
 	while (iter->next_sib_node)
 		iter = iter->next_sib_node;
+	
+	//printf("hi1");
 	update_var(index, "_", iter->value, *envv);
 }
 
@@ -100,7 +104,7 @@ void update_pwd(char *envv[])
 	char cwd[PATH_MAX];
 	
 	new_path = NULL;
-	index = ft_get_index_2d(envv, "PWD=");
+	index = ft_get_index_key(envv, "PWD=");
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		new_path = ft_strdup(cwd);
 	else
@@ -134,7 +138,7 @@ void update_old_pwd(char **envv[]) //clean up
 		index = size;
 	}
 	temp = *envv;
-	int pwd_index = ft_get_index_2d(*envv, "PWD");
+	int pwd_index = ft_get_index_key(*envv, "PWD");
 	char **current_pwd = ft_split(temp[pwd_index], '=');
 	update_var(index, "OLDPWD", current_pwd[1], *envv);
 	ft_free_2d_array(current_pwd);

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/04 14:08:38 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/20 11:43:11 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/22 10:57:38 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,23 @@ TEST(get_exp_len, basic_test5)
     ASSERT_EQ(expected, exp_len);
 }
 
+TEST(get_exp_len, basic_test6)
+{
+    char **envp = create_envp();
+    int exit_code = 0;
+    char **env_var = get_env_var("hello $HOME$HOME", &exit_code);
+    int len_input = ft_strlen("hello $HOME$HOME");
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    int expansion = ft_strlen("/root/root") - ft_strlen("$HOME$HOME");
+    int expected = len_input + expansion + 1;
+    ASSERT_EQ(expected, exp_len);
+}
+
 TEST(expand_input, basic_test1)
 {
     char **envp = create_envp();
@@ -401,4 +418,22 @@ TEST(expand_input, basic_test9)
     exp_len = get_exp_len(env_var_list, len_input);
     expanded = expand_input(input, env_var_list, exp_len);
     ASSERT_STREQ("I am currently in /current/dir/is/pwd/desktop/minishell", expanded);
+}
+
+TEST(expand_input, basic_test10)
+{
+    char **envp = create_envp();
+    char *input = "hello $HOME$HOME";
+    int exit_code = 0;
+    char **env_var = get_env_var(input, &exit_code);
+    int len_input = ft_strlen(input);
+    t_env_var *env_var_list = NULL;
+    int exp_len;
+    char *expanded;
+
+    create_env_var_list(&env_var_list, env_var);
+    check_env_var(&env_var_list, envp);
+    exp_len = get_exp_len(env_var_list, len_input);
+    expanded = expand_input(input, env_var_list, exp_len);
+    ASSERT_STREQ("hello /root/root", expanded);
 }

@@ -35,6 +35,7 @@ BUILTINS_FILES = env.c\
 					cd.c\
 					export.c\
 					unset.c\
+					exit.c\
 					environment.c\
 					builtins.c\
 					builtins_utils.c
@@ -48,7 +49,7 @@ UTILS_FILES = lst_new.c\
 				lst_new.c\
 				ft_xmalloc.c\
 				cpy_2d.c\
-				ft_get_index_2d.c
+				ft_get_index_key.c
 
 PARSER_FILES = cmd.c\
 				node_functions.c\

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 14:24:28 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/17 18:55:01 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/21 09:43:54 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	is_builtin(t_ast *exec_block, t_uint cmd_count)
 		return (1);
 	if (cmd_count == 1 && !ft_strncmp(iter->value, "unset", ft_strlen(iter->value)))
 		return (1);
-	// if (cmd_count == 1 && !ft_strncmp(iter->value, "exit", ft_strlen(iter->value)))
-	// 	return (1);
+	if (cmd_count == 1 && !ft_strncmp(iter->value, "exit", ft_strlen(iter->value)))
+		return (1);
 	return (0);
 }
 
@@ -64,7 +64,7 @@ int exec_builtin(t_ast *exec_block, char **envv[])
 		return (exec_export(iter, envv));
 	if (!ft_strncmp(iter->value, "unset", ft_strlen(iter->value)))
 		return (exec_unset(iter, envv));
-// 	// if (!ft_strncmp(iter->value, "exit", ft_strlen(iter->value)))
-// 	// 	return (exec_exit(iter, envv));
+	if (!ft_strncmp(iter->value, "exit", ft_strlen(iter->value)))
+		return (exec_exit(iter));
 	return (1); //error
 }

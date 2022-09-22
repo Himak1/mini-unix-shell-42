@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/04 12:35:12 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/08/18 16:33:45 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/22 10:45:03 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,4 +275,27 @@ TEST(lexer_parser_expander, underscore)
 	ASSERT_STREQ(tree->child_node->child_node->child_node->value, "echo");
 	ASSERT_EQ(tree->child_node->child_node->child_node->next_sib_node->type, TERMINAL);
 	ASSERT_STREQ(tree->child_node->child_node->child_node->next_sib_node->value, "/usr/bin/env");
+}
+
+TEST(lexer_parser_expander, double_exp)
+{
+	char input[] = "echo $HOME$HOME";
+
+	t_token *lst;
+	t_ast   *tree;
+	char **envp = create_envp();
+
+	lst = NULL;
+	ft_lexer(&lst, input);
+	tree = parse_tokens(lst);
+	expand_tree(tree, envp);
+	EXPECT_TRUE(tree != nullptr);
+	ASSERT_EQ(tree->type, EXEC_CHAIN);
+
+	ASSERT_EQ(tree->child_node->type, EXEC_BLOCK);
+	ASSERT_EQ(tree->child_node->child_node->type, CMD);
+	ASSERT_EQ(tree->child_node->child_node->child_node->type, TERMINAL);
+	ASSERT_STREQ(tree->child_node->child_node->child_node->value, "echo");
+	ASSERT_EQ(tree->child_node->child_node->child_node->next_sib_node->type, TERMINAL);
+	ASSERT_STREQ(tree->child_node->child_node->child_node->next_sib_node->value, "/root/root");
 }

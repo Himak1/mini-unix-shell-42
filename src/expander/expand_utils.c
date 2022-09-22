@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:50:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/19 16:59:02 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/22 12:05:45 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*find_exp_var(char *env_var, char **envp)
 	// 	return ();
 	while (envp[i] != NULL)
 	{
-		if (compare_key(envp[i], &env_var[1]))
+		if (ft_strnstr(envp[i], &env_var[1], ft_strlen(&env_var[1])) != NULL)
 		{
 			exp_var = save_exp_val(envp[i], &env_var[1]);
 			return (exp_var);
@@ -78,7 +78,7 @@ int	get_exp_len(t_env_var *env_var_list, int len_input)
 		exp_len += env_var_list->len_exp_env - env_var_list->len_env;
 		env_var_list = env_var_list->next;
 	}
-	return (len_input + exp_len + 1);
+	return (len_input + exp_len + 1); //!!!!!!!!!!!!!!!!! DELETED +1
 }
 
 
@@ -102,9 +102,12 @@ char	*expand_input(char *input, t_env_var *env_var_list, int len)
 			j += env_var_list->len_env;
 			env_var_list = env_var_list->next;
 		}
-		expanded[i] = input[j];
-		i++;
-		j++;
+		if (input[j] != '$')
+		{
+			expanded[i] = input[j];
+			i++;
+			j++;	
+		}
 	}
 	expanded[i] = '\0';
 	return (expanded);

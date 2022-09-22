@@ -1,18 +1,13 @@
-tasks:
-- adjust parsing for single quotes
-- make norm proof and clean up
-- check for mem leaks
-    
-
-notes:
-- echo $_
-- free in echo?
-- is getcwd using malloc? if so there needs to be freed
-- return values and error codes?!?!?
-- how to keep track of amount of commands that have been execute within the shell
-        ->>> for example, the OLDPWD does not exist without cd being executed.
-
-
+to do:
+    ☐ fix search key -> make sure unset removes the correct key
+    ☐ make sure _= is only updated not added new
+    ✔ make sure $PWD$PWD expands correctly ->segfault now... @done(22-09-22 12:06)
+    ☐ handle non numeric exit instances
+    ☐ update exit codes -> add global variables
+    ☐ make sure $? expands correctly
+    ☐ norminette
+    ☐ correct error message when only entering $PWD -> "is a directory"
+    ☐ if ctrl-c -> exit code should be changed to 1 and after that set back to 0
 
 problems:
     ☐ < infile cat > outfile | cat

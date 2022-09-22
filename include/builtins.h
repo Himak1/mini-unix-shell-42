@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/25 12:43:48 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 15:23:50 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/21 09:44:05 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	exec_pwd(t_ast *cmd, char **envv[]);
 int exec_env(t_ast *cmd, char **envv[]);
 int	exec_unset(t_ast *cmd, char **envv[]);
 int	exec_export(t_ast *cmd, char **envv[]);
-// int	exec_exit(t_ast *cmd, char **envv[]);
+int	exec_exit(t_ast *cmd);
 
 
 void	print_envp(char **envp); //delete!!!!

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/20 15:33:02 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/20 19:18:01 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,14 +128,14 @@ int search_for_key(char *key, char **arr)
     if (ft_strchr(key, '='))
     {
         key_and_val = ft_split(key, '=');
-        i = ft_get_index_2d(arr, key_and_val[0]);
+        i = ft_get_index_key(arr, key_and_val[0]);
         if (!ft_strncmp(arr[i], key_and_val[0], ft_strlen(key_and_val[0])))
         {
             ft_free_2d_array(key_and_val);
             return (i);
         }
     }
-    i = ft_get_index_2d(arr, key);
+    i = ft_get_index_key(arr, key);
     if (!ft_strncmp(arr[i], key, ft_strlen(key)))
             return (i);
     return (-1);

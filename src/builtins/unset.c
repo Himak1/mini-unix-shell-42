@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:58 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/20 15:33:18 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/20 19:36:52 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ static void unset(char *str, char **arr[])
 {
     int index;
 
+    //printf("UNSET\n______________\n");
     index = search_for_key(str, *arr);
-    printf("index = %i\n", index);
     if (index != -1)
         pop_var_from_env(str, arr);
 }

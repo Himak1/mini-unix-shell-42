@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 17:02:16 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 17:23:33 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/20 19:42:45 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "utils.h"
 #include "builtins.h"
 #include "signal_handling.h"
+#include <stdio.h>
 
 void	increase_shlvl(char *envv[])
 {
@@ -22,7 +23,8 @@ void	increase_shlvl(char *envv[])
 	char	*new_shlvl;
 	char	**key_and_val;
 
-	index = ft_get_index_2d(envv, "SHLVL=");
+	index = ft_get_index_key(envv, "SHLVL=");
+	printf("index = %d\n", index);
 	key_and_val = ft_split(envv[index], '=');
 	shlvl = ft_atoi(key_and_val[1]);
 	new_shlvl = ft_itoa(shlvl + 1);

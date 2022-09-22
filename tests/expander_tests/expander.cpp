@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 15:18:48 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/20 12:20:03 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/22 10:50:32 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,19 @@ TEST(expand_dollar_sign, basic_test4)
     char *expanded = expand_dollar_sign(input, envp, &exit_code);
 
     ASSERT_STREQ("", expanded);
+    ft_free_2d_array(envp);
+    free(input);
+    free(expanded);
+}
+
+TEST(expand_dollar_sign, basic_test5)
+{
+    char **envp = create_envp();
+    char *input = ft_strdup("$HOME$HOME");
+    int exit_code = 0;
+    char *expanded = expand_dollar_sign(input, envp, &exit_code);
+
+    ASSERT_STREQ("/root/root", expanded);
     ft_free_2d_array(envp);
     free(input);
     free(expanded);

@@ -6,12 +6,13 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 15:37:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/19 14:17:06 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/22 11:06:57 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "utils.h"
+#include <stdio.h>
 
 t_uint	get_type(char *value)
 {
@@ -62,13 +63,24 @@ void	create_tokenlist(t_token **token_list, char **str)
 	}
 }
 
+void print_tokenlist(t_token *token_list)
+{
+	while (token_list->next)
+	{
+		printf("token value is %s\n", token_list->value);
+		token_list = token_list->next;
+	}
+	printf("token value is %s\n", token_list->value);
+}
+
 void	ft_lexer(t_token **tokenlist, char *input)
 {
 	char	**split_commands;
 
 	split_commands = split_command_line(input);
 	if (!split_commands)
-		exit(1); // not sure if this is the right way to error
+		return ; // not sure if this is the right way to error
 	create_tokenlist(tokenlist, split_commands);
+	// print_tokenlist(*tokenlist);
 	ft_free_2d_array(split_commands);
 }

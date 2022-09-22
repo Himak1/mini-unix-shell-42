@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/19 16:52:10 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/22 11:25:40 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*expand_dollar_sign(char *input, char **envp, int *exit_code)
 	check_env_var(&env_var_list, envp);
 	len_exp = get_exp_len(env_var_list, len_input);
 	exp_input = expand_input(input, env_var_list, len_exp);
+	printf("expanded input = %s\n", exp_input);
 	free_env_var_list(env_var_list);
 	return (exp_input);
 }
