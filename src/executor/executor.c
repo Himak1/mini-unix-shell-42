@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/22 15:28:17 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/22 15:50:39 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,20 @@ static inline void	execute(t_exec *data, char *envv[])
 	exit(EXIT_SUCCESS);
 }
 
-/*
-static inline void	execute(t_exec *data, char *envv[])
-{
-	struct stat	file_info;
 
-	if (data->cmd)
-	{
-		stat(data->cmd[0], &file_info);
-		if (!S_ISDIR(file_info)
-			&& access(data->cmd[0], F_OK | X_OK))
-			execve(data->cmd[0], data->cmd, envv);
-		cmd_error_exit(data->cmd[0]);
-	}
-	exit(EXIT_SUCCESS);
-}
-*/
+// static inline void	execute(t_exec *data, char *envv[])
+// {
+// 	if (data->cmd)
+// 	{
+// 		if (access(data->cmd[0], F_OK | X_OK))
+// 			cmd_error_exit(data->cmd[0], ERRNO);
+// 		else if (ft_strchr(data->cmd[0], '/'))
+// 			cmd_error_exit(data->cmd[0], IS_DIR);
+// 		execve(data->cmd[0], data->cmd, envv);
+// 		cmd_error_exit(data->cmd[0], ERRNO);
+// 	}
+// 	exit(EXIT_SUCCESS);
+// }
 
 void	executor_loop(t_ast *exec_block, t_exec *data, char *envv[])
 {

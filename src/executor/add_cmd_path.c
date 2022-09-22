@@ -6,14 +6,16 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 11:27:24 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/22 17:31:30 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "libft.h"
 #include "executor.h"
-
-#include <stdio.h>
+#include "error_handling.h"
 
 static char	*concatenate_path(const char *path_dir, const char *cmd)
 {
@@ -50,13 +52,28 @@ static void	try_paths(char **cmd, char **split_path)
 	}
 }
 
+static int	is_dir(char *cmd)
+{
+	struct stat	file;
+
+	stat(cmd, &file);
+	if (S_ISDIR(file.st_mode))
+		return (1);
+	else
+		return (0);
+}
+
 void	add_cmd_path(char **cmd)
 {
 	char	*path;
 	char	**split_path;
 
 	if (ft_strchr(cmd[0], '/'))
+	{
+		if (access(cmd[0], F_OK) || access(cmd[0], X_OK))
+			cmd_error_exit(cmd[0]);
 		return ;
+	}
 	path = getenv("PATH");
 	if (path)
 	{
@@ -64,5 +81,6 @@ void	add_cmd_path(char **cmd)
 		if (!split_path)
 			exit(EXIT_FAILURE);
 		try_paths(cmd, split_path);
+		ft_putendl_fd(cmd[0], STDERR_FILENO);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 12:19:45 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/22 14:48:24 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/22 17:17:13 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,20 @@ void	sh_error(void)
 
 void	cmd_error_exit(char *cmd)
 {
-	write(STDERR_FILENO, "minishell: ", 11);
-	write(STDERR_FILENO, cmd, ft_strlen(cmd));
+	char	*msg;
+
+	msg = strerror(errno);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
 	if (errno == ENOENT)
 	{
-		write(STDERR_FILENO, ": command not found\n", 20);
+		ft_putendl_fd(msg, STDERR_FILENO);
 		exit(127);
 	}
 	else if (errno == EACCES)
 	{
-		write(STDERR_FILENO, ": Permission denied\n", 20);
+		ft_putendl_fd(msg, STDERR_FILENO);
 		exit(126);
 	}
 }
