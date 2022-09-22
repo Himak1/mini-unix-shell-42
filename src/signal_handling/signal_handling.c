@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/23 11:33:51 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/20 16:47:57 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/22 13:41:55 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "signal_handling.h"
+
+extern int	g_exit_code;
 
 void	init_sigaction(struct sigaction *sa, void (*handler)(int))
 {
@@ -33,6 +35,7 @@ void	prompt_interrupt(int num)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_exit_code = 1;
 	}
 }
 

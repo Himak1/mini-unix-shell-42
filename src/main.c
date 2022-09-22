@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/21 16:37:13 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/22 13:38:22 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include "signal_handling.h"
 #include "shell_init.h"
 #include "minishell.h"
+
+int	g_exit_code = 0;
 
 int	valid_syntax(t_data *data)
 {
@@ -68,7 +70,7 @@ int	main(int argc, char *argv[], char *envp[])
 			data.tree = parse_tokens(data.lst);
 			ft_lstfree(data.lst);
 			if (data.tree)
-				data.exit_code = valid_syntax(&data);
+				g_exit_code = valid_syntax(&data);
 		}
 		free(line);
 	}

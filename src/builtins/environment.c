@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:18:49 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/22 12:21:25 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/22 13:42:48 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void update_underscore(t_ast *cmd, char **envv[])
     }
     if (index == size) //has not been found
     {
-	    printf("HI\n\n");
+	    //printf("HI\n\n");
 		push_var_to_env("_=", envv);
 		index = size;
 	}
