@@ -6,17 +6,21 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/22 13:31:53 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/22 15:28:17 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/wait.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <signal.h>
 #include <errno.h>
 #include "executor.h"
 #include "builtins.h"
 #include "error_handling.h"
 
+#include <stdio.h>
 static int	count_cmds(t_ast *tree)
 {
 	t_ast	*iter;
@@ -50,9 +54,27 @@ static inline void	execute(t_exec *data, char *envv[])
 			cmd_error_exit(data->cmd[0]);
 		}
 		execve(data->cmd[0], data->cmd, envv);
+		cmd_error_exit(data->cmd[0]);
 	}
 	exit(EXIT_SUCCESS);
 }
+
+/*
+static inline void	execute(t_exec *data, char *envv[])
+{
+	struct stat	file_info;
+
+	if (data->cmd)
+	{
+		stat(data->cmd[0], &file_info);
+		if (!S_ISDIR(file_info)
+			&& access(data->cmd[0], F_OK | X_OK))
+			execve(data->cmd[0], data->cmd, envv);
+		cmd_error_exit(data->cmd[0]);
+	}
+	exit(EXIT_SUCCESS);
+}
+*/
 
 void	executor_loop(t_ast *exec_block, t_exec *data, char *envv[])
 {

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 11:51:40 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/19 14:41:15 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/22 15:26:52 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_env_var
 	struct s_env_var	*next;
 }						t_env_var;
 
-char		**create_envp();
+char		**create_envp(void);
 
 //expand_utils
 void		check_env_var(t_env_var **env_var_list, char **envp);
