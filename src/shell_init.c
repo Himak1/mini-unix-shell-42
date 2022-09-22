@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 17:02:16 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/22 13:31:05 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/22 13:54:04 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	increase_shlvl(char *envv[])
 	char	**key_and_val;
 
 	index = ft_get_index_key(envv, "SHLVL=");
-	printf("index = %d\n", index);
 	key_and_val = ft_split(envv[index], '=');
 	shlvl = ft_atoi(key_and_val[1]);
 	new_shlvl = ft_itoa(shlvl + 1);
