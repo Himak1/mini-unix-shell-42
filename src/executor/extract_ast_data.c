@@ -6,13 +6,13 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/01 13:32:57 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/19 12:09:52 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/23 15:37:56 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-void	extract_ast_data(t_ast *exec_block, t_exec *data)
+void	extract_ast_data(t_ast *exec_block, t_exec *data, char *envv[])
 {
 	data->fd_in = getfd_in(exec_block);
 	data->fd_out = getfd_out(exec_block);
@@ -20,5 +20,5 @@ void	extract_ast_data(t_ast *exec_block, t_exec *data)
 		exit(EXIT_FAILURE);
 	data->cmd = getcmd(exec_block);
 	if (data->cmd)
-		add_cmd_path(data->cmd);
+		add_cmd_path(data->cmd, envv);
 }

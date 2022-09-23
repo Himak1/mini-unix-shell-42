@@ -6,14 +6,17 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 11:27:24 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/23 15:49:24 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <errno.h>
 #include "libft.h"
 #include "executor.h"
-
-#include <stdio.h>
+#include "error_handling.h"
 
 static char	*concatenate_path(const char *path_dir, const char *cmd)
 {
@@ -28,7 +31,7 @@ static char	*concatenate_path(const char *path_dir, const char *cmd)
 	return (cmd_with_path);
 }
 
-static void	try_paths(char **cmd, char **split_path)
+static int	try_paths(char **cmd, char **split_path)
 {
 	int		i;
 	int		status;
@@ -43,26 +46,47 @@ static void	try_paths(char **cmd, char **split_path)
 		{
 			free(cmd[0]);
 			cmd[0] = tmp;
-			return ;
+			return (0);
 		}
 		free(tmp);
 		i++;
 	}
+	return (-1);
 }
 
-void	add_cmd_path(char **cmd)
+static void	is_dir(char *cmd)
+{
+	struct stat	file;
+
+	stat(cmd, &file);
+	if (S_ISDIR(file.st_mode))
+		cmd_custom_exit(cmd, IS_DIR);
+}
+
+void	add_cmd_path(char **cmd, char *envv[])
 {
 	char	*path;
 	char	**split_path;
 
 	if (ft_strchr(cmd[0], '/'))
+	{
+		is_dir(cmd[0]);
+		if (access(cmd[0], F_OK) || access(cmd[0], X_OK))
+			cmd_error_exit(cmd[0]);
 		return ;
-	path = getenv("PATH");
+	}
+	path = ft_getenv(envv, "PATH");
 	if (path)
 	{
 		split_path = ft_split(path, ':');
 		if (!split_path)
 			exit(EXIT_FAILURE);
-		try_paths(cmd, split_path);
+		if (try_paths(cmd, split_path))
+			cmd_custom_exit(cmd[0], NOT_FOUND);
+	}
+	else
+	{
+		errno = ENOENT;
+		cmd_error_exit(cmd[0]);
 	}
 }
