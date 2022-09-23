@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/23 15:36:08 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/23 15:51:10 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static inline void	execute(t_exec *data, char *envv[])
 	}
 	exit(EXIT_SUCCESS);
 }
-
 
 // static inline void	execute(t_exec *data, char *envv[])
 // {
