@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/22 17:31:30 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/23 13:18:42 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*concatenate_path(const char *path_dir, const char *cmd)
 	return (cmd_with_path);
 }
 
-static void	try_paths(char **cmd, char **split_path)
+static int	try_paths(char **cmd, char **split_path)
 {
 	int		i;
 	int		status;
@@ -45,22 +45,21 @@ static void	try_paths(char **cmd, char **split_path)
 		{
 			free(cmd[0]);
 			cmd[0] = tmp;
-			return ;
+			return (0);
 		}
 		free(tmp);
 		i++;
 	}
+	return (-1);
 }
 
-static int	is_dir(char *cmd)
+static void	is_dir(char *cmd)
 {
 	struct stat	file;
 
 	stat(cmd, &file);
 	if (S_ISDIR(file.st_mode))
-		return (1);
-	else
-		return (0);
+		cmd_custom_exit(cmd, IS_DIR);
 }
 
 void	add_cmd_path(char **cmd)
@@ -70,6 +69,7 @@ void	add_cmd_path(char **cmd)
 
 	if (ft_strchr(cmd[0], '/'))
 	{
+		is_dir(cmd[0]);
 		if (access(cmd[0], F_OK) || access(cmd[0], X_OK))
 			cmd_error_exit(cmd[0]);
 		return ;
@@ -80,7 +80,7 @@ void	add_cmd_path(char **cmd)
 		split_path = ft_split(path, ':');
 		if (!split_path)
 			exit(EXIT_FAILURE);
-		try_paths(cmd, split_path);
-		ft_putendl_fd(cmd[0], STDERR_FILENO);
+		if (try_paths(cmd, split_path))
+			cmd_custom_exit(cmd[0], NOT_FOUND);
 	}
 }

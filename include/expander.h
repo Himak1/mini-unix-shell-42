@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 11:51:40 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/22 15:26:52 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/23 12:01:14 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,5 @@ int			count_dollar_sign(char *value, int *exit_code);
 char		*expand_dollar_sign(char *input, char **envp, int *exit_code);
 int			expander(char **input, char **envp);
 int			expand_tree(t_ast *parent, char **envp);
-
 
 #endif
