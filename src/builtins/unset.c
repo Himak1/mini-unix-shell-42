@@ -6,57 +6,15 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:58 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/20 19:36:52 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/23 15:25:47 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "parser.h"
-#include "expander.h"
+#include "error_handling.h"
 #include "builtins.h"
 #include <stdio.h>
-
-
-void pop_var_from_env(char *str, char **arr[])
-{
-    int i;
-    int j;
-    int index;
-    int size;
-    char **temp;
-    char **new_arr;
-
-    index = 0;
-    temp = *arr;
-    size = 0;
-    while (temp[size])
-        size++;
-    while (temp[index])
-    {
-        if (ft_strnstr(temp[index], str, ft_strlen(str)))
-            break;
-        index++;
-    }
-    if (index == size && ft_strncmp(temp[index], str, ft_strlen(str)))
-        return ;
-    new_arr = ft_xmalloc(sizeof(char *) * size);
-    i = 0;
-    j = 0;
-    while (j < size && temp[i])
-    {
-        if (i == index)
-            i++;
-        if (temp[i])
-        {
-            new_arr[j] = ft_strdup(temp[i]);
-            i++;
-            j++;
-        }
-    }
-    new_arr[j] = NULL;
-    ft_free_2d_array(*arr);
-    *arr = new_arr;
-}
 
 void	print_envp(char **envp) //delete
 {
@@ -72,31 +30,38 @@ void	print_envp(char **envp) //delete
 	ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
-static void unset(char *str, char **arr[])
+static	int unset(char *str, char **arr[])
 {
-    int index;
+	int	index;
 
-    //printf("UNSET\n______________\n");
-    index = search_for_key(str, *arr);
-    if (index != -1)
-        pop_var_from_env(str, arr);
+	if (!check_valid_identifier(str))
+	{
+		not_valid_identifier_msg(str);
+		return (-1);
+	}	
+	index = search_for_key(str, *arr);
+	if (index != -1)
+		pop_var_from_env(str, arr);
+	return (0);
 }
 
-int exec_unset(t_ast *cmd, char **envv[])
+int	exec_unset(t_ast *cmd, char **envv[])
 {
-	t_ast *tmp;
+	int		exit_code;
+	t_ast	*tmp;
 
-    if (cmd->next_sib_node)
-    {
-        tmp = cmd->next_sib_node;
-        while (tmp->next_sib_node)
-        {
-            //printf("hello");
-            unset(tmp->value, envv);
-            tmp = tmp->next_sib_node;
-        }
-        unset(tmp->value, envv);
-    }
-	//update_envv(cmd, envv);
-	return (0);
+	exit_code = 0;
+	if (cmd->next_sib_node)
+	{
+		tmp = cmd->next_sib_node;
+		while (tmp->next_sib_node)
+		{
+			//printf("hello");
+			exit_code += unset(tmp->value, envv);
+			tmp = tmp->next_sib_node;
+		}
+	exit_code += unset(tmp->value, envv);
+	}
+	update_underscore(cmd, envv);
+	return (exit_code);
 }

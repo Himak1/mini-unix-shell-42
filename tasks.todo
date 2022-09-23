@@ -1,15 +1,18 @@
 to do:
     ☐ fix search key -> make sure unset removes the correct key
-    ☐ make sure _= is only updated not added new
+    ✔ make sure _= is only updated not added new @done(22-09-23 15:24)
     ✔ make sure $PWD$PWD expands correctly ->segfault now... @done(22-09-22 12:06)
-    ☐ handle non numeric exit instances
+    ✔ handle non numeric exit instances @done(22-09-23 15:24)
     ✔ update exit codes -> add global variables @done(22-09-22 13:51)
     ✔ make sure $? expands correctly @done(22-09-22 14:37)
     ☐ norminette
-    ☐ correct error message when only entering $PWD -> "is a directory"
+    ✔ correct error message when only entering $PWD -> "is a directory" @done(22-09-23 15:07)
     ✔ if ctrl-c -> exit code should be changed to 1 and after that set back to 0 @done(22-09-22 14:37)
+    ☐ protection split & strjoin?
+    ✔ error message + code for cd @done(22-09-23 12:08)
+    ✔ error message + code for export & unset @done(22-09-23 15:07)
 
-problems:
+    problems:
     ☐ < infile cat > outfile | cat
     
 edge-cases:

@@ -6,29 +6,18 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/26 14:29:19 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/17 14:39:28 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/23 11:10:52 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "parser.h"
-#include "lexer.h"
-#include "expander.h"
-#include "executor.h"
 #include "builtins.h"
 #include <stdio.h>
 
-// -n option is used to omit echoing trailing newline
-//		eg. input
-//		["echo", "hello", NULL];					->		hello\n
-//		["echo", "-n", "hi", "hello", NULL]			->		hi hello
-//		["echo", "-n", "-n", "hello", NULL]			->		hello
-//		["echo", "-n", "-d", "hello", NULL]			->		-d hello
-//		["echo", "-nnnnnnnn", "-n", "hello", NULL]	->		hello
-
 int	check_n(char *arg)
 {	
-	int i;
+	int	i;
 
 	i = 0;
 	while (arg[i] && arg[i] == '-')
@@ -55,14 +44,14 @@ int	check_n(char *arg)
 
 int	get_index_arg(t_ast *cmd)
 {
-	int i;
-	t_ast *tmp_cmd;
+	int		i;
+	t_ast	*tmp_cmd;
 
 	i = 0;
 	tmp_cmd = cmd;
 	while (tmp_cmd->next_sib_node)
 	{
-		if (!i && !ft_strncmp(tmp_cmd->value, "echo", ft_strlen(tmp_cmd->value)))
+		if (!i && !ft_strncmp(tmp_cmd->value, "echo", 5))
 		{
 			tmp_cmd = tmp_cmd->next_sib_node;
 			i++;
@@ -77,8 +66,8 @@ int	get_index_arg(t_ast *cmd)
 
 int	get_first_arg(t_ast **cmd)
 {
-	int i;
-	int index;
+	int	i;
+	int	index;
 
 	i = 0;
 	index = get_index_arg(*cmd);
@@ -92,15 +81,14 @@ int	get_first_arg(t_ast **cmd)
 	return (0);
 }
 
-
-void echo(t_ast *cmd)
+void	echo(t_ast *cmd)
 {
-	int flag;
-	t_ast *tmp_cmd;
-	
+	int		flag;
+	t_ast	*tmp_cmd;
+
 	tmp_cmd = cmd;
 	flag = get_first_arg(&tmp_cmd);
-	if (!ft_strncmp(cmd->value, "echo", ft_strlen(cmd->value)) && !cmd->next_sib_node)
+	if (!ft_strncmp(cmd->value, "echo", 5) && !cmd->next_sib_node)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	else
 	{
