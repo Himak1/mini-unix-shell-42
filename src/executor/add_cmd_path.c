@@ -6,13 +6,14 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/23 13:18:42 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/23 15:49:24 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <errno.h>
 #include "libft.h"
 #include "executor.h"
 #include "error_handling.h"
@@ -62,7 +63,7 @@ static void	is_dir(char *cmd)
 		cmd_custom_exit(cmd, IS_DIR);
 }
 
-void	add_cmd_path(char **cmd)
+void	add_cmd_path(char **cmd, char *envv[])
 {
 	char	*path;
 	char	**split_path;
@@ -74,7 +75,7 @@ void	add_cmd_path(char **cmd)
 			cmd_error_exit(cmd[0]);
 		return ;
 	}
-	path = getenv("PATH");
+	path = ft_getenv(envv, "PATH");
 	if (path)
 	{
 		split_path = ft_split(path, ':');
@@ -82,5 +83,10 @@ void	add_cmd_path(char **cmd)
 			exit(EXIT_FAILURE);
 		if (try_paths(cmd, split_path))
 			cmd_custom_exit(cmd[0], NOT_FOUND);
+	}
+	else
+	{
+		errno = ENOENT;
+		cmd_error_exit(cmd[0]);
 	}
 }
