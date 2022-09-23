@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/23 15:36:14 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/23 16:55:50 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,10 @@ static int	export(char *str, char **arr[])
 		return (-1);
 	}	
 	index = search_for_key(str, *arr);
-	printf("found at index %d\n", index);
 	if (index != -1)
 	{
 		if (!ft_strchr(str, '='))
 			return (0);
-		printf("hi\n");
 		update_var(index, str, NULL, *arr);
 	}
 	else

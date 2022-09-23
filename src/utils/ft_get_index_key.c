@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/22 16:16:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/23 15:49:33 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/23 16:56:27 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_get_index_key(char **str_arr, char *str)
 	while (str_arr[i] != NULL)
 	{
 		if (ft_strnstr(str_arr[i], str, ft_strlen(str_arr[i])) != NULL
-			&& !ft_strncmp(str, str_arr[i], ft_strlen(str)))
+			&& !ft_strncmp(str, str_arr[i], ft_strlen(str_arr[i])))
 			return (i);
 		i++;
 	}

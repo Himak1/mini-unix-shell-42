@@ -6,7 +6,7 @@
 /*   By: jhille <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/28 11:20:42 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/22 15:39:26 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/23 17:18:17 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ int	ft_strncmp(const char *str1, const char *str2, size_t n)
 		return (0);
 	if (str1[i] == '\0' || str2[i] == '\0')
 	{
-		if (str1[i] == '\0' && str2[i] == '\0')
-			return ((unsigned char)str1[i] - (unsigned char)str2[i]);
-		else
-			return ((unsigned char)str1[i - 1] - (unsigned char)str2[i - 1]);
+		return ((unsigned char)str1[i] - (unsigned char)str2[i]);
 	}
 	while ((i < n - 1) && (str1[i] != '\0' && str2[i] != '\0'))
 	{

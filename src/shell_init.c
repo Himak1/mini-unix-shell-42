@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 17:02:16 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/22 13:54:04 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/23 16:55:40 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@
 #include "signal_handling.h"
 #include <stdio.h>
 
+static int	search_shlvl(char *envv[])
+{
+	int	i;
+
+	i = 0;
+	while (envv[i])
+	{
+		if (!ft_strncmp(envv[i], "SHLVL=", 6))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
 void	increase_shlvl(char *envv[])
 {
 	int		shlvl;
@@ -23,7 +37,7 @@ void	increase_shlvl(char *envv[])
 	char	*new_shlvl;
 	char	**key_and_val;
 
-	index = ft_get_index_key(envv, "SHLVL=");
+	index = search_shlvl(envv);
 	key_and_val = ft_split(envv[index], '=');
 	shlvl = ft_atoi(key_and_val[1]);
 	new_shlvl = ft_itoa(shlvl + 1);

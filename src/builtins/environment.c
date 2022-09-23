@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:18:49 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/23 15:35:34 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/23 16:45:02 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	update_underscore(t_ast *cmd, char **envv[])
 	while (temp[index])
 	{
 		if (ft_strnstr(temp[index], "_=", ft_strlen("_=")))
-			break;
+			break ;
 		index++;
 	}
 	if (index == size)

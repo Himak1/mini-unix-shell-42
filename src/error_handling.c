@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 12:19:45 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/23 16:05:24 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/23 16:19:42 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	cmd_custom_exit(char *cmd, int error_type)
 
 void	dir_error_msg(t_ast *cmd)
 {
-	ft_putstr_fd("bash: ", STDERR_FILENO);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(cmd->value, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd(cmd->next_sib_node->value, STDERR_FILENO);
@@ -73,7 +73,7 @@ void	dir_error_msg(t_ast *cmd)
 
 void	not_valid_identifier_msg(char *str)
 {
-	ft_putstr_fd("bash: export: `", STDERR_FILENO);
+	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putendl_fd("\': not a valid identifier", STDERR_FILENO);
 }

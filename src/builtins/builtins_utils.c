@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 10:39:53 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/23 11:27:53 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/23 16:18:05 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,29 @@ int	compare_key(char *full_var, char *key)
 	return (0);
 }
 
+// int	search_for_key(char *key, char **arr)
+// {
+// 	int		i;
+// 	char	**key_and_val;
+
+// 	i = 0;
+// 	if (ft_strchr(key, '='))
+// 	{
+// 		key_and_val = ft_split(key, '=');
+// 		i = ft_get_index_key(arr, key_and_val[0]);
+// 		if (!ft_strncmp(arr[i], key_and_val[0], ft_strlen(key_and_val[0])))
+// 		{
+// 			ft_free_2d_array(key_and_val);
+// 			return (i);
+// 		}
+// 	}
+// 	i = ft_get_index_key(arr, key);
+// 	printf("i = %d\n", i);
+// 	if (!ft_strncmp(arr[i], key, ft_strlen(key)))
+// 		return (i);
+// 	return (-1);
+// }
+
 int	search_for_key(char *key, char **arr)
 {
 	int		i;
@@ -39,17 +62,15 @@ int	search_for_key(char *key, char **arr)
 	{
 		key_and_val = ft_split(key, '=');
 		i = ft_get_index_key(arr, key_and_val[0]);
-		if (!ft_strncmp(arr[i], key_and_val[0], ft_strlen(key_and_val[0])))
-		{
-			ft_free_2d_array(key_and_val);
-			return (i);
-		}
+		ft_free_2d_array(key_and_val);
+		if (i == -1)
+			return (-1);
+		return (i);
 	}
 	i = ft_get_index_key(arr, key);
-	printf("i = %d\n", i);
-	if (!ft_strncmp(arr[i], key, ft_strlen(key)))
-		return (i);
-	return (-1);
+	if (i == -1)
+		return (-1);
+	return (i);
 }
 
 void	push_var_to_env(char *str, char **arr[])
