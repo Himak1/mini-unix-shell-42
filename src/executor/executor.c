@@ -118,9 +118,9 @@ int	executor(t_ast *tree, char **envv[])
 			wait(0);
 			i++;
 		}
+		free(data.pid);
 	}
 	else
 		return (exec_builtin(first_cmd, envv));
-	free(data.pid);
 	return (get_exitcode(status));
 }

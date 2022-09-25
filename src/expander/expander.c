@@ -90,7 +90,6 @@ int	expander(char **input, char **envp)
 	if (error == -1)
 		return (error);
 	expanded = remove_quotes(expanded);
-	free(*input);
 	*input = ft_strdup(expanded);
 	free(expanded);
 	return (0);
