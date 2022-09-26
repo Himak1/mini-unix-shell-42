@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 14:24:28 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/23 14:56:41 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 12:19:34 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ static int	exec_and_exit(t_ast *cmd, char **envv[], int (*f)(t_ast *cmd, char **
 
 int	exec_builtin(t_ast *exec_block, char **envv[])
 {
-	int		exit_code;
 	t_ast	*iter;
 
-	exit_code = 0;
 	iter = exec_block->child_node;
 	if (iter->type != CMD)
 		iter = iter->next_sib_node;

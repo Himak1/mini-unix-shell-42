@@ -6,11 +6,12 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:32:53 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 11:27:24 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/23 20:39:44 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+#include <stdio.h>
 
 static t_uint	child_count(t_ast *node)
 {

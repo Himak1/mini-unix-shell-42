@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/23 12:02:57 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/23 20:44:01 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include "builtins.h"
 #include "error_handling.h"
 
-#include <stdio.h>
 static int	count_cmds(t_ast *tree)
 {
 	t_ast	*iter;

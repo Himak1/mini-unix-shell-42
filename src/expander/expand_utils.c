@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:50:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/22 13:49:18 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/23 20:16:06 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*save_exp_val(char *full_env_val, char *alias)
 	if (full_env_val[len_alias] != '=')
 		return (NULL);
 	len_var = ft_strlen(full_env_val) - len_alias;
-	val = (char *)malloc(sizeof(char) * (len_var + 1));
+	val = ft_xmalloc(sizeof(char) * (len_var + 1));
 	ft_strlcpy(val, &full_env_val[len_alias + 1], (len_var + 1));
 	return (val);
 }
@@ -50,7 +50,7 @@ char	*find_exp_var(char *env_var, char **envp)
 	}
 	while (envp[i] != NULL)
 	{
-		if (ft_strnstr(envp[i], &env_var[1], ft_strlen(&env_var[1])) != NULL)
+		if (ft_strnstr(envp[i], &env_var[1], ft_strlen(envp[i])) != NULL)
 		{
 			exp_var = save_exp_val(envp[i], &env_var[1]);
 			return (exp_var);

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 10:39:53 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/23 11:27:53 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 13:01:43 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,6 @@
 #include "parser.h"
 #include "builtins.h"
 #include <stdio.h>
-
-int	compare_key(char *full_var, char *key)
-{
-	size_t	i;
-
-	i = 0;
-	if (!full_var)
-		return (0);
-	while (full_var[i] && full_var[i] != '=')
-		i++;
-	if (i == ft_strlen(key) && ft_strncmp(full_var, key, ft_strlen(key)))
-		return (1);
-	return (0);
-}
 
 int	search_for_key(char *key, char **arr)
 {
