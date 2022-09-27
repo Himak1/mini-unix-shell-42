@@ -6,16 +6,16 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/26 11:41:44 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/19 16:52:07 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 14:50:57 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "expander.h"
 
-int		get_env_var_len(char *env_var)
+int	get_env_var_len(char *env_var)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env_var[i] != ' ' && env_var[i] != '\0')
@@ -29,17 +29,18 @@ int		get_env_var_len(char *env_var)
 
 char	**get_env_var(char *input, int *exit_code)
 {
-	int i;
-	int len;
-	int count;
-	char **env_var;
+	int		i;
+	int		len;
+	int		count;
+	char	**env_var;
 
 	i = 0;
 	count = count_dollar_sign(input, exit_code);
 	if (!count || *exit_code == -1)
 		return (NULL);
 	env_var = ft_xmalloc(sizeof(char *) * (count + 1));
-	while (*input && i < count)	{
+	while (*input && i < count)
+	{
 		if (*input == '$')
 		{
 			len = get_env_var_len(input);
@@ -95,10 +96,10 @@ void	create_env_var_list(t_env_var **env_var_list, char **env_var)
 }
 
 // delete
-char	**create_envp()
+char	**create_envp(void)
 {
 	char **envp = NULL;
-		envp = (char **)malloc((12) * sizeof(char *));
+	envp = (char **)malloc((12) * sizeof(char *));
 	envp[0] = ft_strdup("CHARSET=UTF-8");
 	envp[1] = ft_strdup("HOSTNAME=a4d647f5f42a");
 	envp[2] = ft_strdup("PWD=/pwd/desktop/minishell");
@@ -111,6 +112,5 @@ char	**create_envp()
 	envp[9] = ft_strdup("OLDPWD=/pwd/desktop/minishell/build");
 	envp[10] = ft_strdup("_=/usr/bin/env");
 	envp[11] = NULL;
-	
 	return (envp);
 }

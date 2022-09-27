@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:18:49 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/23 16:45:02 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/26 14:32:25 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	update_pwd(char *envv[])
 		perror("cd:");
 	if (envv[index])
 		free(envv[index]);
-	envv[index]= create_full_var("PWD", new_path);
+	envv[index] = create_full_var("PWD", new_path);
 	free(new_path);
 }
 
@@ -89,7 +89,9 @@ void	update_old_pwd(char **envv[])
 {
 	int		index;
 	int		size;
+	int		pwd_index;
 	char	**temp;
+	char	**current_pwd;
 
 	index = 0;
 	temp = *envv;
@@ -99,7 +101,7 @@ void	update_old_pwd(char **envv[])
 	while (temp[index])
 	{
 		if (ft_strnstr(temp[index], "OLDPWD", ft_strlen("OLDPWD")))
-			break;
+			break ;
 		index++;
 	}
 	if (index == size)
@@ -108,8 +110,8 @@ void	update_old_pwd(char **envv[])
 		index = size;
 	}
 	temp = *envv;
-	int pwd_index = ft_get_index_key(*envv, "PWD");
-	char **current_pwd = ft_split(temp[pwd_index], '=');
+	pwd_index = ft_get_index_key(*envv, "PWD");
+	current_pwd = ft_split(temp[pwd_index], '=');
 	update_var(index, "OLDPWD", current_pwd[1], *envv);
 	ft_free_2d_array(current_pwd);
 }

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 14:15:07 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 15:09:28 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	free_env_var_list(t_env_var *list)
 	}
 }
 
-char	*expand_dollar_sign(char *input, char **envp, int *exit_code)
+char	*expand_dollar_sign(char *input, char **envv, int *exit_code)
 {
 	int			len_input;
 	int			len_exp;
@@ -73,30 +73,29 @@ char	*expand_dollar_sign(char *input, char **envp, int *exit_code)
 	if (!env_var)
 		return (input);
 	create_env_var_list(&env_var_list, env_var);
-	check_env_var(&env_var_list, envp);
+	check_env_var(&env_var_list, envv);
 	len_exp = get_exp_len(env_var_list, len_input);
 	exp_input = expand_input(input, env_var_list, len_exp);
 	free_env_var_list(env_var_list);
 	return (exp_input);
 }
 
-int	expander(char **input, char **envp)
+int	expander(char **input, char **envv)
 {
-	int 	error;
+	int		error;
 	char	*expanded;
 
 	error = 0;
-	expanded = expand_dollar_sign(*input, envp, &error);
+	expanded = expand_dollar_sign(*input, envv, &error);
 	if (error == -1)
 		return (error);
 	expanded = remove_quotes(expanded);
-	free(*input);
 	*input = ft_strdup(expanded);
 	free(expanded);
 	return (0);
 }
 
-int	expand_tree(t_ast *parent, char **envp)
+int	expand_tree(t_ast *parent, char **envv)
 {
 	int		error;
 	t_ast	*iter;
@@ -109,13 +108,13 @@ int	expand_tree(t_ast *parent, char **envp)
 		iter = iter->next_sib_node;
 	while (iter->prev_sib_node)
 	{
-		error += expand_tree(iter, envp);
+		error += expand_tree(iter, envv);
 		if (iter->type == TERMINAL)
-			error += expander(&(iter->value), envp);
+			error += expander(&(iter->value), envv);
 		iter = iter->prev_sib_node;
 	}
 	if (iter->type == TERMINAL)
-		error += expander(&(iter->value), envp);
-	error += expand_tree(iter, envp);
+		error += expander(&(iter->value), envv);
+	error += expand_tree(iter, envv);
 	return (error);
 }

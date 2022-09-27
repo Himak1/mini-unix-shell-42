@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/26 14:13:12 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 15:44:11 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "libft.h"
 #include "executor.h"
 #include "error_handling.h"
+
+#include <stdio.h>
 
 static char	*concatenate_path(const char *path_dir, const char *cmd)
 {

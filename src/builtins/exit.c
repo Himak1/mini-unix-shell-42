@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:09:22 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/23 15:24:11 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 14:32:56 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	handle_non_numeric(char *arg)
 	exit(255);
 }
 
-static int handle_too_many_args(void)
+static int	handle_too_many_args(void)
 {
 	ft_putendl_fd("exit", STDERR_FILENO);
 	ft_putendl_fd("bash: exit: too many arguments", STDERR_FILENO);
@@ -50,7 +50,7 @@ static int handle_too_many_args(void)
 int	exit_with_args(t_ast *arg)
 {
 	int	n;
-	
+
 	n = 0;
 	if (!check_numeric(arg->value))
 		handle_non_numeric(arg->value);

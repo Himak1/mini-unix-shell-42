@@ -6,28 +6,13 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 15:03:07 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/21 16:50:50 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/26 14:48:39 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "utils.h"
 #include <stdio.h>
-
-/* parse quotes
-
-echo "hello" 			----> 		[DQUOTE]			----> 	["hello"]
-echo "hello $hello" 	---->		[DQUOTE] 			----> 	["hello $hello"]
-echo "hello" $hello 	---->		[DQUOTE, ENV_V] 	----> 	["hello", $hello]
-echo "hello $USER"		----> 		[DQUOTE] 			----> 	["hello $USER"]
-echo "hello" $USER		----> 		[DQUOTE, ENV_V] 	----> 	["hello", $USER]
-echo "hello 'hi'"		---->		[DQUOTE]			---->	["hello 'hi"]
-echo "hello \$hi"		---->		[DQUOTE]			---->	["hello \$hi"]
-
-echo 'hello'			---->		[WORD]				---->	[hello]
-echo 'hello "hi" bye'	---->		[WORD]				----> 	[hello "hi" bye]
-echo 'hello $USER' 		----> 		[WORD] 				----> 	[hello $USER]
-*/
 
 int	find_quotes(const char *s, int i)
 {
@@ -86,9 +71,6 @@ static	char	**fill_array(char **arr, char const *s, int len)
 	{
 		i = 0;
 		i = find_quotes(s, i);
-			// arr[j] = (char *)malloc(sizeof(char) * (i + 1));
-			// if (!arr[j])
-			// 	return (ft_free_2d_array(arr));
 		arr[j] = ft_xmalloc(sizeof(char) * (i + 1));
 		ft_strlcpy(arr[j], s, (i + 1));
 		while (s[i] == ' ' && s[i])

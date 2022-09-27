@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 10:39:53 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 14:11:28 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 14:29:57 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,43 +60,43 @@ void	push_var_to_env(char *str, char **arr[])
 	*arr = new_arr;
 }
 
-void pop_var_from_env(char *str, char **arr[])
+void	pop_var_from_env(char *str, char **arr[])
 {
-    int i;
-    int j;
-    int index;
-    int size;
-    char **temp;
-    char **new_arr;
+	int		i;
+	int		j;
+	int		index;
+	int		size;
+	char	**temp;
+	char	**new_arr;
 
-    index = 0;
-    temp = *arr;
-    size = 0;
-    while (temp[size])
-        size++;
-    while (temp[index])
-    {
-        if (ft_strnstr(temp[index], str, ft_strlen(str)))
-            break;
-        index++;
-    }
-    if (index == size && ft_strncmp(temp[index], str, ft_strlen(str)))
-        return ;
-    new_arr = ft_xmalloc(sizeof(char *) * size);
-    i = 0;
-    j = 0;
-    while (j < size && temp[i])
-    {
-        if (i == index)
-            i++;
-        if (temp[i])
-        {
-            new_arr[j] = ft_strdup(temp[i]);
-            i++;
-            j++;
-        }
-    }
-    new_arr[j] = NULL;
-    ft_free_2d_array(*arr);
-    *arr = new_arr;
+	index = 0;
+	temp = *arr;
+	size = 0;
+	while (temp[size])
+		size++;
+	while (temp[index])
+	{
+		if (ft_strnstr(temp[index], str, ft_strlen(str)))
+			break ;
+		index++;
+	}
+	if (index == size && ft_strncmp(temp[index], str, ft_strlen(str)))
+		return ;
+	new_arr = ft_xmalloc(sizeof(char *) * size);
+	i = 0;
+	j = 0;
+	while (j < size && temp[i])
+	{
+		if (i == index)
+			i++;
+		if (temp[i])
+		{
+			new_arr[j] = ft_strdup(temp[i]);
+			i++;
+			j++;
+		}
+	}
+	new_arr[j] = NULL;
+	ft_free_2d_array(*arr);
+	*arr = new_arr;
 }

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:34 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/23 12:01:20 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 14:57:55 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <readline/readline.h>
 
-int	cd(t_ast *cmd)
+int	cd(t_ast *cmd, char *envv[])
 {
 	char	*dir;
 
@@ -25,9 +25,9 @@ int	cd(t_ast *cmd)
 	{
 		dir = cmd->next_sib_node->value;
 		if (!ft_strncmp(dir, "~", ft_strlen(dir)))
-			chdir(getenv("HOME"));
+			chdir(ft_getenv(envv, "HOME"));
 		else if (!ft_strncmp(dir, "-", ft_strlen(dir)))
-			chdir(getenv("OLDPWD"));
+			chdir(ft_getenv(envv, "OLDPWD"));
 		else
 		{
 			if (chdir(dir) != 0)
@@ -38,15 +38,15 @@ int	cd(t_ast *cmd)
 		}
 	}
 	else
-		chdir(getenv("HOME"));
-	return(0);
+		chdir(ft_getenv(envv, "HOME"));
+	return (0);
 }
 
 int	exec_cd(t_ast *cmd, char **envv[])
 {
 	int	exit_code;
 
-	exit_code = cd(cmd);
+	exit_code = cd(cmd, *envv);
 	update_underscore(cmd, envv);
 	update_old_pwd(envv);
 	update_pwd(*envv);

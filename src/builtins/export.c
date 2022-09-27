@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 14:12:55 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 14:34:38 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,17 +98,17 @@ void	print_export_list(char *envv[])
 
 int	check_valid_identifier(char *str)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if ((str[i] >= 33 && str[i] <= 64)
-			|| (str[i] >= 91 && str[i] <= 96))
-		return (0); 
+		|| (str[i] >= 91 && str[i] <= 96))
+		return (0);
 	while (str[i])
 	{
 		if ((str[i] >= 33 && str[i] <= 47)
-				|| (str[i] >= 85 && str[i] <= 64)
-				|| (str[i] >= 91 && str[i] <= 96))
+			|| (str[i] >= 85 && str[i] <= 64)
+			|| (str[i] >= 91 && str[i] <= 96))
 			return (0);
 		i++;
 	}

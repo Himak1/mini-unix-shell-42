@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:58 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/23 15:25:47 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 14:36:28 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,7 @@
 #include "builtins.h"
 #include <stdio.h>
 
-void	print_envp(char **envp) //delete
-{
-	int i;
-
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		ft_putstr_fd(envp[i], STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		i++;
-	}
-	ft_putchar_fd('\n', STDOUT_FILENO);
-}
-
-static	int unset(char *str, char **arr[])
+static int	unset(char *str, char **arr[])
 {
 	int	index;
 
@@ -56,7 +42,6 @@ int	exec_unset(t_ast *cmd, char **envv[])
 		tmp = cmd->next_sib_node;
 		while (tmp->next_sib_node)
 		{
-			//printf("hello");
 			exit_code += unset(tmp->value, envv);
 			tmp = tmp->next_sib_node;
 		}

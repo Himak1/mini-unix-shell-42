@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:50:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/23 20:16:06 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 15:07:27 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ char	*save_exp_val(char *full_env_val, char *alias)
 	return (val);
 }
 
-char	*find_exp_var(char *env_var, char **envp)
+char	*find_exp_var(char *env_var, char **envv)
 {
-	int i;
-	char *exp_var;
-	char *exit_code;
+	int		i;
+	char	*exp_var;
+	char	*exit_code;
 
 	i = 0;
 	exp_var = NULL;
@@ -48,11 +48,11 @@ char	*find_exp_var(char *env_var, char **envp)
 		exit_code = ft_itoa(g_exit_code);
 		return (exit_code);
 	}
-	while (envp[i] != NULL)
+	while (envv[i] != NULL)
 	{
-		if (ft_strnstr(envp[i], &env_var[1], ft_strlen(envp[i])) != NULL)
+		if (ft_strnstr(envv[i], &env_var[1], ft_strlen(envv[i])) != NULL)
 		{
-			exp_var = save_exp_val(envp[i], &env_var[1]);
+			exp_var = save_exp_val(envv[i], &env_var[1]);
 			return (exp_var);
 		}
 		i++;
@@ -60,15 +60,18 @@ char	*find_exp_var(char *env_var, char **envp)
 	return (exp_var);
 }
 
-void	check_env_var(t_env_var **env_var_list, char **envp)
+void	check_env_var(t_env_var **env_var_list, char **envv)
 {
-	t_env_var *head;
+	t_env_var	*head;
+
 	head = *env_var_list;
 	while (*env_var_list)
 	{
-		(*env_var_list)->exp_env_value = find_exp_var((*env_var_list)->env_value, envp);
+		(*env_var_list)->exp_env_value
+			= find_exp_var((*env_var_list)->env_value, envv);
 		if ((*env_var_list)->exp_env_value)
-			(*env_var_list)->len_exp_env = ft_strlen((*env_var_list)->exp_env_value);
+			(*env_var_list)->len_exp_env
+				= ft_strlen((*env_var_list)->exp_env_value);
 		*env_var_list = (*env_var_list)->next;
 	}
 	*env_var_list = head;
@@ -76,7 +79,7 @@ void	check_env_var(t_env_var **env_var_list, char **envp)
 
 int	get_exp_len(t_env_var *env_var_list, int len_input)
 {
-	int exp_len;
+	int	exp_len;
 
 	exp_len = 0;
 	while (env_var_list)
@@ -87,12 +90,11 @@ int	get_exp_len(t_env_var *env_var_list, int len_input)
 	return (len_input + exp_len + 1);
 }
 
-
 char	*expand_input(char *input, t_env_var *env_var_list, int len)
 {
-	int i;
-	int j;
-	char *expanded;
+	int		i;
+	int		j;
+	char	*expanded;
 
 	expanded = (char *)malloc(sizeof(char) * (len + 1));
 	if (!expanded)
@@ -103,7 +105,8 @@ char	*expand_input(char *input, t_env_var *env_var_list, int len)
 	{
 		if (input[j] == '$')
 		{
-			ft_strlcpy(&expanded[i], env_var_list->exp_env_value, (env_var_list->len_exp_env + 1));
+			ft_strlcpy(&expanded[i], env_var_list->exp_env_value,
+				(env_var_list->len_exp_env + 1));
 			i += env_var_list->len_exp_env;
 			j += env_var_list->len_env;
 			env_var_list = env_var_list->next;
@@ -112,7 +115,7 @@ char	*expand_input(char *input, t_env_var *env_var_list, int len)
 		{
 			expanded[i] = input[j];
 			i++;
-			j++;	
+			j++;
 		}
 	}
 	expanded[i] = '\0';

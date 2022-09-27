@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/26 14:14:32 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/26 15:37:16 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include "executor.h"
 #include "builtins.h"
 #include "error_handling.h"
+
+#include <stdio.h>
 
 static int	count_cmds(t_ast *tree)
 {
@@ -117,9 +119,9 @@ int	executor(t_ast *tree, char **envv[])
 			wait(0);
 			i++;
 		}
+		free(data.pid);
 	}
 	else
 		return (exec_builtin(first_cmd, envv));
-	free(data.pid);
 	return (get_exitcode(status));
 }

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 15:37:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/22 13:33:05 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/26 14:48:13 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,8 @@ t_uint	get_type(char *value)
 	return (type);
 }
 
-/*
 t_token	*create_token(char *value)
 {
-	t_token	*new;
-
-	new = (t_token *)malloc(sizeof(t_token));
-	if (!new)
-		return (NULL);
-	new->value = ft_strdup(value);
-	new->type = get_type(value);
-	new->next = NULL;
-	return (new);
-}
-*/
-
-t_token	*create_token(char *value)
-{
-	// possible fix
 	t_token	*new;
 
 	new = ft_xmalloc(sizeof(t_token));
@@ -84,7 +68,7 @@ void	ft_lexer(t_token **tokenlist, char *input)
 
 	split_commands = split_command_line(input);
 	if (!split_commands)
-		return ; // not sure if this is the right way to error
+		return ;
 	create_tokenlist(tokenlist, split_commands);
 	ft_free_2d_array(split_commands);
 }
