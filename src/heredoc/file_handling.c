@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:07:42 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/21 16:57:49 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/27 17:20:00 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,30 @@ char	*find_tmp_filepath(void)
 	return (tmpdir);
 }
 
+static char	*create_ttyname(void)
+{
+	char	*tty_complete;
+	char	*tty_no_path;
+
+	tty_complete = ttyname(STDOUT_FILENO);
+	tty_no_path = ft_strdup(ft_strrchr(tty_complete, '/') + 1);
+	if (!tty_no_path)
+		exit(EXIT_FAILURE);
+	return (tty_no_path);
+}
+
 char	*create_tmp_filename(char *tmp_filepath, int i)
 {
 	char	*file_with_path;
 	char	*filename;
 	char	*number;
+	char	*tty;
 
+	tty = create_ttyname();
 	number = ft_itoa(i);
 	if (!number)
 		exit(EXIT_FAILURE);
-	filename = ft_strjoin("minishell_heredoc_rd_", number);
+	filename = ft_strjoin(number, tty);
 	if (!filename)
 		exit(EXIT_FAILURE);
 	file_with_path = ft_strjoin(tmp_filepath, filename);
