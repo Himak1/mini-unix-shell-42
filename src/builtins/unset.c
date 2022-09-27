@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:58 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 14:36:28 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/27 14:38:51 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	unset(char *str, char **arr[])
 	}	
 	index = search_for_key(str, *arr);
 	if (index != -1)
-		pop_var_from_env(str, arr);
+		pop_var_from_env(arr, index);
 	return (0);
 }
 

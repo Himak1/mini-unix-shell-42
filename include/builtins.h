@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/25 12:43:48 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/26 14:07:54 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/27 14:38:45 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		check_n(char *arg);
 int		get_index_arg(t_ast *cmd);
 
 void	push_var_to_env(char *str, char **arr[]);
-void	pop_var_from_env(char *str, char **arr[]);
+void	pop_var_from_env(char **arr[], int index);
 void	update_underscore(t_ast *cmd, char **envv[]);
 char	*create_full_var(char *key, char *value);
 void	update_var(int index, char *key, char *val, char *envv[]);
