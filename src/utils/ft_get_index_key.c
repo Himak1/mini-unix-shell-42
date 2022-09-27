@@ -6,14 +6,14 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/22 16:16:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 14:30:44 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/27 14:12:29 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "libft.h"
-#include <stdio.h>
 
+#include <stdio.h>
 int	ft_get_index_key(char **str_arr, char *str)
 {
 	int	i;
@@ -21,9 +21,12 @@ int	ft_get_index_key(char **str_arr, char *str)
 	i = 0;
 	while (str_arr[i] != NULL)
 	{
-		if (ft_strnstr(str_arr[i], str, ft_strlen(str_arr[i])) != NULL
-			&& !ft_strncmp(str, str_arr[i], ft_strlen(str_arr[i])))
+		// if (ft_strnstr(str_arr[i], str, ft_strlen(str_arr[i])) != NULL
+		// 	&& !ft_strncmp(str, str_arr[i], ft_strlen(str_arr[i])))
+		// 	return (i);
+		if (!ft_strncmp(str, str_arr[i], ft_strlen(str)))
 			return (i);
+		fprintf(stderr, "%s\n", str_arr[i]);
 		i++;
 	}
 	return (-1);

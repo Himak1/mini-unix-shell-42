@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 15:09:28 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/27 14:12:14 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*expand_dollar_sign(char *input, char **envv, int *exit_code)
 	len_input = ft_strlen(input);
 	env_var = get_env_var(input, exit_code);
 	if (!env_var)
-		return (input);
+		return (ft_strdup(input));
 	create_env_var_list(&env_var_list, env_var);
 	check_env_var(&env_var_list, envv);
 	len_exp = get_exp_len(env_var_list, len_input);
@@ -90,8 +90,9 @@ int	expander(char **input, char **envv)
 	if (error == -1)
 		return (error);
 	expanded = remove_quotes(expanded);
-	*input = ft_strdup(expanded);
-	free(expanded);
+	if (expanded)
+		free(*input);
+	*input = expanded;
 	return (0);
 }
 
