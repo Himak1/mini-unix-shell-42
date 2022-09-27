@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:07:42 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/27 17:20:00 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/27 17:30:53 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ char	*find_tmp_filepath(void)
 
 static char	*create_ttyname(void)
 {
-	char	*tty_complete;
+	char	*tty_stack;
 	char	*tty_no_path;
 
-	tty_complete = ttyname(STDOUT_FILENO);
-	tty_no_path = ft_strdup(ft_strrchr(tty_complete, '/') + 1);
+	tty_stack = ft_strrchr(ttyname(STDOUT_FILENO), '/');
+	if (!tty_stack)
+		exit(EXIT_FAILURE);
+	tty_no_path = ft_strdup(tty_stack + 1);
 	if (!tty_no_path)
 		exit(EXIT_FAILURE);
 	return (tty_no_path);
@@ -63,5 +65,6 @@ char	*create_tmp_filename(char *tmp_filepath, int i)
 		exit(EXIT_FAILURE);
 	free(number);
 	free(filename);
+	free(tty);
 	return (file_with_path);
 }
