@@ -6,44 +6,13 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/27 14:12:14 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/28 17:38:41 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 #include "lexer.h"
 #include <stdio.h>
-
-int	count_dollar_sign(char *value, int *exit_code)
-{
-	int	dquote;
-	int	squote;
-	int	count;
-
-	count = 0;
-	squote = 0;
-	dquote = 0;
-	while (*value)
-	{
-		if (*value == '\"')
-			dquote++;
-		if (*value == '\'' && !dquote)
-			squote++;
-		if (*value == '$' && !squote)
-			count++;
-		if (squote == 2)
-			squote = 0;
-		if (dquote == 2)
-			dquote = 0;
-		value++;
-	}
-	if (dquote == 1 || squote == 1)
-	{
-		ft_putendl_fd("Syntax error: unclosed quote", STDERR_FILENO);
-		*exit_code = -1;
-	}
-	return (count);
-}
 
 void	free_env_var_list(t_env_var *list)
 {
