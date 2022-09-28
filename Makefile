@@ -65,7 +65,8 @@ HEREDOC_FILES = heredoc.c\
 EXPANDER_FILES = expander.c\
 					expand_utils.c\
 					env_var_utils.c\
-					remove_quotes.c
+					remove_quotes.c\
+					expand_input.c\
 
 EXECUTOR_FILES = executor.c\
 					get_exitcode.c\

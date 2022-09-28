@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:50:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 15:07:27 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/28 17:14:58 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,36 +88,4 @@ int	get_exp_len(t_env_var *env_var_list, int len_input)
 		env_var_list = env_var_list->next;
 	}
 	return (len_input + exp_len + 1);
-}
-
-char	*expand_input(char *input, t_env_var *env_var_list, int len)
-{
-	int		i;
-	int		j;
-	char	*expanded;
-
-	expanded = (char *)malloc(sizeof(char) * (len + 1));
-	if (!expanded)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (i < len)
-	{
-		if (input[j] == '$')
-		{
-			ft_strlcpy(&expanded[i], env_var_list->exp_env_value,
-				(env_var_list->len_exp_env + 1));
-			i += env_var_list->len_exp_env;
-			j += env_var_list->len_env;
-			env_var_list = env_var_list->next;
-		}
-		if (input[j] != '$')
-		{
-			expanded[i] = input[j];
-			i++;
-			j++;
-		}
-	}
-	expanded[i] = '\0';
-	return (expanded);
 }
