@@ -34,6 +34,7 @@ BUILTINS_FILES = env.c\
 					pwd.c\
 					cd.c\
 					export.c\
+					export_print.c\
 					unset.c\
 					exit.c\
 					environment.c\
