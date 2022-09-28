@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/22 16:16:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/27 14:33:03 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/28 13:10:27 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	ft_get_index(char **str_arr, char *str)
 	{
 		if (!ft_strncmp(str, str_arr[i], ft_strlen(str_arr[i])))
 		{
-			fprintf(stderr, "%d, %s\n", i, str_arr[i]);
 			return (i);
 		}
 		i++;
