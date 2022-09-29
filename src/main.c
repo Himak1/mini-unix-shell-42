@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/29 09:40:49 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/29 11:40:37 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,26 @@ int	valid_syntax(t_data *data)
 	return (exit_code);
 }
 
+static void	eof_handling(void)
+{
+	write(1, "exit\n", 6);
+	exit(EXIT_SUCCESS);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	data;
 	char	*line;
 
-	if (argc == 100 && argv[0][0])
-		return (0);
+	(void)argv;
+	(void)argc;
 	shell_init(&data, envp);
 	while (1)
 	{
 		data.lst = NULL;
 		line = readline("minishell-$ ");
 		if (!line)
-		{
-			write(1, "exit\n", 6);
-			exit(EXIT_SUCCESS);
-		}
+			eof_handling();
 		if (ft_strlen(line) != 0)
 		{
 			add_history(line);

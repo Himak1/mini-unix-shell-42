@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:18:49 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/27 16:22:07 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/29 11:42:36 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,3 +97,34 @@ void	update_old_pwd(char **envv[])
 	update_var(index, "OLDPWD", current_pwd[1], *envv);
 	ft_free_2d_array(current_pwd);
 }
+
+// void	update_old_pwd(char **envv[])
+// {
+// 	int		index;
+// 	int		size;
+// 	int		pwd_index;
+// 	char	**temp;
+// 	char	**current_pwd;
+
+// 	index = 0;
+// 	temp = *envv;
+// 	size = 0;
+// 	while (temp[size])
+// 		size++;
+// 	while (temp[index])
+// 	{
+// 		if (ft_strnstr(temp[index], "OLDPWD", ft_strlen("OLDPWD")))
+// 			break ;
+// 		index++;
+// 	}
+// 	if (index == size)
+// 	{
+// 		push_var_to_env("OLDPWD=", envv);
+// 		index = size;
+// 	}
+// 	temp = *envv;
+// 	pwd_index = ft_get_index_key(*envv, "PWD");
+// 	current_pwd = ft_split(temp[pwd_index], '=');
+// 	update_var(index, "OLDPWD", current_pwd[1], *envv);
+// 	ft_free_2d_array(current_pwd);
+// }

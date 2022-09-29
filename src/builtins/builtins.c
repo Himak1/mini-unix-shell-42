@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 14:24:28 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 14:27:55 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/27 17:38:28 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	is_builtin(t_ast *exec_block, t_uint cmd_count)
 	iter = exec_block->child_node;
 	if (iter->type != CMD)
 		iter = iter->next_sib_node;
+	if (!iter)
+		return (0);
 	iter = iter->child_node;
 	if (cmd_count == 1 && !ft_strncmp(iter->value, "echo", 5))
 		return (1);
