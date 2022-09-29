@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:31:04 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/29 12:08:56 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/29 14:44:49 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,11 @@ int	getfd_out(t_ast *exec_block)
 			if (ret_fd != 0)
 				close(ret_fd);
 			if (iter->type == RD_OUT)
+			{
+				unlink(iter->child_node->next_sib_node->value);
 				ret_fd = open(iter->child_node->next_sib_node->value, \
 					O_CREAT | O_WRONLY, 0666);
+			}
 			else
 				ret_fd = open(iter->child_node->next_sib_node->value, \
 					O_CREAT | O_APPEND | O_WRONLY, 0666);

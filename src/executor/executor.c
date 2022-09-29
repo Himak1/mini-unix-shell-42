@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/27 14:44:47 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/29 14:25:36 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/29 14:33:22 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	executor_loop(t_ast *exec_block, t_exec *data, char *envv[])
 		{
 			signal(SIGINT, SIG_DFL);
 			signal(SIGQUIT, SIG_DFL);
-			fprintf(stderr, "hello\n");
 			extract_ast_data(exec_block, data, envv);
 			handle_redirects(data, i);
 			execute(exec_block, data, envv);
