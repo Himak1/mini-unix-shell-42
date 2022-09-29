@@ -6,13 +6,14 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:31:04 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/15 15:34:18 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/29 12:08:56 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "executor.h"
 
+#include <stdio.h>
 int	getfd_in(t_ast *exec_block)
 {
 	t_ast	*iter;

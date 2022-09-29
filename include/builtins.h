@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/25 12:43:48 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/28 17:09:04 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/29 14:15:43 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,12 @@ void	update_var(int index, char *key, char *val, char *envv[]);
 int		search_for_key(char *key, char **arr);
 int		check_valid_identifier(char *str);
 
-int		is_builtin(t_ast *exec_block, t_uint cmd_count);
-int		exec_builtin(t_ast *exec_block, char **envv[]);
+int		is_builtin(t_ast *exec_block);
+t_ast	*get_term(t_ast *exec_block);
+void	exec_builtin(t_ast *exec_block, char **envv[]);
+int		exec_and_exit(t_ast *cmd, char **envv[], \
+	int (*f)(t_ast *cmd, char **envv[]));
+int		exec_single_builtin(t_ast *exec_block, char **envv[]);
 
 void	update_pwd(char *envv[]);
 void	update_old_pwd(char **envv[]);

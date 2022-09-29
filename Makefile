@@ -38,6 +38,7 @@ BUILTINS_FILES = env.c\
 					exit.c\
 					environment.c\
 					builtins.c\
+					exec_single_builtin.c\
 					builtins_utils.c
 
 UTILS_FILES = lst_new.c\
