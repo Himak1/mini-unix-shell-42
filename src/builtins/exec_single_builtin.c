@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/29 13:51:43 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/29 14:45:23 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/29 15:17:48 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,22 @@ static inline void	reset_close_fd(int stdin, int stdout)
 	close(stdout);
 }
 
+static inline void	copy_fd(int *og_stdin, int *og_stdout)
+{
+	*og_stdin = dup(STDIN_FILENO);
+	*og_stdout = dup(STDOUT_FILENO);
+}
+
 int	exec_single_builtin(t_ast *exec_block, char **envv[])
 {
 	t_ast	*iter;
 	int		og_stdin;
-	int     og_stdout;
+	int		og_stdout;
 	int		exit_code;
 
 	exit_code = 1;
 	iter = get_term(exec_block);
-	og_stdin = dup(STDIN_FILENO);
-	og_stdout = dup(STDOUT_FILENO);
+	copy_fd(&og_stdin, &og_stdout);
 	builtin_redirect(exec_block);
 	if (!ft_strncmp(iter->value, "echo", 5))
 		exit_code = exec_echo(iter, envv);
