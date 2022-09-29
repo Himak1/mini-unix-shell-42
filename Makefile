@@ -49,6 +49,7 @@ UTILS_FILES = lst_new.c\
 				lst_new.c\
 				ft_xmalloc.c\
 				cpy_2d.c\
+				sort_2d_alpha.c\
 				envv_search.c
 
 PARSER_FILES = cmd.c\
@@ -64,7 +65,9 @@ HEREDOC_FILES = heredoc.c\
 EXPANDER_FILES = expander.c\
 					expand_utils.c\
 					env_var_utils.c\
-					remove_quotes.c
+					remove_quotes.c\
+					search_exp_utils.c\
+					error.c
 
 EXECUTOR_FILES = executor.c\
 					get_exitcode.c\

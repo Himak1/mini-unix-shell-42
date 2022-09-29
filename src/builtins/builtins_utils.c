@@ -6,14 +6,13 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 10:39:53 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/27 14:42:09 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/29 09:11:38 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "parser.h"
 #include "builtins.h"
-#include <stdio.h>
 
 int	search_for_key(char *key, char **arr)
 {

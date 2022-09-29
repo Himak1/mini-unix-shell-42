@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/10 14:29:27 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 14:54:29 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/27 17:23:37 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,21 @@ int	len_filtered_quotes(char *value)
 	return (count);
 }
 
+int	handle_quotes(int quote_type, char *new_value, char *old_value, size_t *i, size_t *j)
+{
+	if (quote_type && old_value[*i] != quote_type)
+	{
+		new_value[*j] = old_value[*i];
+		*j += 1;
+	}
+	else if (quote_type && old_value[*i] == quote_type)
+		quote_type = 0;
+	else
+		quote_type = old_value[*i];
+	*i += 1;
+	return (quote_type);
+}
+
 void	copy_filtered_quotes(char *new_value, char *old_value, size_t size)
 {
 	int		quote_type;
@@ -53,18 +68,7 @@ void	copy_filtered_quotes(char *new_value, char *old_value, size_t size)
 	while (old_value[i] && j < (size + 1))
 	{
 		if (old_value[i] == '\'' || old_value[i] == '\"')
-		{
-			if (quote_type && old_value[i] != quote_type)
-			{
-				new_value[j] = old_value[i];
-				j++;
-			}
-			else if (quote_type && old_value[i] == quote_type)
-				quote_type = 0;
-			else
-				quote_type = old_value[i];
-			i++;
-		}
+			quote_type = handle_quotes(quote_type, new_value, old_value, &i, &j);
 		while (old_value[i] && old_value[i] != '\''
 			&& old_value[i] != '\"' && j < (size + 1))
 		{

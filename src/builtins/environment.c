@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:18:49 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 14:32:25 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/27 16:22:07 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,17 @@ void	update_var(int index, char *key, char *val, char *envv[])
 		envv[index] = create_full_var(key, val);
 }
 
-// static int	is_key()
 void	update_underscore(t_ast *cmd, char **envv[])
 {
 	int		index;
 	int		size;
-	char	**temp;
 	t_ast	*iter;
 
-	index = 0;
-	temp = *envv;
 	size = 0;
-	while (temp[size])
+	while ((*envv)[size])
 		size++;
-	while (temp[index])
-	{
-		if (ft_strnstr(temp[index], "_=", ft_strlen("_=")))
-			break ;
-		index++;
-	}
-	if (index == size)
+	index = ft_get_index_key(*envv, "_=");
+	if (index == -1)
 	{
 		push_var_to_env("_=", envv);
 		index = size;
@@ -90,28 +81,19 @@ void	update_old_pwd(char **envv[])
 	int		index;
 	int		size;
 	int		pwd_index;
-	char	**temp;
 	char	**current_pwd;
 
-	index = 0;
-	temp = *envv;
 	size = 0;
-	while (temp[size])
+	while ((*envv)[size])
 		size++;
-	while (temp[index])
-	{
-		if (ft_strnstr(temp[index], "OLDPWD", ft_strlen("OLDPWD")))
-			break ;
-		index++;
-	}
-	if (index == size)
+	index = ft_get_index_key(*envv, "OLDPWD=");
+	if (index == -1)
 	{
 		push_var_to_env("OLDPWD=", envv);
 		index = size;
 	}
-	temp = *envv;
 	pwd_index = ft_get_index_key(*envv, "PWD");
-	current_pwd = ft_split(temp[pwd_index], '=');
+	current_pwd = ft_split((*envv)[pwd_index], '=');
 	update_var(index, "OLDPWD", current_pwd[1], *envv);
 	ft_free_2d_array(current_pwd);
 }

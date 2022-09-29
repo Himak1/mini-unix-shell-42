@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 15:35:08 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/29 09:40:49 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char	*line;
 
 	if (argc == 100 && argv[0][0])
-		return (0); // filler
+		return (0);
 	shell_init(&data, envp);
 	while (1)
 	{

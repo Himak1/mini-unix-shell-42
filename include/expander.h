@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 11:51:40 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/26 15:07:45 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/29 09:25:17 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 typedef struct s_env_var
 {
 	int					len_env;
-	int					len_exp_env;
+	int					len_exp;
 	char				*env_value;
-	char				*exp_env_value;
+	char				*exp_env;
 	struct s_env_var	*next;
 }						t_env_var;
 
@@ -52,4 +52,6 @@ char		*expand_dollar_sign(char *input, char **envv, int *exit_code);
 int			expander(char **input, char **envv);
 int			expand_tree(t_ast *parent, char **envv);
 
+//error
+int			error_unclosed_quote(void);
 #endif

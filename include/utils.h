@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 16:36:49 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/27 14:27:03 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/27 16:24:26 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ int		ft_get_index_key(char **str_arr, char *str);
 int		ft_get_index(char **str_arr, char *str);
 char	*ft_getenv(char **envv, char *var_name);
 char	**cpy_2d(char **arr);
+char	**sort_2d_alpha(char *arr[], int size);
 
 #endif

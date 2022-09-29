@@ -6,13 +6,12 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/27 14:12:14 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/29 09:25:55 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 #include "lexer.h"
-#include <stdio.h>
 
 int	count_dollar_sign(char *value, int *exit_code)
 {
@@ -38,10 +37,7 @@ int	count_dollar_sign(char *value, int *exit_code)
 		value++;
 	}
 	if (dquote == 1 || squote == 1)
-	{
-		ft_putendl_fd("Syntax error: unclosed quote", STDERR_FILENO);
-		*exit_code = -1;
-	}
+		*exit_code = error_unclosed_quote();
 	return (count);
 }
 
@@ -53,7 +49,7 @@ void	free_env_var_list(t_env_var *list)
 	{
 		tmp = list->next;
 		free(list->env_value);
-		free(list->exp_env_value);
+		free(list->exp_env);
 		free(list);
 		list = tmp;
 	}

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/22 16:16:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/27 14:33:03 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/29 11:11:12 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,24 @@ int	ft_get_index_key(char **str_arr, char *str)
 
 int	ft_get_index(char **str_arr, char *str)
 {
-	int	i;
+	int		i;
+	char	**key_and_val;
 
 	i = 0;
 	while (str_arr[i] != NULL)
 	{
-		if (!ft_strncmp(str, str_arr[i], ft_strlen(str_arr[i])))
+		if (ft_strchr(str_arr[i], '='))
 		{
-			fprintf(stderr, "%d, %s\n", i, str_arr[i]);
-			return (i);
+			key_and_val = ft_split(str_arr[i], '=');
+			if (!ft_strncmp(str, key_and_val[0], ft_strlen(key_and_val[0])))
+			{
+				ft_free_2d_array(key_and_val);
+				return (i);
+			}
+			ft_free_2d_array(key_and_val);
 		}
+		if (!ft_strncmp(str, str_arr[i], ft_strlen(str_arr[i])))
+			return (i);
 		i++;
 	}
 	return (-1);
