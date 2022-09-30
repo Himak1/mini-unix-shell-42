@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/29 11:40:37 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/30 14:29:26 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	valid_syntax(t_data *data)
 		exit_code = -1;
 	free_ast(data->tree);
 	sigaction(SIGINT, &data->sigint_h, NULL);
+	if (exit_code == -1)
+		return (1);
 	return (exit_code);
 }
 

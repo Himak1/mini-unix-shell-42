@@ -34,3 +34,7 @@ edge-cases:
     ☐ env | grep SHLVL
     ☐ export
     ☐ export a, env
+
+
+    ☐ echo -n hello "      daad [causes a leak]
+    
