@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/30 10:47:44 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/30 14:19:46 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ int	expander(char **input, char **envv)
 	error = 0;
 	expanded = expand_dollar_sign(*input, envv, &error);
 	if (error == -1)
+	{
+		free(expanded);
 		return (error);
+	}
 	expanded = remove_quotes(expanded);
 	if (expanded)
 		free(*input);
