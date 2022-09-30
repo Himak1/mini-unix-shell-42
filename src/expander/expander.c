@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 14:27:25 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/29 11:43:16 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/30 10:47:44 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	count_dollar_sign(char *value, int *exit_code)
 	dquote = 0;
 	while (*value)
 	{
-		if (*value == '\"')
+		if (*value == '\"' && !squote)
 			dquote++;
 		if (*value == '\'' && !dquote)
 			squote++;

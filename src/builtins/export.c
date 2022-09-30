@@ -6,14 +6,13 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:50 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/29 11:42:00 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/30 11:32:15 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "builtins.h"
 #include "error_handling.h"
-#include <stdio.h>
 
 void	print_with_quotes(char *str)
 {
@@ -70,13 +69,13 @@ int	check_valid_identifier(char *str)
 
 	i = 0;
 	if ((str[i] >= 33 && str[i] <= 64)
-		|| (str[i] >= 91 && str[i] <= 96))
+		|| (str[i] >= 91 && str[i] <= 94) || str[i] == 96)
 		return (0);
-	while (str[i])
+	while (str[i] && str[i] != '=')
 	{
 		if ((str[i] >= 33 && str[i] <= 47)
-			|| (str[i] >= 85 && str[i] <= 64)
-			|| (str[i] >= 91 && str[i] <= 96))
+			|| (str[i] >= 58 && str[i] <= 64)
+			|| (str[i] >= 91 && str[i] <= 94) || str[i] == 96)
 			return (0);
 		i++;
 	}
@@ -93,7 +92,6 @@ static int	export(char *str, char **arr[])
 		return (-1);
 	}	
 	index = search_for_key(str, *arr);
-	printf("found at index %d\n", index);
 	if (index != -1)
 	{
 		if (!ft_strchr(str, '='))

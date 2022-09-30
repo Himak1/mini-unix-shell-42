@@ -6,14 +6,14 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/01 13:29:19 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/26 15:24:28 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/30 11:37:59 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-#include "utils.h"
+# include "utils.h"
 
 typedef unsigned int	t_uint;
 

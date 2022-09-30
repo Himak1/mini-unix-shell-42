@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/29 13:51:43 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/29 15:17:48 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/30 11:32:06 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "builtins.h"
 #include "executor.h"
 
-#include <stdio.h>
 static void	builtin_redirect(t_ast *exec_block)
 {
 	int	fd_in;

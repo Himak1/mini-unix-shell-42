@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/15 10:08:58 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/27 14:38:51 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/30 11:32:33 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "parser.h"
 #include "error_handling.h"
 #include "builtins.h"
-#include <stdio.h>
 
 static int	unset(char *str, char **arr[])
 {

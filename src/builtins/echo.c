@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/26 14:29:19 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/23 11:10:52 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/30 13:27:48 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ int	get_index_arg(t_ast *cmd)
 		if (!check_n(tmp_cmd->value))
 			break ;
 		i++;
-		tmp_cmd = tmp_cmd->next_sib_node;
+		if (tmp_cmd->next_sib_node)
+			tmp_cmd = tmp_cmd->next_sib_node;
 	}
+	if (check_n(tmp_cmd->value))
+		return (-1);
 	return (i);
 }
 
@@ -71,6 +74,8 @@ int	get_first_arg(t_ast **cmd)
 
 	i = 0;
 	index = get_index_arg(*cmd);
+	if (index == -1)
+		return (-1);
 	while (i < index && (*cmd)->next_sib_node)
 	{
 		*cmd = (*cmd)->next_sib_node;
@@ -88,6 +93,8 @@ void	echo(t_ast *cmd)
 
 	tmp_cmd = cmd;
 	flag = get_first_arg(&tmp_cmd);
+	if (flag == -1)
+		return ;
 	if (!ft_strncmp(cmd->value, "echo", 5) && !cmd->next_sib_node)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	else
