@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/21 11:51:40 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/30 11:38:18 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/30 15:06:49 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void		lst_add_bk_env_var(t_env_var **list, t_env_var *env_var);
 char		**get_env_var(char *value, int *exit_code);
 int			get_env_var_len(char *env_var);
 
-int			len_filtered_quotes(char *value);
 void		copy_filtered_quotes(char *new_value, char *old_value, size_t size);
 char		*remove_quotes(char *value);
 
