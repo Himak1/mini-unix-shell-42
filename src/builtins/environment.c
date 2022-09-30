@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:18:49 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/30 15:44:46 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/30 16:07:29 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 #include "parser.h"
 #include "builtins.h"
 #include <limits.h>
+#include <stdio.h>
 
 char	*create_full_var(char *key, char *value)
 {
 	char	*full_var;
 	char	*key_is_equal;
 
-	key_is_equal = ft_strjoin(key, "=");
-	full_var = ft_strjoin(key_is_equal, value);
+	key_is_equal = ft_xstrjoin(key, "=");
+	full_var = ft_xstrjoin(key_is_equal, value);
 	free(key_is_equal);
 	return (full_var);
 }
@@ -31,7 +32,7 @@ void	update_var(int index, char *key, char *val, char *envv[])
 	if (envv[index])
 		free(envv[index]);
 	if (!val)
-		envv[index] = ft_strdup(key);
+		envv[index] = ft_xstrdup(key);
 	else
 		envv[index] = create_full_var(key, val);
 }
@@ -66,7 +67,7 @@ void	update_pwd(char *envv[])
 	new_path = NULL;
 	index = ft_get_index_key(envv, "PWD=");
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		new_path = ft_strdup(cwd);
+		new_path = ft_xstrdup(cwd);
 	else
 		perror("cd:");
 	if (envv[index])
@@ -92,7 +93,7 @@ void	update_old_pwd(char **envv[])
 		index = size;
 	}
 	pwd_index = ft_get_index_key(*envv, "PWD");
-	current_pwd = ft_split((*envv)[pwd_index], '=');
+	current_pwd = ft_xsplit((*envv)[pwd_index], '=');
 	update_var(index, "OLDPWD", current_pwd[1], *envv);
 	ft_free_2d_array(current_pwd);
 }

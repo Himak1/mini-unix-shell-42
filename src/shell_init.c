@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 17:02:16 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/23 16:55:40 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/30 16:03:17 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "utils.h"
 #include "builtins.h"
 #include "signal_handling.h"
-#include <stdio.h>
 
 static int	search_shlvl(char *envv[])
 {
@@ -38,9 +37,11 @@ void	increase_shlvl(char *envv[])
 	char	**key_and_val;
 
 	index = search_shlvl(envv);
-	key_and_val = ft_split(envv[index], '=');
+	key_and_val = ft_xsplit(envv[index], '=');
 	shlvl = ft_atoi(key_and_val[1]);
 	new_shlvl = ft_itoa(shlvl + 1);
+	if (!new_shlvl)
+		exit(EXIT_FAILURE);
 	free(envv[index]);
 	envv[index] = create_full_var("SHLVL", new_shlvl);
 	ft_free_2d_array(key_and_val);
@@ -66,9 +67,7 @@ void	copy_envp(t_data *data, char *envp[])
 	data->envv = ft_xmalloc((envp_size + 1) * sizeof(char *));
 	while (envp[i])
 	{
-		data->envv[i] = ft_strdup(envp[i]);
-		if (!data->envv[i])
-			exit(EXIT_FAILURE);
+		data->envv[i] = ft_xstrdup(envp[i]);
 		i++;
 	}
 	data->envv[i] = NULL;

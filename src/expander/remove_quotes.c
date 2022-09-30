@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/10 14:29:27 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/30 14:58:05 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/30 16:03:45 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*remove_quotes(char *value)
 	count = len_filtered_quotes(value);
 	if (count == ft_strlen(value))
 	{
-		new_value = ft_strdup(value);
+		new_value = ft_xstrdup(value);
 		free(value);
 		return (new_value);
 	}

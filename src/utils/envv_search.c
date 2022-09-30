@@ -6,14 +6,12 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/22 16:16:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/29 11:43:30 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/30 16:18:17 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "libft.h"
-
-#include <stdio.h>
 
 int	ft_get_index_key(char **str_arr, char *str)
 {
@@ -39,7 +37,7 @@ int	ft_get_index(char **str_arr, char *str)
 	{
 		if (ft_strchr(str_arr[i], '='))
 		{
-			key_and_val = ft_split(str_arr[i], '=');
+			key_and_val = ft_xsplit(str_arr[i], '=');
 			if (!ft_strncmp(str, key_and_val[0], ft_strlen(key_and_val[0])))
 			{
 				ft_free_2d_array(key_and_val);

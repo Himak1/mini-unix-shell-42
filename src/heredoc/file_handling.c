@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/18 15:07:42 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/27 17:30:53 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/30 16:09:11 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ char	*find_tmp_filepath(void)
 
 	env = getenv("TMPDIR");
 	if (!env)
-		tmpdir = ft_strdup("/tmp/");
+		tmpdir = ft_xstrdup("/tmp/");
 	else
-		tmpdir = ft_strdup(env);
-	if (!tmpdir)
-		exit(EXIT_FAILURE);
+		tmpdir = ft_xstrdup(env);
 	return (tmpdir);
 }
 
@@ -40,9 +38,7 @@ static char	*create_ttyname(void)
 	tty_stack = ft_strrchr(ttyname(STDOUT_FILENO), '/');
 	if (!tty_stack)
 		exit(EXIT_FAILURE);
-	tty_no_path = ft_strdup(tty_stack + 1);
-	if (!tty_no_path)
-		exit(EXIT_FAILURE);
+	tty_no_path = ft_xstrdup(tty_stack + 1);
 	return (tty_no_path);
 }
 
@@ -57,12 +53,8 @@ char	*create_tmp_filename(char *tmp_filepath, int i)
 	number = ft_itoa(i);
 	if (!number)
 		exit(EXIT_FAILURE);
-	filename = ft_strjoin(number, tty);
-	if (!filename)
-		exit(EXIT_FAILURE);
-	file_with_path = ft_strjoin(tmp_filepath, filename);
-	if (!file_with_path)
-		exit(EXIT_FAILURE);
+	filename = ft_xstrjoin(number, tty);
+	file_with_path = ft_xstrjoin(tmp_filepath, filename);
 	free(number);
 	free(filename);
 	free(tty);

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/22 10:39:53 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/29 09:11:38 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/30 16:03:28 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	search_for_key(char *key, char **arr)
 	i = 0;
 	if (ft_strchr(key, '='))
 	{
-		key_and_val = ft_split(key, '=');
+		key_and_val = ft_xsplit(key, '=');
 		i = ft_get_index(arr, key_and_val[0]);
 		ft_free_2d_array(key_and_val);
 		if (i == -1)
@@ -49,10 +49,10 @@ void	push_var_to_env(char *str, char **arr[])
 	i = 0;
 	while (temp[i] != NULL)
 	{
-		new_arr[i] = ft_strdup(temp[i]);
+		new_arr[i] = ft_xstrdup(temp[i]);
 		i++;
 	}
-	new_arr[i] = ft_strdup(str);
+	new_arr[i] = ft_xstrdup(str);
 	i++;
 	new_arr[i] = NULL;
 	ft_free_2d_array(*arr);
@@ -78,7 +78,7 @@ void	pop_var_from_env(char **arr[], int index)
 			i++;
 		if ((*arr)[i])
 		{
-			new_arr[j] = ft_strdup((*arr)[i]);
+			new_arr[j] = ft_xstrdup((*arr)[i]);
 			i++;
 			j++;
 		}

@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/26 11:41:44 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/30 14:58:13 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/30 16:03:49 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_env_var	*create_env_var(char *value)
 	t_env_var	*new;
 
 	new = ft_xmalloc(sizeof(t_env_var));
-	new->env_value = ft_strdup(value);
+	new->env_value = ft_xstrdup(value);
 	new->len_env = ft_strlen(new->env_value);
 	new->len_exp = 0;
 	new->exp_env = NULL;

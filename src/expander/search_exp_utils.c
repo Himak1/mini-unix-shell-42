@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/27 17:08:51 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/29 09:26:57 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/30 16:03:52 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*find_exp_var(char *env_var, char **envv)
 		index = ft_get_index_key(envv, &env_var[1]);
 	exp_var = NULL;
 	if (!ft_strncmp(env_var, "$", ft_strlen(env_var)))
-		return (ft_strdup(env_var));
+		return (ft_xstrdup(env_var));
 	if (!ft_strncmp(env_var, "$?", ft_strlen(env_var)))
 	{
 		exit_code = ft_itoa(g_exit_code);

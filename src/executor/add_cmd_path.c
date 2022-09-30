@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/05 13:44:30 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/27 14:10:51 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/30 16:17:34 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include "libft.h"
 #include "executor.h"
 #include "error_handling.h"
-
-#include <stdio.h>
 
 static char	*concatenate_path(const char *path_dir, const char *cmd)
 {
@@ -80,7 +78,7 @@ void	add_cmd_path(char **cmd, char *envv[])
 	path = ft_getenv(envv, "PATH");
 	if (path)
 	{
-		split_path = ft_split(path, ':');
+		split_path = ft_xsplit(path, ':');
 		if (!split_path)
 			exit(EXIT_FAILURE);
 		if (try_paths(cmd, split_path))

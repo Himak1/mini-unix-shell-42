@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/12 14:11:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/13 11:27:24 by jhille        ########   odam.nl         */
+/*   Updated: 2022/09/30 16:04:30 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_ast	*new_term_node(t_token **list)
 	t_ast	*output;
 
 	output = new_node(TERMINAL);
-	output->value = ft_strdup((*list)->value);
+	output->value = ft_xstrdup((*list)->value);
 	*list = (*list)->next;
 	return (output);
 }

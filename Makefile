@@ -51,7 +51,8 @@ UTILS_FILES = lst_new.c\
 				ft_xmalloc.c\
 				cpy_2d.c\
 				sort_2d_alpha.c\
-				envv_search.c
+				envv_search.c\
+				ft_xfunc.c
 
 PARSER_FILES = cmd.c\
 				node_functions.c\

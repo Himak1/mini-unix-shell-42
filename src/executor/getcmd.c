@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/03 14:32:53 by jhille        #+#    #+#                 */
-/*   Updated: 2022/09/26 15:39:14 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/09/30 16:03:36 by tvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	**getcmd(t_ast *exec_block)
 	cmd[arg_count] = NULL;
 	while (iter)
 	{
-		cmd[i] = ft_strdup(iter->value);
+		cmd[i] = ft_xstrdup(iter->value);
 		if (!cmd[i])
 			exit(EXIT_FAILURE);
 		iter = iter->next_sib_node;
