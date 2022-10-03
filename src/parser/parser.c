@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/04 14:38:52 by jhille        #+#    #+#                 */
-/*   Updated: 2022/08/17 16:25:46 by jhille        ########   odam.nl         */
+/*   Updated: 2022/10/03 14:00:18 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ t_ast	*parse_tokens(t_token *list)
 	t_token	*lst_head;
 
 	lst_head = list;
+	if (!lst_head)
+		return (NULL);
 	tree = new_node(EXEC_CHAIN);
 	if (add_child(tree, exec_block(&lst_head)) == -1)
 	{

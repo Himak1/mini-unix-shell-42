@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/09 11:38:59 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/09/30 15:48:42 by tvan-der      ########   odam.nl         */
+/*   Updated: 2022/10/03 13:59:22 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ int	valid_syntax(t_data *data)
 {
 	int	exit_code;
 
+	if (!data->tree)
+	{
+		ft_putendl_fd("minishell: syntax error", STDERR_FILENO);
+		return (2);
+	}
 	if (handle_all_heredocs(data) != -1)
 	{
 		signal(SIGINT, SIG_IGN);
@@ -54,6 +59,20 @@ static void	eof_handling(void)
 	exit(EXIT_SUCCESS);
 }
 
+int	line_only_whitespace(const char *line)
+{
+	t_uint	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	data;
@@ -68,14 +87,14 @@ int	main(int argc, char *argv[], char *envp[])
 		line = readline("minishell-$ ");
 		if (!line)
 			eof_handling();
-		if (ft_strlen(line) != 0)
+		if (ft_strlen(line) != 0 && !line_only_whitespace(line))
 		{
 			add_history(line);
 			ft_lexer(&data.lst, line);
 			data.tree = parse_tokens(data.lst);
-			ft_lstfree(data.lst);
-			if (data.tree)
-				g_exit_code = valid_syntax(&data);
+			if (data.lst)
+				ft_lstfree(data.lst);
+			g_exit_code = valid_syntax(&data);
 		}
 		free(line);
 	}

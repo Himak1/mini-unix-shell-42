@@ -27,7 +27,8 @@ SRC_FILES = main.c\
 			$(SIGNAL_HANDLING_FILES)
 
 LEXER_FILES = lexer.c\
-				split_command_line.c
+				split_command_line.c\
+				check_syntax_error.c
 
 BUILTINS_FILES = env.c\
 					echo.c\
