@@ -24,10 +24,7 @@ static	char	**fill_array(char **arr, char const *s, int len)
 	while (j < len)
 	{
 		i = 0;
-		if (s[i] == '\'' || s[i] == '\"')
-			i = find_quotes(s, i);
-		else
-			i = find_other(s, i);
+		i = find_other(s, i);
 		i++;
 		arr[j] = ft_xmalloc(sizeof(char) * (i + 1));
 		ft_strlcpy(arr[j], s, (i + 1));

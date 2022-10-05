@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 int	find_quotes(const char *s, int i)
 {
 	int	dquote;
@@ -18,8 +17,6 @@ int	find_quotes(const char *s, int i)
 
 	dquote = 0;
 	squote = 0;
-	if (!s || (s[i] != '\'' && s[i] != '\"'))
-		return (i);
 	while (s[i] && (dquote != 2 && squote != 2))
 	{
 		if (s[i] == '\"' && !squote)
@@ -57,11 +54,16 @@ int	find_other(const char *s, int i)
 	int	old_ctype;
 
 	old_ctype = get_ctype(s[i]);
-	while (s[i] && (s[i] != '\'' && s[i] != '\"'))
+	while (s[i])
 	{
 		ctype = get_ctype(s[i]);
 		if (ctype != old_ctype)
 			break ;
+		if (s[i] == '\'' || s[i] == '\"')
+		{
+			i = find_quotes(s, i);
+			continue ;
+		}
 		i++;
 	}
 	if (i != 0)
@@ -80,15 +82,11 @@ int	count_tokens(char const *s)
 		return (0);
 	while (s[i] != '\0')
 	{
-		if (s[i] == '\'' || s[i] == '\"')
-			i = find_quotes(s, i);
-		else
-			i = find_other(s, i);
+		i = find_other(s, i);
 		count++;
 		i++;
 	}
 	if (i != 0 && s[i - 1] == ' ')
 		count--;
-	fprintf(stderr, "%d\n", count);
 	return (count);
 }
