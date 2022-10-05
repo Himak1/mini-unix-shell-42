@@ -18,8 +18,8 @@ int	find_quotes(const char *s, int i)
 
 	dquote = 0;
 	squote = 0;
-	if (!s)
-		return (0);
+	if (!s || (s[i] != '\'' && s[i] != '\"'))
+		return (i);
 	while (s[i] && (dquote != 2 && squote != 2))
 	{
 		if (s[i] == '\"' && !squote)
