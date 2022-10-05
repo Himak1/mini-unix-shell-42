@@ -28,6 +28,7 @@ SRC_FILES = main.c\
 
 LEXER_FILES = lexer.c\
 				split_command_line.c\
+				count_tokens.c\
 				check_syntax_error.c
 
 BUILTINS_FILES = env.c\

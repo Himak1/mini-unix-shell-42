@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 15:37:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/10/03 13:59:00 by jhille        ########   odam.nl         */
+/*   Updated: 2022/10/05 17:25:19 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	create_tokenlist(t_token **token_list, char **str)
 	i = 0;
 	while (str[i] != NULL)
 	{
+		if (str[i])
 		new = create_token(str[i]);
 		if (*token_list == NULL)
 			*token_list = new;
