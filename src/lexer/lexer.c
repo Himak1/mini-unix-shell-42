@@ -6,76 +6,23 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/06/29 15:37:18 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/10/05 17:25:19 by jhille        ########   odam.nl         */
+/*   Updated: 2022/10/05 17:54:38 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "utils.h"
-#include <stdio.h>
-
-t_uint	get_type(char *value)
-{
-	t_uint	type;
-
-	if (!ft_strncmp(value, "<", ft_strlen(value)))
-		type = RDR_IN;
-	else if (!ft_strncmp(value, ">", ft_strlen(value)))
-		type = RDR_OUT;
-	else if (!ft_strncmp(value, "<<", ft_strlen(value)))
-		type = RDR_DLM_IN;
-	else if (!ft_strncmp(value, ">>", ft_strlen(value)))
-		type = RDR_APND_OUT;
-	else if (!ft_strncmp(value, "|", ft_strlen(value)))
-		type = PIPE;
-	else
-		type = WORD;
-	return (type);
-}
-
-t_token	*create_token(char *value)
-{
-	t_token	*new;
-
-	new = ft_xmalloc(sizeof(t_token));
-	new->value = ft_strdup(value);
-	if (!new->value)
-		exit(EXIT_FAILURE);
-	new->type = get_type(value);
-	new->next = NULL;
-	return (new);
-}
-
-void	create_tokenlist(t_token **token_list, char **str)
-{
-	int		i;
-	t_token	*new;
-
-	i = 0;
-	while (str[i] != NULL)
-	{
-		if (str[i])
-		new = create_token(str[i]);
-		if (*token_list == NULL)
-			*token_list = new;
-		else
-			lst_add_bk(token_list, new);
-		i++;
-	}
-}
 
 void	ft_lexer(t_token **tokenlist, char *input)
 {
 	char	**split_commands;
-	int		syntax_error;
+	int		status;
 
 	split_commands = split_command_line(input);
 	if (!split_commands)
 		return ;
-	create_tokenlist(tokenlist, split_commands);
-	syntax_error = check_syntax_error(tokenlist);
+	status = create_tokenlist(tokenlist, split_commands);
 	ft_free_2d_array(split_commands);
-	if (syntax_error == 1)
+	if (status == -1)
 	{
 		ft_lstfree(*tokenlist);
 		*tokenlist = NULL;

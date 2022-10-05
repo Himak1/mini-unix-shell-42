@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/05 17:21:31 by jhille        #+#    #+#                 */
-/*   Updated: 2022/10/05 17:21:45 by jhille        ########   odam.nl         */
+/*   Updated: 2022/10/05 17:27:40 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	find_quotes(const char *s, int i)
 	return (i);
 }
 
-static int	get_ctype(char c)
+int	get_ctype(char c)
 {
 	int	output;
 
