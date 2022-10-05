@@ -6,14 +6,13 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 15:03:07 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/10/05 17:27:34 by jhille        ########   odam.nl         */
+/*   Updated: 2022/10/05 18:00:56 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "utils.h"
 
-#include <stdio.h>
 static	char	**fill_array(char **arr, char const *s, int len)
 {
 	int	i;
@@ -49,10 +48,5 @@ char	**split_command_line(char const *s)
 	count = count_tokens(s);
 	split_arr = ft_xmalloc((count + 1) * sizeof(char *));
 	split_arr = fill_array(split_arr, s, count);
-	fprintf(stderr, "%d\n", count);
-	for (int i = 0; split_arr[i]; i++)
-	{
-		fprintf(stderr, "[%s]\n", split_arr[i]);
-	}
 	return (split_arr);
 }
