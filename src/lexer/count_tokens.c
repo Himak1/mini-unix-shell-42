@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/05 17:21:31 by jhille        #+#    #+#                 */
-/*   Updated: 2022/10/06 11:52:57 by jhille        ########   odam.nl         */
+/*   Updated: 2022/10/06 12:08:37 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	find_other(const char *s, int i)
 		{
 			i = find_quotes(s, i);
 		}
-		i++;
+		if (s[i])
+			i++;
 	}
 	if (i != 0)
 		i--;
