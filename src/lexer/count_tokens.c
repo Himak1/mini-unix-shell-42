@@ -6,7 +6,7 @@
 /*   By: jhille <jhille@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/05 17:21:31 by jhille        #+#    #+#                 */
-/*   Updated: 2022/10/05 17:27:40 by jhille        ########   odam.nl         */
+/*   Updated: 2022/10/06 11:52:57 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	find_other(const char *s, int i)
 		if (s[i] == '\'' || s[i] == '\"')
 		{
 			i = find_quotes(s, i);
-			continue ;
 		}
 		i++;
 	}

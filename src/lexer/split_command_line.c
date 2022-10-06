@@ -6,7 +6,7 @@
 /*   By: tvan-der <tvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/06 15:03:07 by tvan-der      #+#    #+#                 */
-/*   Updated: 2022/10/05 18:00:56 by jhille        ########   odam.nl         */
+/*   Updated: 2022/10/06 11:23:37 by jhille        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static	char	**fill_array(char **arr, char const *s, int len)
 	int	j;
 
 	j = 0;
-	while (*s == ' ' && *s)
-		s++;
 	while (j < len)
 	{
 		i = 0;
