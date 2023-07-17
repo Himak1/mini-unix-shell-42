@@ -9,6 +9,14 @@ Repository for our implementation of the 42 Network's Minishell project. The goa
 - A working history
 - CTRL signals 
 
+## Usage
+### build
+Run ```make``` in the project root directory.
+
+### run
+Run ```./minishell```
+
+
 ## Tools Used
 - GCC (limited to C98 standard)
 - Make
