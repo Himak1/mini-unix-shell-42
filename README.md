@@ -1,6 +1,6 @@
 # mini-unix-shell-42
 Repository for our implementation of the 42 Network's Minishell project. The goal of the project was to create a simple UNIX shell, using Bash as reference. 
-
+This was a collaborative between [Himak1](https://github.com/himak1) and [tessavdvorst](https://github.com/tessavdvorst)
 ## Features
 - Redirection and here-document support
 - Builtins such as "echo" and "export"
